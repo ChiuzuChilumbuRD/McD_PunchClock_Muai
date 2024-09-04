@@ -1,0 +1,22 @@
+﻿namespace carddatasync3;
+
+public partial class App : Application
+{
+	public App()
+	{
+		InitializeComponent();
+
+		MainPage = new AppShell();
+	}
+
+	protected override void OnStart()
+	{
+		base.OnStart();
+		
+		// 尝试在窗口启动时设置标题
+		if (Application.Current.Windows.Any())
+		{
+			Application.Current.Windows.First().Title = "HCM出勤資料同步工具";
+		}
+	}
+}
