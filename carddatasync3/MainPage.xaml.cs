@@ -78,7 +78,7 @@ public partial class MainPage : ContentPage
 	{
 		try
             {
-                string url = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg?u=AxtimTmpOrg_List&code=BQ0000"; // Thay thế URL bằng URL của bạn
+                string url = "http://qcest-2/cvs1/bpm/forms/devformt05/getToken?formKind=1";
                 string response = await GetRequestAsync(url);
                 await DisplayAlert("GET Response", response, "OK");
             }
@@ -92,7 +92,7 @@ public partial class MainPage : ContentPage
 	{
 		try
             {
-                string url = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg?u=AxtimTmpOrg_List&code=BQ0000"; // Thay thế URL bằng URL của bạn
+                string url = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg?u=AxtimTmpOrg_List&code=BQ0000";
                 var data = new { name = "John Doe", age = 30 };
                 string response = await PostRequestAsync(url, data);
                 await DisplayAlert("POST Response", response, "OK");
