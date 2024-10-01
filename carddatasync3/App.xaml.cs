@@ -14,7 +14,8 @@ public partial class App : Application
 		base.OnStart();
 		
 		// 尝试在窗口启动时设置标题
-		if (Application.Current.Windows.Any())
+		var mainWindow = Application.Current.Windows.FirstOrDefault();
+		if (mainWindow != null)
 		{
 			Application.Current.Windows.First().Title = "HCM出勤資料同步工具";
 		}

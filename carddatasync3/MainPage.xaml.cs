@@ -1,129 +1,167 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using System.Net.Http;
+﻿using Microsoft.Maui.Storage;
+using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Microsoft.Maui.Controls;
 
-namespace carddatasync3;
-
-public partial class MainPage : ContentPage
+namespace carddatasync3
 {
-    public MainPage()
+    public partial class MainPage : ContentPage
     {
-        InitializeComponent();
+        private string _backupPath;
+        private string _outFilePath;
 
-		// 示例 XML 数据
-		string xmlData = @"
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>
-		<metadata name=""timer1Min.TrayLocation"" type=""System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"">
-			<value>17, 17</value>
-		</metadata>";
-
-		// 将 XML 数据设置到 Editor 控件中
-		XmlEditor.Text = xmlData;
-    }
-
-    private async void OnfingerprintDTapped(object sender, EventArgs e)
-    {
-        // 在主線程上顯示 Alert，確保跨平台一致性
-        await MainThread.InvokeOnMainThreadAsync(async () =>
+        public MainPage()
         {
-            await DisplayAlert("Button Clicked", "You clicked the button fingerprintD!", "OK");
-        });
-    }
+            InitializeComponent();
+            
+            // Get the path to the Desktop
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            
+            // Define the backup and output paths on the Desktop
+            _backupPath = Path.Combine(desktopPath, "Backup");
+            _outFilePath = Path.Combine(desktopPath, "Output");
+        }
 
-    private async void OnfingerprintUTapped(object sender, EventArgs e)
-    {
-        // 在主線程上顯示 Alert，確保跨平台一致性
-        await MainThread.InvokeOnMainThreadAsync(async () =>
+        // Check and create files
+        private bool CheckAndCreateFile(string filePath, string fileContent)
         {
-            await DisplayAlert("Button Clicked", "You clicked the button fingerprintU!", "OK");
-        });
-    }
-
-    private async void OnDeliveryUploadTapped(object sender, EventArgs e)
-    {
-        // 在主線程上顯示 Alert，確保跨平台一致性
-        await MainThread.InvokeOnMainThreadAsync(async () =>
-        {
-            await DisplayAlert("Button Clicked", "You clicked the button delivery_upload!", "OK");
-        });
-    }
-
-	private async void OnGetRequestButtonClicked(object sender, EventArgs e)
-	{
-		try
+            try
             {
-                string url = "http://qcest-2/cvs1/bpm/forms/devformt05/getToken?formKind=1";
-                string response = await GetRequestAsync(url);
-                await DisplayAlert("GET Response", response, "OK");
+                if (!File.Exists(filePath))
+                {
+                    File.WriteAllText(filePath, fileContent);
+                }
+                return true;
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "OK");
+                OutputEditor.Text += $"Error creating file: {ex.Message}\n";
+                return false;
             }
-	}
+        }
 
-	private async void OnPostRequestButtonClicked(object sender, EventArgs e)
-	{
-		try
+        // Create directories if they don't exist
+        private void CheckAndCreateDirectories()
+        {
+            if (!Directory.Exists(_backupPath))
             {
-                string url = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg?u=AxtimTmpOrg_List&code=BQ0000";
-                var data = new { name = "John Doe", age = 30 };
-                string response = await PostRequestAsync(url, data);
-                await DisplayAlert("POST Response", response, "OK");
+                Directory.CreateDirectory(_backupPath);
+            }
+
+            if (!Directory.Exists(_outFilePath))
+            {
+                Directory.CreateDirectory(_outFilePath);
+            }
+        }
+
+        // Simulate fingerprint upload
+        private async Task SimulateFingerprintUploadAsync()
+        {
+            try
+            {
+                string fingerprintFilePath = Path.Combine(_outFilePath, "FingerOut.txt");
+                string backupFilePath = Path.Combine(_backupPath, $"FingerOut_Backup_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+
+                // Simulate file creation and backup
+                CheckAndCreateFile(fingerprintFilePath, "Simulated Fingerprint Data");
+                File.Copy(fingerprintFilePath, backupFilePath, true);
+
+                OutputEditor.Text += $"Fingerprint data uploaded and backed up at {backupFilePath}\n";
+                await DisplayAlert("Success", "Fingerprint uploaded and backed up!", "OK");
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "OK");
+                OutputEditor.Text += $"Error during fingerprint upload: {ex.Message}\n";
+                await DisplayAlert("Error", $"Failed: {ex.Message}", "OK");
             }
-	}
+        }
 
-	public async Task<string> GetRequestAsync(string url)
-	{
-		using (HttpClient client = new HttpClient())
-		{
-			HttpResponseMessage response = await client.GetAsync(url);
-			response.EnsureSuccessStatusCode();
-			string responseBody = await response.Content.ReadAsStringAsync();
-			return responseBody;
-		}
-	}
+        // Retry card data sync
+        private async Task RetryCardDataSync()
+        {
+            try
+            {
+                string errorDataPath = Path.Combine(_backupPath, "ErroData.txt");
+                if (File.Exists(errorDataPath))
+                {
+                    string[] failedData = File.ReadAllLines(errorDataPath);
+                    foreach (var line in failedData)
+                    {
+                        OutputEditor.Text += $"Retrying card sync for data: {line}\n";
+                    }
+                    File.Delete(errorDataPath);
+                    OutputEditor.Text += $"Card data sync retry successful. Removed {errorDataPath}.\n";
+                }
+                else
+                {
+                    OutputEditor.Text += "No failed card data found for retry.\n";
+                }
 
-	public async Task<string> PostRequestAsync(string url, object data)
-	{
-		using (HttpClient client = new HttpClient())
-		{
-			var json = JsonConvert.SerializeObject(data);
-			var content = new StringContent(json, Encoding.UTF8, "application/json");
-			HttpResponseMessage response = await client.PostAsync(url, content);
-			response.EnsureSuccessStatusCode();
-			string responseBody = await response.Content.ReadAsStringAsync();
-			return responseBody;
-		}
-	}
+                await DisplayAlert("Info", "Card data sync retry completed.", "OK");
+            }
+            catch (Exception ex)
+            {
+                OutputEditor.Text += $"Error during card data sync retry: {ex.Message}\n";
+                await DisplayAlert("Error", $"Failed: {ex.Message}", "OK");
+            }
+        }
+
+        // Simulate the interaction with HCM service
+        private async void OnUploadToHCMClicked(object sender, EventArgs e)
+        {
+            // Simulate threading with Task.Run for a long-running process
+            await Task.Run(() =>
+            {
+                // Log that the upload has started
+                Dispatcher.Dispatch(() => OutputEditor.Text += "Starting upload to HCM...\n");
+
+                // Simulate long-running task (e.g., network request)
+                SimulateHCMUpload();
+
+                // Log that the upload has completed
+                Dispatcher.Dispatch(() => OutputEditor.Text += "Upload to HCM completed.\n");
+            });
+        }
+
+        // Simulate a long-running HCM upload process
+        private void SimulateHCMUpload()
+        {
+            // Simulating some time-consuming task (e.g., network upload)
+            Thread.Sleep(5000); // Simulates a 5-second task
+        }
+
+        // Button click event handlers
+        private async void OnCheckAndCreateFileClicked(object sender, EventArgs e)
+        {
+            CheckAndCreateDirectories();
+
+            var filePath = Path.Combine(_outFilePath, "sync_data.txt");
+            bool success = CheckAndCreateFile(filePath, "Initial sync data.");
+
+            if (success)
+            {
+                OutputEditor.Text += $"File created at {filePath}\n";
+                await DisplayAlert("Success", "File created successfully!", "OK");
+            }
+        }
+
+        private async void OnSimulateFingerprintUploadClicked(object sender, EventArgs e)
+        {
+            await SimulateFingerprintUploadAsync();
+        }
+
+        private async void OnRetryCardDataSyncClicked(object sender, EventArgs e)
+        {
+            await RetryCardDataSync();
+        }
+
+        // Simulate a long-running fingerprint upload process
+        private void SimulateFingerprintUpload()
+        {
+            // Simulating file processing and fingerprint upload
+            Thread.Sleep(3000); // Simulates a 3-second task
+        }
+    }
 }
