@@ -1,48 +1,95 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="carddatasync3.MainPage"
-             Title="Card Data Sync">
+             x:Class="carddatasync3.MainPage">
 
-    <StackLayout Padding="20" Spacing="15">
-        
-        <!-- Header label -->
-        <Label Text="HCM Sync and Fingerprint Operations"
-               FontSize="Large"
-               HorizontalOptions="Center"
-               Margin="0,10,0,10" />
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <!-- HorizontalStackLayout to hold three Entry controls -->
+            <FlexLayout 
+                Direction="Row"
+                Wrap="Wrap"
+                AlignItems="Center"
+                JustifyContent="Center"
+                HorizontalOptions="Start">
+            </FlexLayout>
 
-        <!-- Entry for custom directory path -->
-        <Entry x:Name="DirectoryPathEntry" 
-               Placeholder="Enter custom directory path or leave empty for default" 
-               Margin="0,0,0,20"/>
+            <ScrollView>
+                <Editor x:Name="XmlEditor"
+                        AutoSize="TextChanges"
+                        IsReadOnly="True"
+                        HeightRequest="250"
+                        WidthRequest="900"/>
+            </ScrollView>
 
-        <!-- Buttons for simulating tasks -->
-        <Button Text="Check and Create Files"
-                Clicked="OnCheckAndCreateFileClicked" 
-                Margin="0,5"/>
-        
-        <Button Text="Simulate Fingerprint Upload"
-                Clicked="OnSimulateFingerprintUploadClicked" 
-                Margin="0,5"/>
+            <FlexLayout 
+                Direction="Row"
+                Wrap="Wrap"
+                AlignItems="Center"
+                JustifyContent="Center">
 
-        <Button Text="Retry Card Data Sync"
-                Clicked="OnRetryCardDataSyncClicked"
-                Margin="0,5"/>
+                <!-- First Button (HCM to Fingerprint) -->
+                <VerticalStackLayout>
+                    <Button x:Name="btnHCMToFingerprint"
+                            Text="員工資料匯入指紋機"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Clicked="btn_HCM_to_fingerprint"/>  <!-- Event handler for clicks -->
+                    <Image Source="fingerprint_d.png"
+                           WidthRequest="300"
+                           HeightRequest="100"
+                           Aspect="Center"/>
+                    <Label Text="新進、離職、資源維護(調撥)"
+                           WidthRequest="300"
+                           HeightRequest="50"
+                           FontSize="15"
+                           Margin="0,10,0,0"
+                           VerticalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
 
-        <Button Text="Simulate Upload to HCM"
-                Clicked="OnUploadToHCMClicked"
-                Margin="0,5"/>
+                <!-- Second Button (Upload to HCM) -->
+                <VerticalStackLayout>
+                    <Button x:Name="btnUploadToHCM"
+                            Text="卡鐘與指紋資料上傳"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Clicked="btn_upload_to_HCM"/>  <!-- Event handler for clicks -->
+                    <Image Source="fingerprint_u.png"
+                           WidthRequest="300"
+                           HeightRequest="100"
+                           Aspect="Center"/>
+                    <Label Text="卡鐘內刷卡與指紋資料上傳至HCM"
+                           WidthRequest="300"
+                           HeightRequest="50"
+                           FontSize="15"
+                           Margin="0,10,0,0"
+                           VerticalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
 
-        <!-- Logs the output -->
-        <ScrollView HeightRequest="200"> <!-- Added ScrollView for long logs -->
-            <Editor x:Name="OutputEditor" 
-                    Placeholder="Logs" 
-                    IsReadOnly="True"
-                    VerticalOptions="EndAndExpand" 
-                    AutoSize="TextChanges"
-                    BackgroundColor="LightGray"
-                    Margin="0,20,0,0"/>
-        </ScrollView>
-    </StackLayout>
+                <!-- Third Button (Delivery Upload) -->
+                <VerticalStackLayout>
+                    <Button x:Name="btnDeliveryUpload"
+                            Text="趟次資料上傳"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Clicked="btn_delivery_upload"/>  <!-- Event handler for clicks -->
+                    <Image Source="btn_delivery_upload.png"
+                           WidthRequest="300"
+                           HeightRequest="100"
+                           Aspect="Center"/>
+                    <Label Text="趟次資料傳回後端系統，匯入資料庫"
+                           WidthRequest="300"
+                           HeightRequest="50"
+                           FontSize="15"
+                           Margin="0,10,0,0"
+                           VerticalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
+
+            </FlexLayout>
+            
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>
