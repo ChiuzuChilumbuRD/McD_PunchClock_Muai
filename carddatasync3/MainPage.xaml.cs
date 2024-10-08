@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Dispatching;
+using System.Text.Json;
 
 namespace carddatasync3
 {
@@ -23,16 +24,182 @@ namespace carddatasync3
         {
             InitializeComponent();
         }
+
+		#region banner Org code
+		private void OnOrgTextChanged(object sender, TextChangedEventArgs e)
+        {
+            // 更新 Label 的文字為 Entry 中的文字
+            outputOrg.Text = e.NewTextValue; // 使用新文字值更新 Label
+        }
+		#endregion
         
         #region delivery button
+        public class ComparisonResult
+        {
+            public string Key { get; set; }
+            public string Result { get; set; }
+            public string Failure { get; set; }
+        }
+
+        private async void Punch_Data_Changing_rule2(object sender, EventArgs e)
+        {
+            try
+            {
+                // 使用絕對路徑來讀取 JSON 檔案
+                var fileHCMPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\HCM_fingerprint.json"; 
+                var filePunchClockPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\PunchClock_fingerprint.json"; 
+
+                // 讀取檔案內容
+                var fileHCMContent = await File.ReadAllTextAsync(fileHCMPath);
+                var filePunchClockContent = await File.ReadAllTextAsync(filePunchClockPath);
+
+                // 解析 JSON 檔案，轉換為 List<Dictionary<string, string>>
+                var fileHCMData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(fileHCMContent);
+                var filePunchClockData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(filePunchClockContent);
+
+                // 比較兩個檔案的資料
+                var comparisonResults = new List<List<bool>>();
+
+                // 檢查 HCM 資料，並對應 PunchClock 資料
+                for (int i = 0; i < fileHCMData.Count; i++)
+                {
+                    var empHCM = fileHCMData[i];
+                    var empPunchClock = filePunchClockData.FirstOrDefault(e => e["empNo"] == empHCM["empNo"]); // PunchClock中找到對應員工資料
+
+                    // 初始化比較結果陣列
+                    List<bool> comparison = new List<bool>(); // 假設 HCM 中的所有欄位都需要比較
+
+                    if (empPunchClock != null)
+                    {
+                        // 比較每個欄位
+                        for (int j = 0; j < empHCM.Keys.Count; j++)
+                        {
+                            var key = empHCM.Keys.ElementAt(j); // 取得當前欄位的鍵
+                            if (key != "empNo" && key != "displayName" && key != "addFlag") // 忽略 empNo 欄位的比較
+                            {
+                                // 比較值並將結果存入 comparison 陣列
+                                comparison.Add(empPunchClock[key] == empHCM[key]);
+                            }
+                        }
+                        comparisonResults.Add(comparison);
+                    }
+                }
+
+                // 將比較結果轉換為 JSON 字串
+                var comparisonResultJson = JsonSerializer.Serialize(comparisonResults, new JsonSerializerOptions { WriteIndented = true });
+
+                // 將 comparisonResults 轉換為可讀字符串
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < comparisonResults.Count; i++)
+                {
+                    stringBuilder.AppendLine($"{string.Join("", comparisonResults[i].Select(result => result ? "0" : "1"))}");
+                }
+
+                await DisplayAlert("JSON Data Comparison Results", stringBuilder.ToString(), "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Failed to read files: {ex.Message}", "OK");
+            }
+        }
+
         private async void btn_delivery_upload(object sender, EventArgs e)
         {
-            // 在主線程上顯示 Alert，確保跨平台一致性
-            await MainThread.InvokeOnMainThreadAsync(async () =>
+            try
             {
-                await DisplayAlert("Button Clicked", "You clicked the button delivery_upload!", "OK");
-            });
+                // 使用絕對路徑來讀取 JSON 檔案
+                var fileHCMPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\HCM.json"; 
+                var filePunchClockPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\PunchClock.json"; 
+
+                // 讀取檔案內容
+                var fileHCMContent = await File.ReadAllTextAsync(fileHCMPath);
+                var filePunchClockContent = await File.ReadAllTextAsync(filePunchClockPath);
+
+                // 解析 JSON 檔案，轉換為 List<Dictionary<string, string>>
+                var fileHCMData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(fileHCMContent);
+                var filePunchClockData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(filePunchClockContent);
+
+                // 比較兩個檔案的資料
+                var comparisonResults = new List<ComparisonResult>();
+
+                // 檢查 HCM 資料，並對應 PunchClock 資料
+                for (int i = 0; i < fileHCMData.Count; i++)
+                {
+                    var empHCM = fileHCMData[i];
+                    var empPunchClock = filePunchClockData.FirstOrDefault(e => e["empNo"] == empHCM["empNo"]); // PunchClock中找到對應員工資料
+
+                    // 1. 當 HCM 找得到資料，且 addFlag == "D"，但 PunchClock 找不到該筆資料，result="不變"
+                    if (empHCM["addFlag"] == "D" && empPunchClock == null)
+                    {
+                        comparisonResults.Add(new ComparisonResult
+                        {
+                            Key = empHCM["empNo"],
+                            Result = "True",
+                            Failure = "case1: no change"
+                        });
+                    }
+                    // 2. 當 HCM 找得到資料，且 addFlag == "D"，且 PunchClock 找得到該筆資料，result="卡鐘刪除"
+                    else if (empHCM["addFlag"] == "D" && empPunchClock != null)
+                    {
+                        comparisonResults.Add(new ComparisonResult
+                        {
+                            Key = empHCM["empNo"],
+                            Result = "False",
+                            Failure = "case2: PunchClock Deleted"
+                        });
+
+                        // 從 PunchClock 資料中刪除該筆資料
+                        filePunchClockData.Remove(empPunchClock);
+                    }
+                    // 5. 當 HCM 找得到資料，且 addFlag == "A"，但 PunchClock 找不到該筆資料，result="卡鐘增加"
+                    else if (empHCM["addFlag"] == "A" && empPunchClock == null)
+                    {
+                        comparisonResults.Add(new ComparisonResult
+                        {
+                            Key = empHCM["empNo"],
+                            Result = "False",
+                            Failure = "case5: PunchClock Added"
+                        });
+                    }
+                }
+
+                // 繼續檢查 PunchClock 資料中的項目，看看 HCM 是否有對應資料
+                for (int i = 0; i < filePunchClockData.Count; i++)
+                {
+                    var empPunchClock = filePunchClockData[i];
+                    var empHCM = fileHCMData.FirstOrDefault(e => e["empNo"] == empPunchClock["empNo"]); // HCM中找到對應員工資料
+
+                    // 3. 當 HCM 找不到資料，但 PunchClock 找得到該筆資料，result="卡鐘刪除"
+                    if (empHCM == null)
+                    {
+                        comparisonResults.Add(new ComparisonResult
+                        {
+                            Key = empPunchClock["empNo"],
+                            Result = "False",
+                            Failure = "case3: PunchClock Deleted"
+                        });
+
+                        // 從 PunchClock 資料中刪除該筆資料
+                        filePunchClockData.Remove(empPunchClock);
+                    }
+                }
+
+                // 將比較結果轉換為 JSON 字串
+                var comparisonResultJson = JsonSerializer.Serialize(comparisonResults, new JsonSerializerOptions { WriteIndented = true });
+
+                // 顯示比較結果在同一個 Alert
+                await DisplayAlert("JSON Data Comparison Results", comparisonResultJson, "OK");
+
+                // 將 PunchClock 資料寫回到原始檔案中（更新刪除後的資料）
+                var updatedPunchClockContent = JsonSerializer.Serialize(filePunchClockData, new JsonSerializerOptions { WriteIndented = true });
+                await File.WriteAllTextAsync(filePunchClockPath, updatedPunchClockContent);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Failed to read files: {ex.Message}", "OK");
+            }
         }
+
         #endregion
 
         #region download from hcm
@@ -353,9 +520,46 @@ namespace carddatasync3
 
         private void set_btns_state(bool state)
         {
-            btnHCMToFingerprint.IsEnabled = state;  
-            btnUploadToHCM.IsEnabled = state;  
-            btnDeliveryUpload.IsEnabled = state; 
+			// 禁用 ContentView 的點擊
+			contentViewHCMToFingerprint.IsEnabled = state;  
+            contentViewUploadToHCM.IsEnabled = state;  
+            contentViewDeliveryUpload.IsEnabled = state; 
+
+			// 根據 state 添加或移除 GestureRecognizer
+			if (state)
+			{
+				// 如果啟用，添加 TapGestureRecognizer
+				if (contentViewHCMToFingerprint.GestureRecognizers.Count == 0)
+				{
+					TapGestureRecognizer tapGesture = new TapGestureRecognizer();
+					tapGesture.Tapped += btn_HCM_to_fingerprint;
+					contentViewHCMToFingerprint.GestureRecognizers.Add(tapGesture);
+				}
+				if (contentViewUploadToHCM.GestureRecognizers.Count == 0)
+				{
+					TapGestureRecognizer tapGesture = new TapGestureRecognizer();
+					tapGesture.Tapped += btn_upload_to_HCM;
+					contentViewUploadToHCM.GestureRecognizers.Add(tapGesture);
+				}
+				if (contentViewDeliveryUpload.GestureRecognizers.Count == 0)
+				{
+					TapGestureRecognizer tapGesture = new TapGestureRecognizer();
+					tapGesture.Tapped += btn_delivery_upload;
+					contentViewDeliveryUpload.GestureRecognizers.Add(tapGesture);
+				}
+			}
+			else
+			{
+				// 如果禁用，移除 TapGestureRecognizer
+				contentViewHCMToFingerprint.GestureRecognizers.Clear();
+				contentViewUploadToHCM.GestureRecognizers.Clear();
+				contentViewDeliveryUpload.GestureRecognizers.Clear();
+			}
+
+			// 根據狀態改變 ContentView 的外觀（可選）
+			contentViewUploadToHCM.Opacity = state ? 1 : 0.5;
+			contentViewUploadToHCM.Opacity = state ? 1 : 0.5;
+			contentViewDeliveryUpload.Opacity = state ? 1 : 0.5;
         }
 
     }

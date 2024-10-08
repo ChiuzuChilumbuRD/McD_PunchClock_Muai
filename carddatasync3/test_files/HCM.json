@@ -1,0 +1,27 @@
+[
+    {
+        "empNo": "A123456",
+        "displayName": "王小明",
+        "finger1": "1234567890",
+        "finger2": "0987654321",
+        "cardNo": "1122334455",
+        "addFlag": "D"
+    },
+    {
+        "empNo": "A123457",
+        "displayName": "李四",
+        "finger1": "2345678901",
+        "finger2": "1098765532",
+        "cardNo": "2233445566",
+        "addFlag": "D"
+    },
+    
+    {
+        "empNo": "A123459",
+        "displayName": "劉德華",
+        "finger1": "4567890123",
+        "finger2": "3210987654",
+        "cardNo": "4455667788",
+        "addFlag": "D"
+    }
+]

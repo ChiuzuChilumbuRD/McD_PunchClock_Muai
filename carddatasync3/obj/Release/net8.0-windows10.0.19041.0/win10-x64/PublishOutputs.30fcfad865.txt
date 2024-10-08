@@ -479,7 +479,6 @@ C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Re
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Text.Encoding.Extensions.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Text.Encoding.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Text.Encodings.Web.dll
-C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Text.Json.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Text.RegularExpressions.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Threading.Channels.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Threading.Overlapped.dll
@@ -546,6 +545,7 @@ C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Re
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Newtonsoft.Json.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Speech.dll
+C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Text.Json.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\carddatasync3.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Windows.SDK.NET.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\WinRT.Runtime.dll
