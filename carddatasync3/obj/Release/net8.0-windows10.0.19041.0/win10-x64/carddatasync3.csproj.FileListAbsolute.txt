@@ -1963,3 +1963,10 @@ C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bi
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.UI.Xaml.Controls.pri
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\mscordaccore_amd64_amd64_8.0.824.36612.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\appsettings.json
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Configuration.Binder.dll

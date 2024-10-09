@@ -61,6 +61,7 @@ C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bi
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\dotnet_bot.scale-400.png
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\fingerprint_d.scale-100.png
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\fingerprint_u.scale-100.png
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\appsettings.json
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\CoreMessagingXP.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\dcompi.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\dwmcorei.dll
@@ -514,8 +515,14 @@ C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bi
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\CommunityToolkit.Maui.Core.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Configuration.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Configuration.Json.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Logging.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Logging.Debug.dll

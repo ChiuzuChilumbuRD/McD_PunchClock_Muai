@@ -38,11 +38,11 @@
             "targetAlias": "net8.0-android",
             "projectReferences": {}
           },
-          "net8.0-ios17.5": {
+          "net8.0-ios18.0": {
             "targetAlias": "net8.0-ios",
             "projectReferences": {}
           },
-          "net8.0-maccatalyst17.5": {
+          "net8.0-maccatalyst18.0": {
             "targetAlias": "net8.0-maccatalyst",
             "projectReferences": {}
           },
@@ -69,6 +69,14 @@
             "CommunityToolkit.Maui": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -114,12 +122,20 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         },
-        "net8.0-ios17.5": {
+        "net8.0-ios18.0": {
           "targetAlias": "net8.0-ios",
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -165,12 +181,20 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         },
-        "net8.0-maccatalyst17.5": {
+        "net8.0-maccatalyst18.0": {
           "targetAlias": "net8.0-maccatalyst",
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -223,6 +247,14 @@
             "CommunityToolkit.Maui": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
