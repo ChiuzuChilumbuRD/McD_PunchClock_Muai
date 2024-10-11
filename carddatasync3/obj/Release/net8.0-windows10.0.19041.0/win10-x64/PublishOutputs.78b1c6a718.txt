@@ -553,6 +553,8 @@ C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bi
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Windows.Widgets.Projection.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Newtonsoft.Json.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Serilog.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Serilog.Sinks.Console.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\System.Speech.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\carddatasync3.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Windows.SDK.NET.dll

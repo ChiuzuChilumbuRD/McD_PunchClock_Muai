@@ -1970,3 +1970,5 @@ C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bi
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\appsettings.json
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Serilog.dll
+C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Serilog.Sinks.Console.dll

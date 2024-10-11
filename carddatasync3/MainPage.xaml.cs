@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using Serilog;
 using System.Text;
 using System.Threading;
 using Microsoft.Maui.Controls;
@@ -14,16 +15,240 @@ namespace carddatasync3
         // Lock to prevent concurrent UI operations
         private static SpinLock ui_sp = new SpinLock();
         private static string str_current_task = string.Empty;
-        private static string pglocation = "your_pgfingerlocation_path"; // Set these paths manually
-        private static string _gOutFilePath = "your_fileOutPath";
-        private static string _gBackUpPath = "your_BackUpPath";
+        private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        private static string _gOutFilePath = Path.Combine(desktopPath, "FingerData");
+        private static string _gBackUpPath = Path.Combine(desktopPath, "HCMBackUp");
+        private static string pglocation = Path.Combine(desktopPath, "PGFinger.exe");
+
         private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
+
 
 
         public MainPage()
         {
+            // Initialize Serilog (this can also be done in the program's entry point)
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            Log.Information("App starting...");
+            
             InitializeComponent();
+
+            // Call initialization sequence
+            InitializeApp();
         }
+
+        #region Initialisation
+
+        private void InitializeApp()
+        {
+            AppendTextToEditor("App initialization started.");
+
+            // Step 1: Load appsettings.json content
+            LoadAppSettings();
+
+            // Step 2: Check if file exists and execute if found
+            if (!CheckAndExecuteFile(this))
+            {
+                AppendTextToEditor("Required file not found. Closing application.");
+                return;
+            }
+
+
+            // Step 3: Check internet connection
+            if (!IsInternetAvailable())
+            {
+                AppendTextToEditor("No internet connection. Closing application.");
+                return;
+            }
+
+            // Step 4: Ping server IP address
+            if (!PingServer("192.168.1.1")) // Example IP, replace with the actual one
+            {
+                AppendTextToEditor("Unable to reach the server. Closing application.");
+                return;
+            }
+
+            AppendTextToEditor("App initialization completed.");
+        }
+
+        #endregion
+
+        #region Placeholder Functions
+
+        private void LoadAppSettings()
+        {
+            AppendTextToEditor("Loading appsettings.json...");
+            // TODO: Add logic to load and parse appsettings.json
+        }
+
+        private bool CheckAndExecuteFile(MainPage page)
+        {
+            string date = "";
+            bool blResult = true;
+            var content = new List<string>();
+
+            if (blResult)
+            {
+                blResult = page.ensureFilePathExists();
+                if (!blResult)
+                {
+                    page.show_err("The folder for storing PGFinger data does not exist.");
+                    return false;
+                }
+            }
+
+            if (blResult)
+            {
+                blResult = page.validatePGFingerExe();
+                if (!blResult)
+                {
+                    page.show_err("PGFinger.exe does not exist.");
+                    return false;
+                }
+            }
+
+            if (blResult)
+            {
+                if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
+                {
+                    try
+                    {
+                        File.Delete(_gOutFilePath + @"\FingerOut.txt");
+                    }
+                    catch
+                    {
+                        page.show_err("Cannot delete FingerOut.txt file.");
+                        blResult = false;
+                    }
+                }
+            }
+
+            // Call the PGFinger.exe process
+            if (blResult)
+            {
+                date = DateTime.Now.ToString("yyyy-MM-dd");
+                try
+                {
+                    page.show_info("Reading fingerprint data from the machine...");
+                    Process.Start(pglocation + @"1 " + _gOutFilePath + @"\FingerOut.txt");
+
+                    wait_for_devicecontrol_complete();
+                    page.show_info("Fingerprint data read completed.");
+                }
+                catch (Exception ex)
+                {
+                    page.show_err("Error running PGFinger.exe: " + ex.Message);
+                    return false;
+                }
+
+                int counter = 0;
+                while (!File.Exists(_gOutFilePath + @"\FingerOut.txt"))
+                {
+                    Thread.Sleep(1000);
+                    counter++;
+                    if (counter > 20)
+                    {
+                        page.show_err("FingerOut.txt not generated. Please check the system.");
+                        return false;
+                    }
+                }
+            }
+
+
+            // Process the fingerprint data
+            if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
+            {
+                try
+                {
+                    using (var sr = new StreamReader(_gOutFilePath + @"\FingerOut.txt"))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            if (line.Trim().Length > 0)
+                                content.Add(line);
+                        }
+                    }
+
+                    if (content.Count <= 0)
+                    {
+                        page.show_err("FingerOut.txt is empty.");
+                        return false;
+                    }
+
+                    // Backup the file
+                    page.getFilePath1(date);
+                    File.Copy(_gOutFilePath + @"\FingerOut.txt", _gBackUpPath + @"\FingerprintData" + date.Replace("-", "") + ".txt", true);
+
+                    // Simulate updating the card number and employee data
+                    int successCount = content.Count;
+                    page.show_info($"{successCount} fingerprint records uploaded to HCM.");
+
+                }
+                catch (Exception ex)
+                {
+                    page.show_err("Error processing FingerOut.txt: " + ex.Message);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+        // Utility functions in MainPage class
+        public bool ensureFilePathExists()
+        {
+            if (!Directory.Exists(_gOutFilePath))
+            {
+                Directory.CreateDirectory(_gOutFilePath);
+            }
+            return true;
+        }
+
+        public bool validatePGFingerExe()
+        {
+            return File.Exists(pglocation + @"\PGFinger.exe");
+        }
+
+
+
+        private bool IsInternetAvailable()
+        {
+            AppendTextToEditor("Checking internet connection...");
+            // TODO: Add logic to check for internet availability
+            return true; // Return true if internet is available, false otherwise
+        }
+
+        private bool PingServer(string ipAddress)
+        {
+            AppendTextToEditor($"Pinging server at {ipAddress}...");
+            // TODO: Add logic to ping the server
+            return true; // Return true if the server is reachable, false otherwise
+        }
+
+        private void DisplayErrorMessage(string message)
+        {
+            AppendTextToEditor(message);
+            Log.Error(message);
+            DisplayAlert("Error", message, "OK");
+        }
+
+        #endregion
+
+
+        // Helper function to append text to XmlEditor
+        private void AppendTextToEditor(string text)
+        {
+            if (XmlEditor != null)
+            {
+                XmlEditor.Text += $"{text}\n"; // Append the text line by line
+            }
+        }
+
 
 		#region banner Org code
         private void OnOrgTextChanged(object sender, TextChangedEventArgs e)
@@ -308,10 +533,6 @@ namespace carddatasync3
         {
             // Disable buttons while the task is running
             set_btns_state(false);
-
-            // Start a new thread to handle the upload process
-            var work_thread = new Thread(upload_to_HCM_thread);
-            work_thread.Start(this);
 
             await DisplayAlert("Upload Started", "Uploading fingerprint data to HCM...", "OK");
 
