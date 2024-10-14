@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using Serilog;
 using System.Text;
-using System.Threading;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Dispatching;
+using System.Net.NetworkInformation;
 using System.Text.Json;
 
 namespace carddatasync3
@@ -18,10 +14,6 @@ namespace carddatasync3
         private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private static string _gOutFilePath = Path.Combine(desktopPath, "FingerData");
         private static string _gBackUpPath = Path.Combine(desktopPath, "HCMBackUp");
-        // private static string _testPath = @"C:\Users\reena.tsai\source\repos\PGFinger\PGFinger\bin\Debug\net8.0";
-        // private static string pglocation = Path.Combine(desktopPath, "PGFinger.exe");
-        // private static string pglocation = Path.Combine(desktopPath, "PGFinger");
-        // private static FileInfo fileInfo = new FileInfo(desktopPath + @"\PGFinger.exe");
 
         private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
 
@@ -51,18 +43,12 @@ namespace carddatasync3
             LoadAppSettings();
 
             // Step 2: Check if file exists and execute if found
-            if (!CheckAndExecuteFile(this))
-            {
-                // AppendTextToEditor($"Checking file path: {pglocation}");
-                // AppendTextToEditor($"Checking directory path: {desktopPath}");
-                // AppendTextToEditor(Directory.Exists(desktopPath).ToString());
-                // var fileInfo = new FileInfo(desktopPath + @"\PGFinger.exe");
-                // AppendTextToEditor($"File exists: {fileInfo.Exists.ToString()}");
-                // AppendTextToEditor($"File is read-only: {fileInfo.IsReadOnly.ToString()}");
-                // AppendTextToEditor($"File length: {fileInfo.Length.ToString()} bytes");
-                AppendTextToEditor("Required file not found. Closing application.");
-                return;
-            }
+            // if (!CheckAndExecuteFile(this))
+            // {
+
+            //     AppendTextToEditor("Required file not found. Closing application.");
+            //     return;
+            // }
 
 
             // Step 3: Check internet connection
@@ -73,7 +59,7 @@ namespace carddatasync3
             }
 
             // Step 4: Ping server IP address
-            if (!PingServer("192.168.1.1")) // Example IP, replace with the actual one
+            if (!PingServer("8.8.8.8")) // Example IP, replace with the actual one
             {
                 AppendTextToEditor("Unable to reach the server. Closing application.");
                 return;
@@ -90,6 +76,27 @@ namespace carddatasync3
         {
             AppendTextToEditor("Loading appsettings.json...");
             // TODO: Add logic to load and parse appsettings.json
+            string appSettingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
+
+            // 檢查檔案是否存在
+            if (File.Exists(appSettingsPath))
+            {
+                try
+                {
+                    // 讀取檔案內容
+                    string jsonContent = File.ReadAllText(appSettingsPath);
+                    AppendTextToEditor(jsonContent); // 將 JSON 內容顯示在 TextEditor
+                }
+                catch (Exception ex)
+                {
+                    // 處理讀取檔案時的異常
+                    AppendTextToEditor("Error reading appsettings.json: " + ex.Message);
+                }
+            }
+            else
+            {
+                AppendTextToEditor("appsettings.json not found.");
+            }
         }
 
         private bool CheckAndExecuteFile(MainPage page)
@@ -230,16 +237,61 @@ namespace carddatasync3
         private bool IsInternetAvailable()
         {
             AppendTextToEditor("Checking internet connection...");
-            // TODO: Add logic to check for internet availability
-            return true; // Return true if internet is available, false otherwise
+
+            var current = Connectivity.Current.NetworkAccess;
+            var profiles = Connectivity.Current.ConnectionProfiles;
+
+            // Check if the device is connected to the internet via WiFi or other profiles
+            bool isConnected = current == NetworkAccess.Internet;
+
+            if (isConnected)
+            {
+                AppendTextToEditor("Internet connection is available.");
+                return true;
+            }
+            else
+            {
+                AppendTextToEditor("No internet connection available.");
+                return false;
+            }
         }
+
+
 
         private bool PingServer(string ipAddress)
         {
             AppendTextToEditor($"Pinging server at {ipAddress}...");
-            // TODO: Add logic to ping the server
-            return true; // Return true if the server is reachable, false otherwise
+
+            try
+            {
+                using (Ping ping = new Ping())
+                {
+                    PingReply reply = ping.Send(ipAddress);
+
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        AppendTextToEditor($"Server at {ipAddress} is reachable. Response time: {reply.RoundtripTime} ms");
+                        return true;
+                    }
+                    else
+                    {
+                        AppendTextToEditor($"Failed to reach server at {ipAddress}. Status: {reply.Status}");
+                        return false;
+                    }
+                }
+            }
+            catch (PingException ex)
+            {
+                AppendTextToEditor($"Ping failed: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                AppendTextToEditor($"Unexpected error: {ex.Message}");
+                return false;
+            }
         }
+
 
         private void DisplayErrorMessage(string message)
         {
@@ -284,8 +336,8 @@ namespace carddatasync3
             try
             {
                 // 使用絕對路徑來讀取 JSON 檔案
-                var fileHCMPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\HCM_fingerprint.json"; 
-                var filePunchClockPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\PunchClock_fingerprint.json"; 
+                var fileHCMPath = Path.Combine(Environment.CurrentDirectory, @"\test_files\appsettings.json");
+                var filePunchClockPath = Path.Combine(Environment.CurrentDirectory, @"\test_files\PunchClock_fingerprint.json");
 
                 // 讀取檔案內容
                 var fileHCMContent = await File.ReadAllTextAsync(fileHCMPath);
