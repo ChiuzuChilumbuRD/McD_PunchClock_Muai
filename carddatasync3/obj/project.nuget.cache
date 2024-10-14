@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Q1/6el/lqPQ=",
+  "dgSpecHash": "7VMKLsDvH8Y=",
   "success": true,
   "projectFilePath": "C:\\Users\\reena.tsai\\Documents\\maui-guru\\McD_PunchClock_Muai\\carddatasync3\\carddatasync3.csproj",
   "expectedPackageFiles": [
@@ -125,11 +125,14 @@
     "C:\\Users\\reena.tsai\\.nuget\\packages\\xamarin.kotlin.stdlib.jdk8\\1.9.0.1\\xamarin.kotlin.stdlib.jdk8.1.9.0.1.nupkg.sha512",
     "C:\\Users\\reena.tsai\\.nuget\\packages\\xamarin.kotlinx.coroutines.android\\1.7.2.1\\xamarin.kotlinx.coroutines.android.1.7.2.1.nupkg.sha512",
     "C:\\Users\\reena.tsai\\.nuget\\packages\\xamarin.kotlinx.coroutines.core.jvm\\1.7.2.1\\xamarin.kotlinx.coroutines.core.jvm.1.7.2.1.nupkg.sha512",
-    "C:\\Users\\reena.tsai\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.6\\microsoft.netcore.app.runtime.win-x64.8.0.6.nupkg.sha512",
-    "C:\\Users\\reena.tsai\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.6\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.6.nupkg.sha512",
-    "C:\\Users\\reena.tsai\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.6\\microsoft.aspnetcore.app.runtime.win-x64.8.0.6.nupkg.sha512",
-    "C:\\Users\\reena.tsai\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\8.0.6\\microsoft.netcore.app.crossgen2.win-x64.8.0.6.nupkg.sha512",
     "C:\\Users\\reena.tsai\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.31\\microsoft.windows.sdk.net.ref.10.0.19041.31.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\reena.tsai\\Documents\\maui-guru\\McD_PunchClock_Muai\\carddatasync3\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
