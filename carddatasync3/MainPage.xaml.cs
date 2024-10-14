@@ -18,11 +18,12 @@ namespace carddatasync3
         private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private static string _gOutFilePath = Path.Combine(desktopPath, "FingerData");
         private static string _gBackUpPath = Path.Combine(desktopPath, "HCMBackUp");
-        private static string pglocation = Path.Combine(desktopPath, "PGFinger.exe");
+        // private static string _testPath = @"C:\Users\reena.tsai\source\repos\PGFinger\PGFinger\bin\Debug\net8.0";
+        // private static string pglocation = Path.Combine(desktopPath, "PGFinger.exe");
+        // private static string pglocation = Path.Combine(desktopPath, "PGFinger");
+        // private static FileInfo fileInfo = new FileInfo(desktopPath + @"\PGFinger.exe");
 
         private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
-
-
 
         public MainPage()
         {
@@ -52,6 +53,13 @@ namespace carddatasync3
             // Step 2: Check if file exists and execute if found
             if (!CheckAndExecuteFile(this))
             {
+                // AppendTextToEditor($"Checking file path: {pglocation}");
+                // AppendTextToEditor($"Checking directory path: {desktopPath}");
+                // AppendTextToEditor(Directory.Exists(desktopPath).ToString());
+                // var fileInfo = new FileInfo(desktopPath + @"\PGFinger.exe");
+                // AppendTextToEditor($"File exists: {fileInfo.Exists.ToString()}");
+                // AppendTextToEditor($"File is read-only: {fileInfo.IsReadOnly.ToString()}");
+                // AppendTextToEditor($"File length: {fileInfo.Length.ToString()} bytes");
                 AppendTextToEditor("Required file not found. Closing application.");
                 return;
             }
@@ -95,7 +103,7 @@ namespace carddatasync3
                 blResult = page.ensureFilePathExists();
                 if (!blResult)
                 {
-                    page.show_err("The folder for storing PGFinger data does not exist.");
+                    AppendTextToEditor("The folder for storing PGFinger data does not exist.");
                     return false;
                 }
             }
@@ -105,7 +113,7 @@ namespace carddatasync3
                 blResult = page.validatePGFingerExe();
                 if (!blResult)
                 {
-                    page.show_err("PGFinger.exe does not exist.");
+                    AppendTextToEditor("PGFinger.exe does not exist.");
                     return false;
                 }
             }
@@ -124,23 +132,25 @@ namespace carddatasync3
                         blResult = false;
                     }
                 }
+                // AppendTextToEditor("Pass validatePGFingerExe");
             }
 
             // Call the PGFinger.exe process
             if (blResult)
             {
+                // AppendTextToEditor("Call the PGFinger.exe process");
                 date = DateTime.Now.ToString("yyyy-MM-dd");
                 try
                 {
-                    page.show_info("Reading fingerprint data from the machine...");
-                    Process.Start(pglocation + @"1 " + _gOutFilePath + @"\FingerOut.txt");
+                    AppendTextToEditor("Reading fingerprint data from the machine...");
+                    Process.Start(desktopPath + @"\PGFinger.exe");
 
                     wait_for_devicecontrol_complete();
-                    page.show_info("Fingerprint data read completed.");
+                    AppendTextToEditor("Fingerprint data read completed.");
                 }
                 catch (Exception ex)
                 {
-                    page.show_err("Error running PGFinger.exe: " + ex.Message);
+                    AppendTextToEditor("Error running PGFinger.exe: " + ex.Message);
                     return false;
                 }
 
@@ -151,7 +161,7 @@ namespace carddatasync3
                     counter++;
                     if (counter > 20)
                     {
-                        page.show_err("FingerOut.txt not generated. Please check the system.");
+                        AppendTextToEditor("FingerOut.txt not generated. Please check the system.");
                         return false;
                     }
                 }
@@ -175,7 +185,7 @@ namespace carddatasync3
 
                     if (content.Count <= 0)
                     {
-                        page.show_err("FingerOut.txt is empty.");
+                        AppendTextToEditor("FingerOut.txt is empty.");
                         return false;
                     }
 
@@ -185,12 +195,12 @@ namespace carddatasync3
 
                     // Simulate updating the card number and employee data
                     int successCount = content.Count;
-                    page.show_info($"{successCount} fingerprint records uploaded to HCM.");
+                    AppendTextToEditor($"{successCount} fingerprint records uploaded to HCM.");
 
                 }
                 catch (Exception ex)
                 {
-                    page.show_err("Error processing FingerOut.txt: " + ex.Message);
+                    AppendTextToEditor("Error processing FingerOut.txt: " + ex.Message);
                     return false;
                 }
             }
@@ -211,7 +221,8 @@ namespace carddatasync3
 
         public bool validatePGFingerExe()
         {
-            return File.Exists(pglocation + @"\PGFinger.exe");
+            // AppendTextToEditor(File.Exists(pglocation + @"\PGFinger.exe").ToString());
+            return File.Exists(desktopPath + @"\PGFinger.exe");
         }
 
 
