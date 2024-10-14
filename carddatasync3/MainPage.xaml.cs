@@ -4,9 +4,9 @@ using System.IO;
 using Serilog;
 using System.Text;
 using System.Threading;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Dispatching;
+using Microsoft.Maui.Networking;
 using System.Text.Json;
+using System.Net.NetworkInformation;
 
 namespace carddatasync3
 {
@@ -50,11 +50,11 @@ namespace carddatasync3
             LoadAppSettings();
 
             // Step 2: Check if file exists and execute if found
-            if (!CheckAndExecuteFile(this))
-            {
-                AppendTextToEditor("Required file not found. Closing application.");
-                return;
-            }
+            // if (!CheckAndExecuteFile(this))
+            // {
+            //     AppendTextToEditor("Required file not found. Closing application.");
+            //     return;
+            // }
 
 
             // Step 3: Check internet connection
@@ -65,7 +65,7 @@ namespace carddatasync3
             }
 
             // Step 4: Ping server IP address
-            if (!PingServer("192.168.1.1")) // Example IP, replace with the actual one
+            if (!PingServer("8.8.8.8")) // Example IP, replace with the actual one
             {
                 AppendTextToEditor("Unable to reach the server. Closing application.");
                 return;
@@ -219,22 +219,58 @@ namespace carddatasync3
         private bool IsInternetAvailable()
         {
             AppendTextToEditor("Checking internet connection...");
-            // TODO: Add logic to check for internet availability
-            return true; // Return true if internet is available, false otherwise
+
+            var current = Connectivity.Current.NetworkAccess;
+            var profiles = Connectivity.Current.ConnectionProfiles;
+
+            // Check if the device is connected to the internet via WiFi or other profiles
+            bool isConnected = current == NetworkAccess.Internet;
+
+            if (isConnected)
+            {
+                AppendTextToEditor("Internet connection is available.");
+                return true;
+            }
+            else
+            {
+                AppendTextToEditor("No internet connection available.");
+                return false;
+            }
         }
+
 
         private bool PingServer(string ipAddress)
         {
             AppendTextToEditor($"Pinging server at {ipAddress}...");
-            // TODO: Add logic to ping the server
-            return true; // Return true if the server is reachable, false otherwise
-        }
 
-        private void DisplayErrorMessage(string message)
-        {
-            AppendTextToEditor(message);
-            Log.Error(message);
-            DisplayAlert("Error", message, "OK");
+            try
+            {
+                using (Ping ping = new Ping())
+                {
+                    PingReply reply = ping.Send(ipAddress);
+
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        AppendTextToEditor($"Server at {ipAddress} is reachable. Response time: {reply.RoundtripTime} ms");
+                        return true;
+                    }
+                    else
+                    {
+                        AppendTextToEditor($"Failed to reach server at {ipAddress}. Status: {reply.Status}");
+                        return false;
+                    }
+                }
+            }
+            catch (PingException ex)
+            {
+                AppendTextToEditor($"Ping failed: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                AppendTextToEditor($"Unexpected error: {ex.Message}");
+                return false;
+            }
         }
 
         #endregion
