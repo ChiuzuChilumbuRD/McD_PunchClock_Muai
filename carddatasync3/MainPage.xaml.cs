@@ -13,8 +13,9 @@ namespace carddatasync3
     public partial class MainPage : ContentPage
     {
         private string str_log_level = "debug"; //TODO: Need to change after program release.
+        static string _gAPPath = AppContext.BaseDirectory;
 
-        static string _gAPPath = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..");   //取得程式執行目錄 (與 .csproj 同層)
+        // static string _gAPPath = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..");   //取得程式執行目錄 (與 .csproj 同層)
         protected static string databaseKey = "GAIA.EHR";
         protected static string downloaction;
         protected static string pglocation;
@@ -40,12 +41,9 @@ namespace carddatasync3
         // Lock to prevent concurrent UI operations
         private static SpinLock ui_sp = new SpinLock();
         private static string str_current_task = string.Empty;
-        
-        private static string str_key_file = Path.Combine(_gAPPath, "key.dat");
-        private static string str_conn_file = Path.Combine(_gAPPath, "conn_data_transfer.dat");
         private bool is_init_completed = true;
         // private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        public static NameValueCollection AppSettings { get; private set; }       
+        public static NameValueCollection AppSettings { get; private set; }      
 
         private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
 
@@ -87,6 +85,8 @@ namespace carddatasync3
 
             // ======================== Step.3 確認資料夾是否存在 Check Folder Exist or Not ====================
             // 讀取並執行桌面上的 PGFinger.exe 檔案 (後段會被卡住) -> 尚未確認所有資料夾
+
+            // TODO: 尚未確認所有資料夾
             if (!CheckAndExecuteFile(this))
             {
                 AppendTextToEditor("Required file not found. Closing application.");
@@ -101,6 +101,7 @@ namespace carddatasync3
             }
 
             // ================== Step.5 取得目前電腦名稱 Get Current Computer Name(GetOrgCode) ===============
+            // TODO: 未完成
             getOrgCode();
 
             // 確認組織代碼名稱
@@ -125,6 +126,7 @@ namespace carddatasync3
             }
 
             // ================= Step.6 確認打卡機就緒 Check Punch Machine Available ==================
+            // TODO: 無法測試，未完成
             // if (!is_HCM_ready())
             // {
             //     string str_msg = "HCM連接發生問題，將關閉程式";
@@ -144,8 +146,10 @@ namespace carddatasync3
             }
 
             // ====================== Step.8 以組織代碼APP=>回傳版本 Check GuruOutbound service =======================
+            // TODO: 未完成 (沒有 code)
 
             // ====================== Step.9 傳送日誌 use POST Send the Log / =>準備就緒 Ready ========================
+            // TODO: 未完成 (沒有 code)
 
             // ====================== Step.10 Unlock Button​ + 初始化成功 App initialization completed =======================
             set_btns_state(true);
@@ -159,8 +163,8 @@ namespace carddatasync3
         private void getOrgCode()
         {
             // TODO: 取得廠商代碼
-            // string m_name = System.Environment.MachineName;
-            // Log.Information("Machine name: " + m_name);
+            string m_name = Environment.MachineName;
+            AppendTextToEditor("Machine name: " + m_name);
             // textBox1.Text = string.Empty; // 清空 Entry 控件的文本
 
             // if (m_name.Length < 7)
@@ -252,7 +256,7 @@ namespace carddatasync3
             AppSettings = new NameValueCollection();
             AppendTextToEditor("Loading appsettings.json...");
 
-            string appSettingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
+            string appSettingsPath = Path.Combine(_gAPPath, "appsettings.json");
 
             // 檢查檔案是否存在
             if (File.Exists(appSettingsPath))
@@ -364,7 +368,7 @@ namespace carddatasync3
                     return false;
                 }
 
-                // 當 PGFinger.exe 執行成功，確認桌面的 FingerData\FingerOut.txt 是否存在
+                // 當 PGFinger.exe 執行成功，確認桌面的 Finger\FingerOut.txt 是否存在
                 // Finger\FingerOut.txt 存在才會繼續執行，20 秒後沒有該檔案的話就會 return false
                 int counter = 0;
                 while (!File.Exists(_gOutFilePath + @"\FingerOut.txt"))

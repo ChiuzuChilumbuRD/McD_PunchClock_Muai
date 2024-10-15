@@ -42,7 +42,7 @@
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)' == 'Release'">
 		<GenerateMsix>true</GenerateMsix>
 		<AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
-		<PackageCertificateThumbprint>23DC4947DF3DED32594C88B3503B90FE358A7A6D</PackageCertificateThumbprint>
+		<PackageCertificateThumbprint>AA7476B609D415A393E8F7D94DE9619283338371</PackageCertificateThumbprint>
 	</PropertyGroup>
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(RuntimeIdentifierOverride)' != ''">
 		<RuntimeIdentifier>$(RuntimeIdentifierOverride)</RuntimeIdentifier>
