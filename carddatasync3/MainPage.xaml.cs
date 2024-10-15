@@ -3,6 +3,8 @@ using Serilog;
 using System.Text;
 using System.Net.NetworkInformation;
 using System.Text.Json;
+using System.Collections.Specialized;
+using System.IO;
 
 namespace carddatasync3
 {
@@ -14,6 +16,7 @@ namespace carddatasync3
         private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private static string _gOutFilePath = Path.Combine(desktopPath, "FingerData");
         private static string _gBackUpPath = Path.Combine(desktopPath, "HCMBackUp");
+        
 
         private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
 
@@ -40,18 +43,21 @@ namespace carddatasync3
             AppendTextToEditor("App initialization started.");
 
             // Step 1: Load appsettings.json content
+            // 讀取 appsettings.json 顯示在 TextEditor 上面
             LoadAppSettings();
 
             // Step 2: Check if file exists and execute if found
-            // if (!CheckAndExecuteFile(this))
-            // {
+            // 讀取並執行桌面上的 PGFinger.exe 檔案 (後段會被卡住)
+            if (!CheckAndExecuteFile(this))
+            {
 
-            //     AppendTextToEditor("Required file not found. Closing application.");
-            //     return;
-            // }
+                AppendTextToEditor("Required file not found. Closing application.");
+                return;
+            }
 
 
             // Step 3: Check internet connection
+            // 確認網路連線
             if (!IsInternetAvailable())
             {
                 AppendTextToEditor("No internet connection. Closing application.");
@@ -72,10 +78,12 @@ namespace carddatasync3
 
         #region Placeholder Functions
 
-        private void LoadAppSettings()
+        // 讀取 appsettings.json 並將內容顯示在 TextEditor 上面
+        private NameValueCollection LoadAppSettings()
         {
+            var appSettings = new NameValueCollection();
             AppendTextToEditor("Loading appsettings.json...");
-            // TODO: Add logic to load and parse appsettings.json
+
             string appSettingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
 
             // 檢查檔案是否存在
@@ -86,10 +94,28 @@ namespace carddatasync3
                     // 讀取檔案內容
                     string jsonContent = File.ReadAllText(appSettingsPath);
                     AppendTextToEditor(jsonContent); // 將 JSON 內容顯示在 TextEditor
+
+                    // 反序列化 JSON 到字典
+                    var jsonDict = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonContent);
+
+                    // 提取 Settings 部分
+                    if (jsonDict.TryGetValue("Settings", out var settings))
+                    {
+                        foreach (var kvp in settings)
+                        {
+                            appSettings.Add(kvp.Key, kvp.Value);
+                        }
+                    }
+
+                    // 顯示讀取的設置 (可選)
+                    AppendTextToEditor($"Download Location: {appSettings["downloadLocation"]}");
+                    AppendTextToEditor($"PGFinger Location: {appSettings["pgfingerlocation"]}");
+                    AppendTextToEditor($"File Out Path: {appSettings["fileOutPath"]}");
+                    AppendTextToEditor($"Back Up Path: {appSettings["BackUpPath"]}");
+                    AppendTextToEditor($"Auto Run Time: {appSettings["AutoRunTime"]}");
                 }
                 catch (Exception ex)
                 {
-                    // 處理讀取檔案時的異常
                     AppendTextToEditor("Error reading appsettings.json: " + ex.Message);
                 }
             }
@@ -97,7 +123,10 @@ namespace carddatasync3
             {
                 AppendTextToEditor("appsettings.json not found.");
             }
+
+            return appSettings;
         }
+
 
         private bool CheckAndExecuteFile(MainPage page)
         {
@@ -105,6 +134,7 @@ namespace carddatasync3
             bool blResult = true;
             var content = new List<string>();
 
+            // 確認 PGFinger.exe 的資料夾路徑
             if (blResult)
             {
                 blResult = page.ensureFilePathExists();
@@ -115,6 +145,7 @@ namespace carddatasync3
                 }
             }
 
+            // 確認 PGFinger.exe 本身是否存在
             if (blResult)
             {
                 blResult = page.validatePGFingerExe();
@@ -125,8 +156,10 @@ namespace carddatasync3
                 }
             }
 
+            // 確認桌面的 FingerData 資料夾中是否存在 FingerOut.txt -> 若存在，則刪除 FingerOut.txt
             if (blResult)
             {
+                AppendTextToEditor(_gOutFilePath);
                 if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
                 {
                     try
@@ -135,17 +168,17 @@ namespace carddatasync3
                     }
                     catch
                     {
-                        page.show_err("Cannot delete FingerOut.txt file.");
+                        AppendTextToEditor("Cannot delete FingerOut.txt file.");
                         blResult = false;
                     }
                 }
-                // AppendTextToEditor("Pass validatePGFingerExe");
             }
 
             // Call the PGFinger.exe process
+            // 執行 PGFinger.exe 並在桌面產生 FingerData\FingerOut.txt 檔案
             if (blResult)
             {
-                // AppendTextToEditor("Call the PGFinger.exe process");
+                // 執行 PGFinger.exe
                 date = DateTime.Now.ToString("yyyy-MM-dd");
                 try
                 {
@@ -161,6 +194,8 @@ namespace carddatasync3
                     return false;
                 }
 
+                // 當 PGFinger.exe 執行成功，確認桌面的 FingerData\FingerOut.txt 是否存在
+                // FingerData\FingerOut.txt 存在才會繼續執行，20 秒後沒有該檔案的話就會 return false
                 int counter = 0;
                 while (!File.Exists(_gOutFilePath + @"\FingerOut.txt"))
                 {
@@ -176,6 +211,7 @@ namespace carddatasync3
 
 
             // Process the fingerprint data
+            // 讀取桌面上的 FingerData\FingerOut.txt 檔案
             if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
             {
                 try
@@ -226,6 +262,7 @@ namespace carddatasync3
             return true;
         }
 
+        // 確認桌面上 PGFinger.exe 是否存在
         public bool validatePGFingerExe()
         {
             // AppendTextToEditor(File.Exists(pglocation + @"\PGFinger.exe").ToString());
@@ -234,6 +271,7 @@ namespace carddatasync3
 
 
 
+        // 確定網路連線
         private bool IsInternetAvailable()
         {
             AppendTextToEditor("Checking internet connection...");
@@ -258,6 +296,7 @@ namespace carddatasync3
 
 
 
+        // 確定是否能夠 ping server
         private bool PingServer(string ipAddress)
         {
             AppendTextToEditor($"Pinging server at {ipAddress}...");
@@ -304,6 +343,7 @@ namespace carddatasync3
 
 
         // Helper function to append text to XmlEditor
+        // 寫 log 到 TextEditor 中
         private void AppendTextToEditor(string text)
         {
             if (XmlEditor != null)
@@ -331,12 +371,13 @@ namespace carddatasync3
             public string Failure { get; set; }
         }
 
+        // 讀取 test_files/ 中的兩個檔案，套用 rules2 並將結果顯示於 alert 中
         private async void Punch_Data_Changing_rule2(object sender, EventArgs e)
         {
             try
             {
                 // 使用絕對路徑來讀取 JSON 檔案
-                var fileHCMPath = Path.Combine(Environment.CurrentDirectory, @"\test_files\appsettings.json");
+                var fileHCMPath = Path.Combine(Environment.CurrentDirectory, @"\test_files\HCM_fingerprint.json");
                 var filePunchClockPath = Path.Combine(Environment.CurrentDirectory, @"\test_files\PunchClock_fingerprint.json");
 
                 // 讀取檔案內容
