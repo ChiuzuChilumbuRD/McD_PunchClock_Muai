@@ -17,13 +17,13 @@
                 VerticalOptions="FillAndExpand">
                 
                 <Label Text="組織代碼" Margin="0,10,10,0"/>
-                <Entry x:Name="inputOrg" Placeholder="" WidthRequest="300" Margin="0,10,10,0" TextChanged="OnOrgTextChanged" />
-                <Label x:Name="outputOrg" Text="None" TextColor="Red" FontAttributes="Bold" Margin="0,10,10,0" />
+                <Entry x:Name="textBox1" Placeholder="" WidthRequest="300" Margin="0,10,10,0" TextChanged="OnOrgTextChanged" />
+                <Label x:Name="labStoreName" Text="None" TextColor="Red" FontAttributes="Bold" Margin="0,10,10,0" />
 
             </FlexLayout>
 
             <ScrollView>
-                <Editor x:Name="XmlEditor"
+                <Editor x:Name="textBox2"
                         AutoSize="TextChanges"
                         IsReadOnly="True"
                         VerticalOptions="FillAndExpand"
