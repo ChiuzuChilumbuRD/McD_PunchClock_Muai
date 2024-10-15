@@ -3,8 +3,8 @@ using Serilog;
 using System.Text;
 using System.Net.NetworkInformation;
 using System.Text.Json;
-using System.Collections.Specialized;
-using System.IO;
+using System.Data;
+using Microsoft.Practices.EnterpriseLibrary.Data;
 
 namespace carddatasync3
 {
@@ -16,9 +16,9 @@ namespace carddatasync3
         private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private static string _gOutFilePath = Path.Combine(desktopPath, "FingerData");
         private static string _gBackUpPath = Path.Combine(desktopPath, "HCMBackUp");
-        
+        private static string pglocation = Path.Combine(desktopPath, "PGFinger.exe");
+         private DBFactory _dbFactory;
 
-        private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
 
         public MainPage()
         {
@@ -34,6 +34,8 @@ namespace carddatasync3
 
             // Call initialization sequence
             InitializeApp();
+            //Database Factory 
+             _dbFactory = new DBFactory();
         }
 
         #region Initialisation
@@ -43,21 +45,18 @@ namespace carddatasync3
             AppendTextToEditor("App initialization started.");
 
             // Step 1: Load appsettings.json content
-            // 讀取 appsettings.json 顯示在 TextEditor 上面
             LoadAppSettings();
 
             // Step 2: Check if file exists and execute if found
-            // 讀取並執行桌面上的 PGFinger.exe 檔案 (後段會被卡住)
-            if (!CheckAndExecuteFile(this))
-            {
+            // if (!CheckAndExecuteFile(this))
+            // {
 
-                AppendTextToEditor("Required file not found. Closing application.");
-                return;
-            }
+            //     AppendTextToEditor("Required file not found. Closing application.");
+            //     return;
+            // }
 
 
             // Step 3: Check internet connection
-            // 確認網路連線
             if (!IsInternetAvailable())
             {
                 AppendTextToEditor("No internet connection. Closing application.");
@@ -78,12 +77,10 @@ namespace carddatasync3
 
         #region Placeholder Functions
 
-        // 讀取 appsettings.json 並將內容顯示在 TextEditor 上面
-        private NameValueCollection LoadAppSettings()
+        private void LoadAppSettings()
         {
-            var appSettings = new NameValueCollection();
             AppendTextToEditor("Loading appsettings.json...");
-
+            // TODO: Add logic to load and parse appsettings.json
             string appSettingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
 
             // 檢查檔案是否存在
@@ -94,28 +91,10 @@ namespace carddatasync3
                     // 讀取檔案內容
                     string jsonContent = File.ReadAllText(appSettingsPath);
                     AppendTextToEditor(jsonContent); // 將 JSON 內容顯示在 TextEditor
-
-                    // 反序列化 JSON 到字典
-                    var jsonDict = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonContent);
-
-                    // 提取 Settings 部分
-                    if (jsonDict.TryGetValue("Settings", out var settings))
-                    {
-                        foreach (var kvp in settings)
-                        {
-                            appSettings.Add(kvp.Key, kvp.Value);
-                        }
-                    }
-
-                    // 顯示讀取的設置 (可選)
-                    AppendTextToEditor($"Download Location: {appSettings["downloadLocation"]}");
-                    AppendTextToEditor($"PGFinger Location: {appSettings["pgfingerlocation"]}");
-                    AppendTextToEditor($"File Out Path: {appSettings["fileOutPath"]}");
-                    AppendTextToEditor($"Back Up Path: {appSettings["BackUpPath"]}");
-                    AppendTextToEditor($"Auto Run Time: {appSettings["AutoRunTime"]}");
                 }
                 catch (Exception ex)
                 {
+                    // 處理讀取檔案時的異常
                     AppendTextToEditor("Error reading appsettings.json: " + ex.Message);
                 }
             }
@@ -123,10 +102,7 @@ namespace carddatasync3
             {
                 AppendTextToEditor("appsettings.json not found.");
             }
-
-            return appSettings;
         }
-
 
         private bool CheckAndExecuteFile(MainPage page)
         {
@@ -134,7 +110,6 @@ namespace carddatasync3
             bool blResult = true;
             var content = new List<string>();
 
-            // 確認 PGFinger.exe 的資料夾路徑
             if (blResult)
             {
                 blResult = page.ensureFilePathExists();
@@ -145,7 +120,6 @@ namespace carddatasync3
                 }
             }
 
-            // 確認 PGFinger.exe 本身是否存在
             if (blResult)
             {
                 blResult = page.validatePGFingerExe();
@@ -156,10 +130,8 @@ namespace carddatasync3
                 }
             }
 
-            // 確認桌面的 FingerData 資料夾中是否存在 FingerOut.txt -> 若存在，則刪除 FingerOut.txt
             if (blResult)
             {
-                AppendTextToEditor(_gOutFilePath);
                 if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
                 {
                     try
@@ -168,17 +140,17 @@ namespace carddatasync3
                     }
                     catch
                     {
-                        AppendTextToEditor("Cannot delete FingerOut.txt file.");
+                        page.show_err("Cannot delete FingerOut.txt file.");
                         blResult = false;
                     }
                 }
+                // AppendTextToEditor("Pass validatePGFingerExe");
             }
 
             // Call the PGFinger.exe process
-            // 執行 PGFinger.exe 並在桌面產生 FingerData\FingerOut.txt 檔案
             if (blResult)
             {
-                // 執行 PGFinger.exe
+                // AppendTextToEditor("Call the PGFinger.exe process");
                 date = DateTime.Now.ToString("yyyy-MM-dd");
                 try
                 {
@@ -194,8 +166,6 @@ namespace carddatasync3
                     return false;
                 }
 
-                // 當 PGFinger.exe 執行成功，確認桌面的 FingerData\FingerOut.txt 是否存在
-                // FingerData\FingerOut.txt 存在才會繼續執行，20 秒後沒有該檔案的話就會 return false
                 int counter = 0;
                 while (!File.Exists(_gOutFilePath + @"\FingerOut.txt"))
                 {
@@ -211,7 +181,6 @@ namespace carddatasync3
 
 
             // Process the fingerprint data
-            // 讀取桌面上的 FingerData\FingerOut.txt 檔案
             if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
             {
                 try
@@ -262,7 +231,6 @@ namespace carddatasync3
             return true;
         }
 
-        // 確認桌面上 PGFinger.exe 是否存在
         public bool validatePGFingerExe()
         {
             // AppendTextToEditor(File.Exists(pglocation + @"\PGFinger.exe").ToString());
@@ -271,7 +239,6 @@ namespace carddatasync3
 
 
 
-        // 確定網路連線
         private bool IsInternetAvailable()
         {
             AppendTextToEditor("Checking internet connection...");
@@ -296,7 +263,6 @@ namespace carddatasync3
 
 
 
-        // 確定是否能夠 ping server
         private bool PingServer(string ipAddress)
         {
             AppendTextToEditor($"Pinging server at {ipAddress}...");
@@ -343,7 +309,6 @@ namespace carddatasync3
 
 
         // Helper function to append text to XmlEditor
-        // 寫 log 到 TextEditor 中
         private void AppendTextToEditor(string text)
         {
             if (XmlEditor != null)
@@ -371,13 +336,12 @@ namespace carddatasync3
             public string Failure { get; set; }
         }
 
-        // 讀取 test_files/ 中的兩個檔案，套用 rules2 並將結果顯示於 alert 中
         private async void Punch_Data_Changing_rule2(object sender, EventArgs e)
         {
             try
             {
                 // 使用絕對路徑來讀取 JSON 檔案
-                var fileHCMPath = Path.Combine(Environment.CurrentDirectory, @"\test_files\HCM_fingerprint.json");
+                var fileHCMPath = Path.Combine(Environment.CurrentDirectory, @"\test_files\appsettings.json");
                 var filePunchClockPath = Path.Combine(Environment.CurrentDirectory, @"\test_files\PunchClock_fingerprint.json");
 
                 // 讀取檔案內容
@@ -537,97 +501,173 @@ namespace carddatasync3
         
          // Event handler for the button that downloads data from the external API
         private async void btn_HCM_to_fingerprint(object sender, EventArgs e)
-        {   
+        {
             // Disable buttons while the task is running
             set_btns_state(false);
 
-            // Make the API GET request instead of interacting with the database
-            bool result = await DownloadAndProcessDataFromApiAsync();
-
-            if (result)
-            {
-                await DisplayAlert("Success", "Data downloaded and processed successfully!", "OK");
-            }
-            else
-            {
-                await DisplayAlert("Error", "Failed to download and process data from the API.", "OK");
-            }
+            // Run the process in a background thread
+            await Task.Run(() => conduct_HCM_to_fingerprint_work());
 
             // Re-enable buttons after the task is complete
             set_btns_state(true);
         }
 
-        // Replaces the database logic with API logic to get data from the external source
-        private async Task<bool> DownloadAndProcessDataFromApiAsync()
+        private void conduct_HCM_to_fingerprint_work()
         {
-            bool result = true;
+            // Disable buttons in the UI thread
+            MainThread.BeginInvokeOnMainThread(() => set_btns_state(false));
 
-            // Make the GET request to the API
-            string url = $"{apiBaseUrl}?u=AxtimTmpOrg_List&code=BQ0000"; // Modify the query params as needed
-            string responseData;
+            // Run the fingerprint process in a separate thread
+            Task.Run(() => HCM_to_fingerprint_thread());
+        }
 
-            try
+        private async Task HCM_to_fingerprint_thread()
+        {
+            bool is_lock_taken = false;
+            ui_sp.TryEnter(ref is_lock_taken);
+            if (!is_lock_taken)
+                return;
+
+            str_current_task = "員工資料匯入指紋機";
+
+            bool b_result = await Task.Run(() => download_fingerprint_from_HCM_imp());
+
+            if (b_result)
             {
-                // Call the helper function to make the GET request
-                responseData = await GetRequestAsync(url);
-                
-                // Update the UI with the API response
-                ShowInfo("Data from API: ");
-                UpdateEditor(responseData); // Assuming responseData will be displayed in the Editor
-                
-                // Process the data further (if necessary)
-                // e.g., parse JSON or XML response to update UI or other elements
+                await MainThread.InvokeOnMainThreadAsync(() => show_info("Fingerprint download successful."));
             }
-            catch (Exception ex)
+            else
             {
-                Debug.WriteLine($"Error making API call: {ex.Message}");
-                ShowError("Failed to get data from the API.");
-                return false;
+                await MainThread.InvokeOnMainThreadAsync(() => show_err("Fingerprint download failed."));
             }
 
-            return result;
-        }
-
-        // Makes the HTTP GET request and returns the response
-        public async Task<string> GetRequestAsync(string url)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-                return responseBody;
-            }
-        }
-
-        // Updates the Editor control with the response data
-        private void UpdateEditor(string data)
-        {
-            MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                XmlEditor.Text = data; // Update the Editor control with the response data
-            });
-        }
-
-        // Show error message in alert
-        private void ShowError(string message)
-        {
-            MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                DisplayAlert("Error", message, "OK");
-            });
-        }
-
-        // Show information message in alert
-        private void ShowInfo(string message)
-        {
-            MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                DisplayAlert("Info", message, "OK");
-            });
+            // Ensure the UI lock is released
+            if (is_lock_taken)
+                ui_sp.Exit();
         }
 
         #endregion
+
+        #region File Handling and Fingerprint Download Logic
+
+        private async Task<bool> download_fingerprint_from_HCM_imp()
+        {
+            bool blResult = true;
+            string date = "";
+            string eHrToFingerData = "";
+
+            #region Check if Folder Exists
+            if (blResult)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => show_info_2("Checking file paths..."));
+                blResult = checkFilePath();
+                if (!blResult)
+                {
+                    blResult = create_out_folder();
+                    if (!blResult)
+                    {
+                        await MainThread.InvokeOnMainThreadAsync(() => show_err_2("Fingerprinter folder missing."));
+                    }
+                }
+            }
+            #endregion
+
+            #region Delete Old FingerIn.txt
+            if (blResult && File.Exists(Path.Combine(_gOutFilePath, "FingerIn.txt")))
+            {
+                File.Delete(Path.Combine(_gOutFilePath, "FingerIn.txt"));
+            }
+            #endregion
+
+            if (blResult)
+            {
+                date = DateTime.Now.ToString("yyyy-MM-dd");
+
+                DataTable dt = getPerson();  // Simulate fetching data
+                
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    await writeToFingerInFile(dt);
+                    blResult = true;
+                }
+                else
+                {
+                    await MainThread.InvokeOnMainThreadAsync(() => show_err_2("No data available to download."));
+                    blResult = false;
+                }
+            }
+
+            return blResult;
+        }
+
+        private async Task writeToFingerInFile(DataTable dt)
+        {
+            await MainThread.InvokeOnMainThreadAsync(() => show_info_2($"Exporting {dt.Rows.Count} rows from HCM."));
+
+            using (FileStream fs = new FileStream(Path.Combine(_gOutFilePath, "FingerIn.txt"), FileMode.CreateNew))
+            using (StreamWriter sw = new StreamWriter(fs, Encoding.GetEncoding("big5")))
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string data = $"{dr["EMPLOYEEID"]},{dr["TrueName"]},{dr["CARDNUM"]},{dr["finger1"]},{dr["finger2"]},{dr["DataType"]}";
+                    sw.WriteLine(data);
+                    await MainThread.InvokeOnMainThreadAsync(() => show_info_2($"Exporting data: {data}"));
+                }
+            }
+
+            await MainThread.InvokeOnMainThreadAsync(() => show_info_2("Data export completed."));
+        }
+
+        private DataTable getPerson()
+        {
+            // Simulated data fetching logic (this would come from the database in a real implementation)
+            DataTable table = new DataTable();
+            table.Columns.Add("EMPLOYEEID", typeof(string));
+            table.Columns.Add("TrueName", typeof(string));
+            table.Columns.Add("CARDNUM", typeof(string));
+            table.Columns.Add("finger1", typeof(string));
+            table.Columns.Add("finger2", typeof(string));
+            table.Columns.Add("DataType", typeof(string));
+
+            // Add example rows
+            table.Rows.Add("E001", "John Doe", "123456", "F1", "F2", "TypeA");
+            table.Rows.Add("E002", "Jane Smith", "789101", "F3", "F4", "TypeB");
+
+            return table;
+        }
+
+        // private DataTable getPerson()
+        // {
+        //     DataTable dt = new DataTable();
+        //     Database db = DatabaseFactory.CreateDatabase(databaseKey);
+        //     DbConnection dbc = db.CreateConnection();
+        //     dbc.Open();
+
+        //     string storeProcName = "";
+        //     storeProcName = "usp_McDFingerImport";
+        //     DbCommand dc = db.GetStoredProcCommand(storeProcName);
+        //     db.AddInParameter(dc, "@UnitCode", DbType.String,textBox1.Text);
+        //     try
+        //     {
+        //         dt = db.ExecuteDataSet(dc).Tables[0];
+        //     }
+        //     catch(Exception ex)
+        //     {
+        //         MessageBox.Show("指紋資料取得失敗" + ex.Message);
+        //     }
+        //     finally
+        //     {
+        //         if (dbc.State != ConnectionState.Closed)
+        //         {
+        //             dbc.Close();
+        //         }
+
+        //     }
+        //     return dt;
+        // }
+
+        #endregion
+
 
 
         #region upload to HCM
@@ -643,23 +683,50 @@ namespace carddatasync3
              set_btns_state(true);
         }
 
-
         #endregion
 
-        private void show_info(string message)
+
+        
+        #region UI Updates and Helper Functions
+
+        private bool checkFilePath()
         {
-            MainThread.BeginInvokeOnMainThread(async () =>
+            return Directory.Exists(_gOutFilePath);
+        }
+
+        private bool create_out_folder()
+        {
+            try
             {
-                await DisplayAlert("Info", message, "OK");
-            });
+                Directory.CreateDirectory(_gOutFilePath);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+         private void show_info(string message)
+        {
+            // Display information message (e.g., in UI)
+            XmlEditor.Text += $"{message}\n";
         }
 
         private void show_err(string message)
         {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await DisplayAlert("Error", message, "OK");
-            });
+            // Display error message
+            XmlEditor.Text += $"Error: {message}\n";
+        }
+
+        private void show_info_2(string message)
+        {
+            XmlEditor.Text += $"{message}\n";
+        }
+
+        private void show_err_2(string message)
+        {
+            XmlEditor.Text += $"Error: {message}\n";
         }
 
         private static void wait_for_devicecontrol_complete()
@@ -719,6 +786,8 @@ namespace carddatasync3
             btnUploadToHCM.Opacity = state ? 1 : 0.5;
             btnDeliveryUpload.Opacity = state ? 1 : 0.5;
         }
+
+        #endregion
 
 
     }
