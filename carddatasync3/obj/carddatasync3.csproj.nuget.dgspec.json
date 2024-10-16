@@ -334,24 +334,8 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[8.0.8, 8.0.8]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Crossgen2.win-x64",
-              "version": "[8.0.8, 8.0.8]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[8.0.8, 8.0.8]"
-            },
-            {
               "name": "Microsoft.Windows.SDK.NET.Ref",
               "version": "[10.0.19041.34, 10.0.19041.34]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[8.0.8, 8.0.8]"
             }
           ],
           "frameworkReferences": {
@@ -378,10 +362,7 @@
         "android-x86": {
           "#import": []
         },
-        "ios-arm64": {
-          "#import": []
-        },
-        "maccatalyst-arm64": {
+        "iossimulator-x64": {
           "#import": []
         },
         "maccatalyst-x64": {
