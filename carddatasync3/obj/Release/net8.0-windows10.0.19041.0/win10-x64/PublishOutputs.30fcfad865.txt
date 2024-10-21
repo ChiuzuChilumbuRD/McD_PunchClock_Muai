@@ -513,6 +513,8 @@ C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Re
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\netstandard.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\CommunityToolkit.Maui.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\CommunityToolkit.Maui.Core.dll
+C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Practices.EnterpriseLibrary.Data.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Configuration.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\Microsoft.Extensions.Configuration.Binder.dll
