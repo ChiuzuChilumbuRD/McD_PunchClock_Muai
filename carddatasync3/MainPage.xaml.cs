@@ -45,8 +45,8 @@ namespace carddatasync3
         // private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         public static NameValueCollection AppSettings { get; private set; }      
 
-        private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
-
+        // private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
+        private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
         private async Task show_error(string message, string caption)
         {
             await DisplayAlert(caption, message, "OK");
@@ -69,7 +69,7 @@ namespace carddatasync3
         }
 
         #region Initialisation
-        private void InitializeApp()
+        private async void InitializeApp()
         {
             // ================================ Step.0 Lock Button ===============================================
             // set_btns_state(false);
@@ -87,7 +87,7 @@ namespace carddatasync3
             // 讀取並執行桌面上的 PGFinger.exe 檔案 (後段會被卡住) -> 尚未確認所有資料夾
 
             // TODO: 尚未確認所有資料夾
-            if (!CheckAndExecuteFile(this))
+            if (!CheckFilesExist(this))
             {
                 AppendTextToEditor("Required file not found. Closing application.");
                 return;
@@ -105,17 +105,17 @@ namespace carddatasync3
             getOrgCode();
 
             // 確認組織代碼名稱
-            // if (string.IsNullOrEmpty(textBox1.Text) || textBox1.Text.Length != 8)
-            // {
-            //     string str_msg = "組織代碼錯誤，將關閉程式";
-            //     AppendTextToEditor(str_msg);
-            //     // await show_error(str_msg, "組織代碼錯誤");
-            //     is_init_completed = false;
-            //     return;
-            // }
+            if (string.IsNullOrEmpty(textBox1.Text) || textBox1.Text.Length != 8)
+            {
+                string str_msg = "組織代碼錯誤，將關閉程式";
+                AppendTextToEditor(str_msg);
+                // await show_error(str_msg, "組織代碼錯誤");
+                is_init_completed = false;
+                return;
+            }
             // ------------------------ 會卡在這裡 --------------------------------
 
-            // labStoreName.Text = getCradORGName();
+            labStoreName.Text = getCradORGName();
             if (labStoreName.Text.Length == 0)
             {
                 string str_msg = $"找不到{textBox1.Text}組織名稱，將關閉程式";
@@ -149,7 +149,20 @@ namespace carddatasync3
             // TODO: 未完成 (沒有 code)
 
             // ====================== Step.9 傳送日誌 use POST Send the Log / =>準備就緒 Ready ========================
-            // TODO: 未完成 (沒有 code)
+            // TODO: 未完成 (待確認)
+            string orgCode = "S000123"; // You can dynamically retrieve the org code if needed.
+            bool postSuccess = await send_org_code_hcm(orgCode);
+
+            if (postSuccess)
+            {
+                AppendTextToEditor("Log sent successfully and data saved to HCM.json.");
+            }
+            else
+            {
+                AppendTextToEditor("Failed to send log or save data.");
+                return;
+            }
+
 
             // ====================== Step.10 Unlock Button​ + 初始化成功 App initialization completed =======================
             set_btns_state(true);
@@ -165,21 +178,21 @@ namespace carddatasync3
             // TODO: 取得廠商代碼
             string m_name = Environment.MachineName;
             AppendTextToEditor("Machine name: " + m_name);
-            // textBox1.Text = string.Empty; // 清空 Entry 控件的文本
+            textBox1.Text = string.Empty; // 清空 Entry 控件的文本
 
-            // if (m_name.Length < 7)
-            // {
-            //     show_err("抓取組織代碼失敗");
-            //     textBox1.Text = string.Empty; // 清空 Entry
-            // }
-            // else
-            // {
-            //     string l_name = m_name.Substring(2, 5);
-            //     if (CommonUtility.is_valid_org_code(l_name))
-            //     {
-            //         textBox1.Text = "S00" + l_name; // 設置 Entry 的值
-            //     }
-            // }
+            if (m_name.Length < 7)
+            {
+                show_err("抓取組織代碼失敗");
+                textBox1.Text = string.Empty; // 清空 Entry
+            }
+            else
+            {
+                string l_name = m_name.Substring(2, 5);
+                if (CommonUtility.is_valid_org_code(l_name))
+                {
+                    textBox1.Text = "S00" + l_name; // 設置 Entry 的值
+                }
+            }
 
             // if (CommonUtility.is_valid_org_code(test_org_code))
             // {
@@ -197,7 +210,7 @@ namespace carddatasync3
             //         textBox1.Text = test_org_code; // 設置 Entry 的值
             //     }
             // }
-            // AppendTextToEditor($"OrgCode: {textBox1.Text}"); // 使用 textBox1.Text 來取得值
+            AppendTextToEditor($"OrgCode: {textBox1.Text}"); // 使用 textBox1.Text 來取得值
         } // END getOrgCode
 
         private bool is_HCM_ready()
@@ -228,6 +241,99 @@ namespace carddatasync3
             // } 
             return false;
         } // END is_HCM_ready
+
+        // static async Task<string> GetRequestAsync(string orgCode)
+        // {
+        //     // Construct the full URL with the org_code
+        //     string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
+        //     string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
+
+        //     using (var client = new HttpClient())
+        //     {
+        //         try
+        //         {
+        //             HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+        //             if (response.IsSuccessStatusCode)
+        //             {
+        //                 return await response.Content.ReadAsStringAsync();
+        //             }
+        //             else   
+
+        //             {
+        //                 throw new Exception($"Failed to get data from API: {response.StatusCode}");
+        //             }
+        //         }
+        //         catch (HttpRequestException ex)
+        //         {
+        //             throw new Exception($"Failed to connect to the API: {ex.Message}");
+        //         }
+        //         catch (JsonException ex)
+        //         {
+        //             throw new Exception($"Error parsing JSON response: {ex.Message}");
+        //         }
+        //     }
+        // }
+
+        public static async Task<bool> send_org_code_hcm(string orgCode)
+        {
+
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                var fileHCMPath = Path.Combine(desktopPath, @"HCM.json");
+
+                // Call the API and get the JSON response
+                string responseData = await GetRequestAsync(orgCode);
+
+                // Write the response data to a JSON file
+                await File.WriteAllTextAsync(fileHCMPath, responseData);
+
+                // Success message (optional)
+                Console.WriteLine("Data has been successfully written to HCM.json");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
+            
+        }
+
+        // Function to handle the API POST request
+        static async Task<string> GetRequestAsync(string orgCode)
+        {
+            // Construct the full URL with the org_code
+            string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
+            string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return await response.Content.ReadAsStringAsync();
+                    }
+                    else   
+
+                    {
+                        throw new Exception($"Failed to get data from API: {response.StatusCode}");
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    throw new Exception($"Failed to connect to the API: {ex.Message}");
+                }
+                catch (JsonException ex)
+                {
+                    throw new Exception($"Error parsing JSON response: {ex.Message}");
+                }
+            }
+        }
 
         private string getCradORGName()
         {
@@ -301,130 +407,29 @@ namespace carddatasync3
                                     System.Globalization.CultureInfo.InvariantCulture);
         } // END LoadAppSettings
 
-
-        private bool CheckAndExecuteFile(MainPage page)
+         private bool CheckFilesExist(MainPage page)
         {
-            string date = "";
-            bool blResult = true;
-            var content = new List<string>();
+            // Load settings from appsettings.json
 
-            // 確認 PGFinger.exe 的資料夾路徑
-            if (blResult)
+            var downloadLocation = AppSettings["downloadlocation"];
+            var pgFingerLocation = AppSettings["pgfingerlocation"];
+
+            // Check if the directories exist
+            if (!Directory.Exists(downloadLocation))
             {
-                blResult = page.ensureFilePathExists();
-                if (!blResult)
-                {
-                    AppendTextToEditor("The folder for storing PGFinger data does not exist.");
-                    return false;
-                }
+                AppendTextToEditor($"The download folder does not exist: {downloadLocation}");
+                return false;
             }
 
-            // 確認 PGFinger.exe 本身是否存在
-            if (blResult)
+            if (!Directory.Exists(pgFingerLocation))
             {
-                blResult = page.validatePGFingerExe();
-                if (!blResult)
-                {
-                    AppendTextToEditor("PGFinger.exe does not exist.");
-                    return false;
-                }
+                AppendTextToEditor($"The PGFinger folder does not exist: {pgFingerLocation}");
+                return false;
             }
 
-            // 確認桌面的 FingerData 資料夾中是否存在 FingerOut.txt -> 若存在，則刪除 FingerOut.txt
-            if (blResult)
-            {
-                AppendTextToEditor(_gOutFilePath);
-                if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
-                {
-                    try
-                    {
-                        File.Delete(_gOutFilePath + @"\FingerOut.txt");
-                    }
-                    catch
-                    {
-                        AppendTextToEditor("Cannot delete FingerOut.txt file.");
-                        blResult = false;
-                    }
-                }
-            }
-
-            // Call the PGFinger.exe process
-            // 執行 PGFinger.exe 並在桌面產生 FingerData\FingerOut.txt 檔案
-            if (blResult)
-            {
-                // 執行 PGFinger.exe
-                date = DateTime.Now.ToString("yyyy-MM-dd");
-                try
-                {
-                    AppendTextToEditor("Reading fingerprint data from the machine...");
-                    Process.Start(pglocation + @"\PGFinger.exe");
-
-                    wait_for_devicecontrol_complete();
-                    AppendTextToEditor("Fingerprint data read completed.");
-                }
-                catch (Exception ex)
-                {
-                    AppendTextToEditor("Error running PGFinger.exe: " + ex.Message);
-                    return false;
-                }
-
-                // 當 PGFinger.exe 執行成功，確認桌面的 Finger\FingerOut.txt 是否存在
-                // Finger\FingerOut.txt 存在才會繼續執行，20 秒後沒有該檔案的話就會 return false
-                int counter = 0;
-                while (!File.Exists(_gOutFilePath + @"\FingerOut.txt"))
-                {
-                    Thread.Sleep(1000);
-                    counter++;
-                    if (counter > 20)
-                    {
-                        AppendTextToEditor("FingerOut.txt not generated. Please check the system.");
-                        return false;
-                    }
-                }
-            }
-
-
-            // Process the fingerprint data
-            // 讀取桌面上的 FingerData\FingerOut.txt 檔案
-            if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
-            {
-                try
-                {
-                    using (var sr = new StreamReader(_gOutFilePath + @"\FingerOut.txt"))
-                    {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            if (line.Trim().Length > 0)
-                                content.Add(line);
-                        }
-                    }
-
-                    if (content.Count <= 0)
-                    {
-                        AppendTextToEditor("FingerOut.txt is empty.");
-                        return false;
-                    }
-
-                    // Backup the file
-                    page.getFilePath1(date);
-                    File.Copy(_gOutFilePath + @"\FingerOut.txt", _gBackUpPath + @"\FingerprintData" + date.Replace("-", "") + ".txt", true);
-
-                    // Simulate updating the card number and employee data
-                    int successCount = content.Count;
-                    AppendTextToEditor($"{successCount} fingerprint records uploaded to HCM.");
-
-                }
-                catch (Exception ex)
-                {
-                    AppendTextToEditor("Error processing FingerOut.txt: " + ex.Message);
-                    return false;
-                }
-            }
-
+            // If both directories exist, return true
             return true;
-        } // EMD CheckAndExecuteFile
-
+        }
 
         // Utility functions in MainPage class
         public bool ensureFilePathExists()
@@ -767,18 +772,6 @@ namespace carddatasync3
             }
 
             return result;
-        }
-
-        // Makes the HTTP GET request and returns the response
-        public async Task<string> GetRequestAsync(string url)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-                return responseBody;
-            }
         }
 
         // Updates the Editor control with the response data
