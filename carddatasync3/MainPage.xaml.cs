@@ -14,8 +14,6 @@ namespace carddatasync3
     {
         private string str_log_level = "debug"; //TODO: Need to change after program release.
         static string _gAPPath = AppContext.BaseDirectory;
-
-        // static string _gAPPath = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..");   //取得程式執行目錄 (與 .csproj 同層)
         protected static string databaseKey = "GAIA.EHR";
         protected static string downloaction;
         protected static string pglocation;
@@ -42,7 +40,6 @@ namespace carddatasync3
         private static SpinLock ui_sp = new SpinLock();
         private static string str_current_task = string.Empty;
         private bool is_init_completed = true;
-        // private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         public static NameValueCollection AppSettings { get; private set; }      
 
         // private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
@@ -84,9 +81,8 @@ namespace carddatasync3
             LoadAppSettings();
 
             // ======================== Step.3 確認資料夾是否存在 Check Folder Exist or Not ====================
-            // 讀取並執行桌面上的 PGFinger.exe 檔案 (後段會被卡住) -> 尚未確認所有資料夾
-
-            // TODO: 尚未確認所有資料夾
+            // 確認 appsettings.json 中的所有資料夾是否存在 -> 不存在則回傳 false
+            
             if (!CheckFilesExist(this))
             {
                 AppendTextToEditor("Required file not found. Closing application.");
@@ -101,7 +97,7 @@ namespace carddatasync3
             }
 
             // ================== Step.5 取得目前電腦名稱 Get Current Computer Name(GetOrgCode) ===============
-            // TODO: 未完成
+            // TODO: 未完成 (getCradORGName)
             getOrgCode();
 
             // 確認組織代碼名稱
@@ -148,8 +144,8 @@ namespace carddatasync3
             // ====================== Step.8 以組織代碼APP=>回傳版本 Check GuruOutbound service =======================
             // TODO: 未完成 (沒有 code)
 
-            // ====================== Step.9 傳送日誌 use POST Send the Log / =>準備就緒 Ready ========================
-            // TODO: 未完成 (待確認)
+            // ====================== Step.9 傳送日誌 use POST Send the Log / => 準備就緒 Ready ========================
+            // TODO: 待確認
             string orgCode = "S000123"; // You can dynamically retrieve the org code if needed.
             bool postSuccess = await send_org_code_hcm(orgCode);
 
@@ -162,7 +158,6 @@ namespace carddatasync3
                 AppendTextToEditor("Failed to send log or save data.");
                 return;
             }
-
 
             // ====================== Step.10 Unlock Button​ + 初始化成功 App initialization completed =======================
             set_btns_state(true);
@@ -413,6 +408,8 @@ namespace carddatasync3
 
             var downloadLocation = AppSettings["downloadlocation"];
             var pgFingerLocation = AppSettings["pgfingerlocation"];
+            var fileOutPath = AppSettings["fileOutPath"];
+            var BackUpPath = AppSettings["BackUpPath"];
 
             // Check if the directories exist
             if (!Directory.Exists(downloadLocation))
@@ -424,6 +421,18 @@ namespace carddatasync3
             if (!Directory.Exists(pgFingerLocation))
             {
                 AppendTextToEditor($"The PGFinger folder does not exist: {pgFingerLocation}");
+                return false;
+            }
+
+            if (!Directory.Exists(fileOutPath))
+            {
+                AppendTextToEditor($"The BackUpPath folder does not exist: {fileOutPath}");
+                return false;
+            }
+
+            if (!Directory.Exists(BackUpPath))
+            {
+                AppendTextToEditor($"The BackUp folder does not exist: {BackUpPath}");
                 return false;
             }
 
