@@ -427,19 +427,22 @@ namespace carddatasync3
                 // Step 4: Compare Employee Data (Rule 1) -Reena
                 // Applies rule 1 to compare employee data from HCM and PunchCard.
                 AppendTextToEditor("Applying Rule 1...");
-                // var (comparisonResult1, hcmEmployeeData1, punchCardData1) = Punch_Data_Changing_rule1(hcmEmployeeData, punchCardData);
                 var result1 = Punch_Data_Changing_rule1(hcmEmployeeData, punchCardData);
 
                 object comparisonResult1 = result1.Item1;
                 hcmEmployeeData = result1.Item2;
                 punchCardData = result1.Item3;
-                await DisplayAlert("Compare Result (Rule1)", JsonConvert.SerializeObject(comparisonResult1), "OK");
-                AppendTextToEditor(JsonConvert.SerializeObject(hcmEmployeeData));
-                AppendTextToEditor(JsonConvert.SerializeObject(punchCardData));
 
                 // Step 5: Compare Fingerprint Data (Rule 2) - Reena
                 // Applies rule 2 to compare fingerprint data.
+                AppendTextToEditor("Applying Rule 2...");
                 var result2 = Punch_Data_Changing_rule2(hcmEmployeeData, punchCardData);
+                object comparisonResult2 = result2.Item1;
+                hcmEmployeeData = result2.Item2;
+                punchCardData = result2.Item3;
+                await DisplayAlert("Compare Result (Rules)", $"Rule1 Result:\n{JsonConvert.SerializeObject(comparisonResult1)}\nRule2 Result:\n{JsonConvert.SerializeObject(comparisonResult2)}", "OK");
+                AppendTextToEditor(JsonConvert.SerializeObject(hcmEmployeeData));
+                AppendTextToEditor(JsonConvert.SerializeObject(punchCardData));
 
                 // Step 6: Update Status if Necessary (PSNModify) 
                 // If comparison result shows differences, update employee records.
@@ -764,6 +767,65 @@ namespace carddatasync3
             IEnumerable<dynamic> hcmEmployeeDataList = _hcmEmployeeData?.data ?? new List<dynamic>();
 
             var results = new List<object>(); // 用來儲存比較結果
+
+            // 開始比較
+            foreach (var hcmEmployee in hcmEmployeeDataList)
+            {
+                foreach (var punchCard in punchCardDataList)
+                {
+                    // 比對 EmpNo 是否相同
+                    if (hcmEmployee.EmpNo == punchCard.EmpNo)
+                    {
+                        // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 Finger1
+                        bool areFieldsEqualExceptFinger1 =
+                            hcmEmployee.DisplayName == punchCard.DisplayName &&
+                            hcmEmployee.Finger2 == punchCard.Finger2 &&
+                            hcmEmployee.CardNo == punchCard.CardNo;
+
+                        // 如果 Finger1 欄位不同且其他欄位相同，印出 case2
+                        if (areFieldsEqualExceptFinger1 && hcmEmployee.Finger1 != punchCard.Finger1)
+                        {
+                            results.Add(new { result = false, Failure = $"100" });
+                        }
+
+                        // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 Finger2
+                        bool areFieldsEqualExceptFinger2 =
+                            hcmEmployee.DisplayName == punchCard.DisplayName &&
+                            hcmEmployee.Finger1 == punchCard.Finger1 &&
+                            hcmEmployee.CardNo == punchCard.CardNo;
+
+                        // 如果 Finger2 欄位不同且其他欄位相同，印出 case3
+                        if (areFieldsEqualExceptFinger2 && hcmEmployee.Finger2 != punchCard.Finger2)
+                        {
+                            results.Add(new { result = false, Failure = $"010" });
+                        }
+
+                        // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 CardNo
+                        bool areFieldsEqualExceptCardNo =
+                            hcmEmployee.DisplayName == punchCard.DisplayName &&
+                            hcmEmployee.Finger1 == punchCard.Finger1 &&
+                            hcmEmployee.Finger2 == punchCard.Finger2;
+
+                        // 如果 CardNo 欄位不同且其他欄位相同，印出 case4
+                        if (areFieldsEqualExceptCardNo && hcmEmployee.CardNo != punchCard.CardNo)
+                        {
+                            results.Add(new { result = false, Failure = $"001" });
+                        }
+
+                        // 如果所有欄位都相同，印出 case1
+                        bool areFieldsEqual =
+                            hcmEmployee.DisplayName == punchCard.DisplayName &&
+                            hcmEmployee.Finger1 == punchCard.Finger1 &&
+                            hcmEmployee.Finger2 == punchCard.Finger2 &&
+                            hcmEmployee.CardNo == punchCard.CardNo;
+
+                        if (areFieldsEqual)
+                        {
+                            results.Add(new { result = true, Failure = $"000" });
+                        }
+                    }
+                }
+            }
 
             
             return (results, _hcmEmployeeData, _punchCardData);
