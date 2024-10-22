@@ -432,6 +432,12 @@ namespace carddatasync3
                 AppendTextToEditor(JsonConvert.SerializeObject(hcmEmployeeData));
                 AppendTextToEditor(JsonConvert.SerializeObject(punchCardData));
 
+                // Write to .json file
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                var fileFingerprintPath = Path.Combine(desktopPath, "fingerprint_update.json");
+
+                File.WriteAllText(fileFingerprintPath, JsonConvert.SerializeObject(punchCardData));
+
                 // Step 6: Update Status if Necessary (PSNModify) 
                 // If comparison result shows differences, update employee records.
                 // if (comparisonResult2.NeedsUpdate)
