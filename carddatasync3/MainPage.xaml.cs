@@ -402,18 +402,6 @@ namespace carddatasync3
                         CardNo = (string)employee["CardNo"],
                         AddFlag = (string)employee["addFlag"]
                     }).ToList();
-
-                    // 輸出每個員工資料
-                    // foreach (var employee in employeeDataList)
-                    // {
-                    //     AppendTextToEditor($"Employee ID: {employee.EmployeeId.ToString()}");
-                    //     AppendTextToEditor($"Name: {employee.Name.ToString()}");
-                    //     AppendTextToEditor($"Finger1: {employee.Finger1.ToString()}");
-                    //     AppendTextToEditor($"Finger2: {employee.Finger2.ToString()}");
-                    //     AppendTextToEditor($"CardNo: {employee.CardNo.ToString()}");
-                    //     AppendTextToEditor($"AddFlag: {employee.AddFlag.ToString()}");
-                    //     AppendTextToEditor("\n"); // 空行分隔
-                    // }
                 }
 
                 // Step 3: Read Punch Card Data (LoadPunchCardInfo) - Reena
@@ -779,11 +767,11 @@ namespace carddatasync3
                         // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 Finger1
                         bool areFieldsEqualExceptFinger1 =
                             hcmEmployee.DisplayName == punchCard.DisplayName &&
-                            hcmEmployee.Finger2 == punchCard.Finger2 &&
+                            hcmEmployee.Finger2.ToString().Substring(0, 10) == punchCard.Finger2.ToString().Substring(0, 10) &&
                             hcmEmployee.CardNo == punchCard.CardNo;
 
                         // 如果 Finger1 欄位不同且其他欄位相同，印出 case2
-                        if (areFieldsEqualExceptFinger1 && hcmEmployee.Finger1 != punchCard.Finger1)
+                        if (areFieldsEqualExceptFinger1 && hcmEmployee.Finger1.ToString().Substring(0, 10) != punchCard.Finger1.ToString().Substring(0, 10))
                         {
                             results.Add(new { result = false, Failure = $"100" });
                         }
@@ -791,11 +779,11 @@ namespace carddatasync3
                         // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 Finger2
                         bool areFieldsEqualExceptFinger2 =
                             hcmEmployee.DisplayName == punchCard.DisplayName &&
-                            hcmEmployee.Finger1 == punchCard.Finger1 &&
+                            hcmEmployee.Finger1.ToString().Substring(0, 10) == punchCard.Finger1.ToString().Substring(0, 10) &&
                             hcmEmployee.CardNo == punchCard.CardNo;
 
                         // 如果 Finger2 欄位不同且其他欄位相同，印出 case3
-                        if (areFieldsEqualExceptFinger2 && hcmEmployee.Finger2 != punchCard.Finger2)
+                        if (areFieldsEqualExceptFinger2 && hcmEmployee.Finger2.ToString().Substring(0, 10) != punchCard.Finger2.ToString().Substring(0, 10))
                         {
                             results.Add(new { result = false, Failure = $"010" });
                         }
@@ -803,8 +791,8 @@ namespace carddatasync3
                         // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 CardNo
                         bool areFieldsEqualExceptCardNo =
                             hcmEmployee.DisplayName == punchCard.DisplayName &&
-                            hcmEmployee.Finger1 == punchCard.Finger1 &&
-                            hcmEmployee.Finger2 == punchCard.Finger2;
+                            hcmEmployee.Finger1.ToString().Substring(0, 10) == punchCard.Finger1.ToString().Substring(0, 10) &&
+                            hcmEmployee.Finger2.ToString().Substring(0, 10) == punchCard.Finger2.ToString().Substring(0, 10);
 
                         // 如果 CardNo 欄位不同且其他欄位相同，印出 case4
                         if (areFieldsEqualExceptCardNo && hcmEmployee.CardNo != punchCard.CardNo)
@@ -815,8 +803,8 @@ namespace carddatasync3
                         // 如果所有欄位都相同，印出 case1
                         bool areFieldsEqual =
                             hcmEmployee.DisplayName == punchCard.DisplayName &&
-                            hcmEmployee.Finger1 == punchCard.Finger1 &&
-                            hcmEmployee.Finger2 == punchCard.Finger2 &&
+                            hcmEmployee.Finger1.ToString().Substring(0, 10) == punchCard.Finger1.ToString().Substring(0, 10) &&
+                            hcmEmployee.Finger2.ToString().Substring(0, 10) == punchCard.Finger2.ToString().Substring(0, 10) &&
                             hcmEmployee.CardNo == punchCard.CardNo;
 
                         if (areFieldsEqual)
