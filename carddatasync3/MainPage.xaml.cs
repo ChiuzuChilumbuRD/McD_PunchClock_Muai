@@ -260,16 +260,19 @@ namespace carddatasync3
                         // Conduct fingerprint upload before fingerprint download
                         await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Starting fingerprint upload to HCM..."));
 
-                        // Commented out upload_finger_print
-                        // op_recorder = init_op_recorder(this_page.TextBox1.Text, "Upload FP to HCM");
-                        // b_result = upload_fingerprint_to_HCM(this_page);
-                        // upload_op_recorder(op_recorder, b_result);
+                        // Upload fingerprint to HCM
+                        b_result = await upload_fingerprint_to_HCM(this_page);
+
+                        if (!b_result)
+                        {
+                            await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Upload to HCM failed."));
+                            return;
+                        }
 
                         // Proceed with downloading fingerprints from HCM
-                        //op_recRecorder = init_op_recorder(this_page.TextBox1.Text, "Get FP from HCM");
-
                         await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Downloading fingerprint data from HCM..."));
                         b_result = download_fingerprint_from_HCM_imp(this_page);
+
 
                         //upload_op_recorder(op_recorder, b_result);
 
@@ -497,249 +500,215 @@ namespace carddatasync3
 
 
         
-        private bool upload_fingerprint_to_HCM(MainPage page)
+        private async Task<bool> upload_fingerprint_to_HCM(MainPage page)
         {
             string date = "";
             bool blResult = true;
             List<string> content = new List<string>();
 
-            // Step 1: Check if the required file paths and executables exist
+            // Step 1: Check if the required file paths exist
             if (blResult)
             {
                 blResult = page.checkFilePath();
                 if (!blResult)
                 {
-                    AppendTextToEditor("指紋機程序「PGFinger」儲存資料夾" + _gOutFilePath + "不存在，請洽系統管理員「卡鐘廠商」");
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Directory {_gOutFilePath} does not exist. Please contact the system administrator."));
                     return false;
                 }
             }
 
+            // Step 2: Check if PGFinger.exe exists
             if (blResult)
             {
                 blResult = page.checkIsExisitExe();
                 if (!blResult)
                 {
-                    AppendTextToEditor("PGFinger.exe不存在，請洽系統管理員「卡鐘廠商」");
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("PGFinger.exe does not exist. Please contact the system administrator."));
                     return false;
                 }
             }
 
-            // Step 2: Delete existing FingeOut.txt if it exists
+            // Step 3: Delete existing FingeOut.txt if it exists
             if (blResult)
             {
-                if (File.Exists(_gOutFilePath + @"\FingeOut.txt"))
+                if (File.Exists(Path.Combine(_gOutFilePath, "FingeOut.txt")))
                 {
                     try
                     {
-                        File.Delete(_gOutFilePath + @"\FingeOut.txt");
-                        AppendTextToEditor("Existing FingeOut.txt deleted.");
+                        File.Delete(Path.Combine(_gOutFilePath, "FingeOut.txt"));
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Deleted existing FingeOut.txt file."));
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        AppendTextToEditor($"Error deleting FingeOut.txt: {ex.Message}");
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Failed to delete FingeOut.txt file. Please contact the system administrator."));
                         blResult = false;
                     }
                 }
             }
 
-            // Step 3: Simulate PGFinger.exe execution and generate FingeOut.txt
+            // Step 4: Generate fingerprint file using PGFinger.exe
+            #region 使用廠商執行檔生成指紋檔案 (Execute PGFinger.exe to generate fingerprint file)
             if (blResult)
             {
                 date = DateTime.Now.ToString("yyyy-MM-dd");
                 try
                 {
-                    AppendTextToEditor("開始讀取指紋機指紋...");
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Starting to read fingerprint from the fingerprint machine..."));
+                    string str_exec_cmd = Path.Combine(pglocation, "PGFinger.exe");
+                    string str_exec_parameter = @"1 " + Path.Combine(_gOutFilePath, "FingeOut.txt");
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Executing: {str_exec_cmd} {str_exec_parameter}"));
 
-                    // Simulate the process execution with asynchronous delay
-                    SimulateFingeOutGeneration(); // Simulate creating the FingeOut.txt file
+                    // Start the process
+                    Process.Start(str_exec_cmd, str_exec_parameter);
+                    //await wait_for_devicecontrol_complete();
 
-                    AppendTextToEditor("讀取指紋機指紋完成");
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Completed reading fingerprint from the fingerprint machine."));
                 }
                 catch (Exception ex)
                 {
-                    AppendTextToEditor("執行PGFinger.exe出錯：" + ex.Message);
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error executing PGFinger.exe: {ex.Message}"));
                     blResult = false;
-                    return blResult;
+                    return false;
+                }
+
+                // Check if FingeOut.txt was created
+                int counter = 0;
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Checking for the FingeOut.txt file..."));
+                while (!File.Exists(Path.Combine(_gOutFilePath, "FingeOut.txt")))
+                {
+                    await Task.Delay(1000); // Wait 1 second
+                    counter++;
+                    if (counter > 20)
+                    {
+                        break;
+                    }
                 }
             }
+            #endregion 使用廠商執行檔生成指紋檔案
 
-            // Step 4: Check for FingeOut.txt
-            if (!File.Exists(_gOutFilePath + @"\FingeOut.txt"))
+            // Step 5: Verify that FingeOut.txt exists
+            if (!File.Exists(Path.Combine(_gOutFilePath, "FingeOut.txt")))
             {
-                blResult = false;
-                AppendTextToEditor("執行PGFinger.exe出錯：未生成FingeOut.txt文件");
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: FingeOut.txt file was not generated by PGFinger.exe. Please contact the system administrator."));
                 return false;
             }
 
-            // Step 5: Process the FingeOut.txt file and validate the content
+            // Step 6: Read and validate FingeOut.txt content
             if (blResult)
             {
                 try
                 {
-                    using (StreamReader sr = new StreamReader(_gOutFilePath + @"\FingeOut.txt", Encoding.Default))
+                    using (StreamReader sr = new StreamReader(Path.Combine(_gOutFilePath, "FingeOut.txt"), Encoding.Default))
                     {
                         string line;
                         while ((line = sr.ReadLine()) != null)
                         {
-                            if (line.Trim().Length > 0)
+                            if (!string.IsNullOrWhiteSpace(line))
                                 content.Add(line);
                         }
                     }
 
                     if (content.Count <= 0)
                     {
-                        AppendTextToEditor("FingeOut.txt文件為空，請洽系統管理員");
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("FingeOut.txt is empty. Please contact the system administrator."));
                         blResult = false;
-                        return false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    AppendTextToEditor("Error processing FingeOut.txt: " + ex.Message);
-                    blResult = false;
-                    return false;
-                }
-            }
-
-            // Step 6: Backup FingeOut.txt
-            if (blResult)
-            {
-                try
-                {
-                    page.getFilePath1(date); // Ensure backup directories are created
-                    string backupPath = _gBackUpPath + @"\員工指紋匯出資料\" + date.Replace("-", "") + @"\PGFingeOut" + date.Replace("-", "") + DateTime.Now.ToString("HHmmss") + ".txt";
-                    File.Copy(_gOutFilePath + @"\FingeOut.txt", backupPath, true);
-                    AppendTextToEditor($"FingeOut.txt backed up successfully to: {backupPath}");
-                }
-                catch (Exception ex)
-                {
-                    AppendTextToEditor("Error backing up FingeOut.txt: " + ex.Message);
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error reading FingeOut.txt: {ex.Message}"));
                     blResult = false;
                 }
             }
 
-            // Step 7: Simulate uploading the fingerprint data to HCM
+            // Step 7: Validate and process content
             if (blResult)
             {
-                int successCount = 0;
-                blResult = SimulateUploadFingerprintData(content, ref successCount);
+                foreach (var data in content)
+                {
+                    var purged_data = data.Trim();
+                    if (string.IsNullOrWhiteSpace(purged_data))
+                        continue;
+
+                    string[] detail = data.Split(',');
+                    if (detail.Length < 5)
+                    {
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: Fingerprint data export format is incorrect. Please contact the system administrator."));
+                        blResult = false;
+                        break;
+                    }
+                }
+            }
+
+            // Step 8: Backup FingeOut.txt
+            if (blResult)
+            {
+                page.getFilePath1(date);
+                string backupPath = Path.Combine(_gBackUpPath, @"員工指紋匯出資料", date.Replace("-", ""), $"PGFingeOut{date.Replace("-", "")}_{DateTime.Now:HHmmss}.txt");
+                File.Copy(Path.Combine(_gOutFilePath, "FingeOut.txt"), backupPath, true);
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Backup created for FingeOut.txt at: {backupPath}."));
+            }
+
+            // Step 9: Update card numbers and employee data in HCM
+            if (blResult)
+            {
+                int success_card_count = 0;
+                //blResult = page.update_card_number(content, ref success_card_count);
+
                 if (!blResult)
                 {
-                    AppendTextToEditor("員工卡號匯入HCM系統失敗");
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Failed to upload employee card numbers to HCM."));
                 }
                 else
                 {
-                    AppendTextToEditor($"員工卡號資料匯入HCM共 {successCount} 筆");
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Successfully uploaded {success_card_count} employee card numbers to HCM."));
+                }
+
+                int success_emp_count = 0;
+                //blResult = page.updateDataByEmployeeId(content, ref success_emp_count);
+
+                if (!blResult)
+                {
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Failed to upload employee fingerprint data to HCM."));
+                }
+                else
+                {
                     try
                     {
-                        // Delete the FingeOut.txt after successful upload
-                        File.Delete(_gOutFilePath + @"\FingeOut.txt");
-                        AppendTextToEditor("FingeOut.txt successfully deleted after upload.");
+                        File.Delete(Path.Combine(_gOutFilePath, "FingeOut.txt"));
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Successfully deleted FingeOut.txt after upload."));
                     }
                     catch (Exception ex)
                     {
-                        AppendTextToEditor("員工指紋資料匯入HCM成功，但FingerOut.txt檔案無法刪除");
-                        blResult = false;
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Successfully uploaded data to HCM but failed to delete FingeOut.txt: {ex.Message}"));
                     }
+
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Successfully uploaded {success_emp_count} employee fingerprint records to HCM."));
                 }
             }
 
             return blResult;
         }
 
-          private void SimulateFingeOutGeneration()
+        private static void wait_for_devicecontrol_complete()
         {
-            try
+            int wait_count = 50;
+            int wait_interval = 100;
+            Process p_device_control = null;
+            string str_device_control = "DeviceControl";
+            while (wait_count > 0)
             {
-                string outputFile = Path.Combine(_gOutFilePath, "FingeOut.txt");
-                using (var fs = new FileStream(outputFile, FileMode.CreateNew))
-                using (var sw = new StreamWriter(fs, Encoding.GetEncoding("big5")))
-                {
-                    // Simulate writing fingerprint data
-                    for (int i = 1; i <= 10; i++)
-                    {
-                        string employeeId = "EMP" + i.ToString("D4");
-                        string trueName = "Employee" + i;
-                        string cardNum = "CARD" + i.ToString("D4");
-                        string finger1 = "Finger1_" + i;
-                        string finger2 = "Finger2_" + i;
-                        string dataType = "Type" + i;
-
-                        string data = $"{employeeId},{trueName},{cardNum},{finger1},{finger2},{dataType}";
-                        sw.WriteLine(data);
-                    }
-                }
-                AppendTextToEditor("Simulated FingeOut.txt file created successfully.");
-            }
-            catch (Exception ex)
-            {
-                AppendTextToEditor("Error simulating FingeOut.txt: " + ex.Message);
-            }
-        }
-
-            
-            
-            
-
-        private bool SimulateUploadFingerprintData(List<string> content, ref int successCount)
-        {
-            try
-            {
-                // Simulate processing each record and uploading it
-                foreach (var record in content)
-                {
-                    // Simulate the validation of record
-                    if (!string.IsNullOrWhiteSpace(record))
-                    {
-                        successCount++;
-                    }
-                }
-
-                AppendTextToEditor($"Simulated upload of {successCount} fingerprint records to HCM.");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                AppendTextToEditor("Error uploading fingerprint data: " + ex.Message);
-                return false;
-            }
-        }
-
-
-
-
-        private async Task SimulateDeviceControlExecution()
-        {
-            int wait_count = 5;  // Maximum number of checks
-            int wait_interval = 50;  // Wait 100ms between checks
-            bool is_device_complete = false;
-
-            AppendTextToEditor("Simulating DeviceControl process...");
-
-            // Simulate waiting for the device to complete its operation
-            for (int i = 0; i < wait_count; i++)
-            {
-                await Task.Delay(wait_interval);  // Wait asynchronously
-                AppendTextToEditor($"Checking DeviceControl (attempt {i + 1})");
-
-                // Simulate device being ready halfway through
-                if (i == 25)
-                {
-                    is_device_complete = true;
+                Thread.Sleep(wait_interval);
+                p_device_control = Process.GetProcessesByName(str_device_control).FirstOrDefault();
+                if (p_device_control != null)
                     break;
-                }
+                wait_count--;
             }
-
-            if (is_device_complete)
+            if (p_device_control != null)
             {
-                AppendTextToEditor("DeviceControl process completed.");
-            }
-            else
-            {
-                AppendTextToEditor("DeviceControl process did not complete within the time limit.");
+                p_device_control.WaitForExit(30 * 60 * 1000);  // Wait for 30 minutes for process to exit
             }
         }
-
 
 
         private DataTable getPerson()
@@ -760,84 +729,6 @@ namespace carddatasync3
             return table;
         }
 
-
-       public async Task<bool> write_to_fingerprinter()
-        {
-            bool ret_val = false;  // Default to failure
-            show_info_2("Write to fingerprinter.");
-            try
-            {
-                // Notify that the fingerprint process is starting
-                await Task.Run(() => show_info("啟動指紋機程式"));
-
-                // Simulating running the `PGFinger.exe` process
-                var str_exec_cmd = "Simulated_PGFinger";  // Simulated executable name
-                var str_exec_parameter = $"2 {Path.Combine(_gOutFilePath, "FingerIn.txt")}";
-                show_info_2($"Simulated Execute {str_exec_cmd} {str_exec_parameter}");
-
-                // Simulate file creation instead of running an external process
-                SimulateFingerprintProcess();
-
-                // Simulate waiting for the fingerprint device to complete
-                //await wait_for_devicecontrol_complete();
-
-                // Notify the user that the process has completed
-                await Task.Run(() => show_info("指紋機執行結束"));
-
-                // Simulate further operations, e.g., getting file path (logic adjusted as needed)
-                getFilePath1(eHrToFingerData);
-
-                // Create backup of the file with a timestamp
-                string backupDir = Path.Combine(_gBackUpPath, "員工指紋匯出資料", eHrToFingerData.Replace("-", ""));
-                string backupFileName = $"PGFingerIn_{eHrToFingerData.Replace("-", "")}{DateTime.Now:yyyyMMdd_HHmmss}.txt";
-                Directory.CreateDirectory(backupDir);  // Ensure backup directory exists
-
-                // Copy the generated file to the backup directory
-                File.Copy(Path.Combine(_gOutFilePath, "FingerIn.txt"), Path.Combine(backupDir, backupFileName), true);
-                show_info_2($"Copy FingerIn.txt to {backupDir}\\{backupFileName}");
-
-                ret_val = true;  // Indicate success
-            }
-            catch (Exception ex)
-            {
-                // Handle errors and notify the user
-                await Task.Run(() => show_err($"執行寫入指紋機出錯：{ex.Message}，請洽系統管理員"));
-                show_info_2("Error writing to fingerprinter");
-            }
-            return ret_val;
-        }
-
-        // Simulate the behavior of running the PGFinger.exe process and creating FingerIn.txt
-        private void SimulateFingerprintProcess()
-        {
-            string fingerInPath = Path.Combine(_gOutFilePath, "FingerIn.txt");
-            Directory.CreateDirectory(_gOutFilePath);  // Ensure directory exists
-
-            using (var writer = new StreamWriter(fingerInPath))
-            {
-                writer.WriteLine("Simulated Fingerprint Data");  // Write dummy data
-                show_info_2("Simulated fingerprint data written to FingerIn.txt.");
-            }
-        }
-
-
-        private static void wait_for_devicecontrol_complete()
-        {
-            int wait_count = 50;
-            int wait_interval = 100;
-            Process p_device_control = null;
-            string str_device_control = "DeviceControl";
-            while (wait_count > 0)
-            {
-                Thread.Sleep(wait_interval);
-                p_device_control = Process.GetProcessesByName(str_device_control).FirstOrDefault();
-                if (p_device_control != null)
-                    break;
-                wait_count--;
-            }
-            p_device_control.WaitForExit(30*60*1000);
-
-        }
 
         private static OperationRecorder init_op_recorder(string str_unitcode, string str_operation)
         {
