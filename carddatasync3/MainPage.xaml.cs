@@ -258,16 +258,16 @@ namespace carddatasync3
 
                     {
                         // Conduct fingerprint upload before fingerprint download
-                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Starting fingerprint upload to HCM..."));
+                        // await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Starting fingerprint upload to HCM..."));
 
-                        // Upload fingerprint to HCM
-                        b_result = await upload_fingerprint_to_HCM(this_page);
+                        // // Upload fingerprint to HCM
+                        // b_result = await upload_fingerprint_to_HCM(this_page);
 
-                        if (!b_result)
-                        {
-                            await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Upload to HCM failed."));
-                            return;
-                        }
+                        // if (!b_result)
+                        // {
+                        //     await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Upload to HCM failed."));
+                        //     return;
+                        // }
 
                         // Proceed with downloading fingerprints from HCM
                         await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Downloading fingerprint data from HCM..."));
