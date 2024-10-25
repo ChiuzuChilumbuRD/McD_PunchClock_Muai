@@ -1983,3 +1983,5 @@ C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Re
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Serilog.Sinks.Console.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Practices.EnterpriseLibrary.Common.dll
 C:\Users\chiuzu.chilumbu\Desktop\github_mcd\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Practices.EnterpriseLibrary.Data.dll
