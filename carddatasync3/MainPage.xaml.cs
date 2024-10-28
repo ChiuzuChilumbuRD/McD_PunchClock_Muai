@@ -3,8 +3,7 @@ using Serilog;
 using System.Text;
 using System.Net.NetworkInformation;
 using System.Data;
-using System.Data.Common; 
-using Microsoft.Practices.EnterpriseLibrary.Data; 
+using System.Text.Json;
 
 
 namespace carddatasync3
@@ -23,7 +22,8 @@ namespace carddatasync3
         public static StringBuilder str_accumulated_log = new StringBuilder();
         protected static string databaseKey = "GAIA.EHR";
         public static string eHrToFingerData;
-        private DBFactory _dbFactory;
+        private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
+        
 
 
         public MainPage()
@@ -271,10 +271,10 @@ namespace carddatasync3
 
                         // Proceed with downloading fingerprints from HCM
                         await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Downloading fingerprint data from HCM..."));
-                        b_result = download_fingerprint_from_HCM_imp(this_page);
+                        b_result = await download_fingerprint_from_HCM_imp(this_page); // Add await here
 
 
-                        //upload_op_recorder(op_recorder, b_result);
+                                //upload_op_recorder(op_recorder, b_result);
 
                         if (!b_result)
                             break;
@@ -308,7 +308,7 @@ namespace carddatasync3
 
 
         // Main method to simulate downloading fingerprints from HCM and writing them to a file
-        private bool download_fingerprint_from_HCM_imp(MainPage page)
+        private async Task<bool> download_fingerprint_from_HCM_imp(MainPage page)
         {
             // Import fingerprint data from the database to the card reader.
             bool blResult = true;
@@ -363,57 +363,29 @@ namespace carddatasync3
             }
             #endregion 刪除FingerIn.txt
 
-            #region 寫入FingerIn.txt (Write FingerIn.txt)
+           #region 寫入HCM json
             if (blResult)
             {
                 date = DateTime.Now.ToString("yyyy-MM-dd");
 
-                MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("開始從 HCM 獲取員工指紋資料..."));
-                DataTable dt = page.getPerson();  // Fetch the person data from HCM.
+                MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Sending organization code to HCM..."));
 
-                if (dt != null && dt.Rows.Count > 0)  // Proceed only if there is data
+                // Call send_org_code_hcm and check for success
+                bool isSuccessful = await send_org_code_hcm("S000123");
+
+                if (isSuccessful) // Proceed only if HCM.json was created successfully
                 {
-                    try
-                    {
-                        MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("獲取到的員工資料筆數：" + dt.Rows.Count)); // Log the number of records fetched from HCM.
-
-                        // Create the FingerIn.txt file and write the data
-                        using (FileStream fs = new FileStream(_gOutFilePath + @"\FingerIn.txt", FileMode.CreateNew))
-                        // Replace 'big5' with 'UTF-8' if you don't need the big5 encoding
-                        using (StreamWriter sw = new StreamWriter(fs, Encoding.UTF8)) 
-                        {
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                string data = $"{dr["EMPLOYEEID"]},{dr["TrueName"]},{dr["CARDNUM"]},{dr["finger1"]},{dr["finger2"]},{dr["DataType"]}";
-                                MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"正在寫入數據到 FingerIn.txt: {data}")); // Log each data line being written to FingerIn.txt.
-                                sw.WriteLine(data);
-                            }
-                        }
-
-
-                        MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"HCM 匯出 {dt.Rows.Count} 筆員工指紋資料到 FingerIn.txt。")); // Successfully exported {count} records to FingerIn.txt.
-                        blResult = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("寫入 FingerIn.txt 文件時出錯：" + ex.Message)); // Error writing to FingerIn.txt.
-                        blResult = false;
-                    }
+                    MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("HCM.json created successfully on desktop."));
+                    blResult = true; // Set blResult to true, indicating success
                 }
                 else
                 {
-                    if (dt == null || dt.Rows.Count == 0)
-                    {
-                        MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("目前無相關指紋資料可以下載, 請確認")); // No relevant fingerprint data to download, please check.
-                    }
-                    else
-                    {
-                        MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("獲取門店員工資料失敗，請洽系統管理員")); // Failed to retrieve employee data, please contact system administrator.
-                    }
-                    blResult = false;
+                    MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Failed to retrieve data from HCM. Aborting operation."));
+                    blResult = false; // Set blResult to false if operation fails
                 }
             }
-            #endregion 寫入FingerIn.txt
+            #endregion 寫入HCM json
+
 
             if (blResult)
             {
@@ -711,23 +683,75 @@ namespace carddatasync3
         }
 
 
-        private DataTable getPerson()
+        public static async Task<bool> send_org_code_hcm(string orgCode)
         {
-            // Simulated data fetching logic (this would come from the database in a real implementation)
-            DataTable table = new DataTable();
-            table.Columns.Add("EMPLOYEEID", typeof(string));
-            table.Columns.Add("TrueName", typeof(string));
-            table.Columns.Add("CARDNUM", typeof(string));
-            table.Columns.Add("finger1", typeof(string));
-            table.Columns.Add("finger2", typeof(string));
-            table.Columns.Add("DataType", typeof(string));
+            try
+            {
+                // Define the path for the FingerData directory on the Desktop
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string fingerDataPath = Path.Combine(desktopPath, "FingerData");
 
-            // Add example rows
-            table.Rows.Add("E001", "John Doe", "123456", "F1", "F2", "TypeA");
-            table.Rows.Add("E002", "Jane Smith", "789101", "F3", "F4", "TypeB");
+                // Ensure the FingerData directory exists; create if not
+                if (!Directory.Exists(fingerDataPath))
+                {
+                    Directory.CreateDirectory(fingerDataPath);
+                }
 
-            return table;
+                // Define the path for HCM.json within FingerData
+                var fileHCMPath = Path.Combine(fingerDataPath, "HCM.json");
+
+                // Call the API and get the JSON response
+                string responseData = await GetRequestAsync(orgCode);
+
+                // Write the response data to HCM.json, overwriting if it exists
+                await File.WriteAllTextAsync(fileHCMPath, responseData);
+
+                // Log success message
+                Console.WriteLine("Data has been successfully written to HCM.json");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
         }
+
+
+        // Function to handle the API POST request
+        static async Task<string> GetRequestAsync(string orgCode)
+        {
+            // Construct the full URL with the org_code
+            string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
+            string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return await response.Content.ReadAsStringAsync();
+                    }
+                    else   
+
+                    {
+                        throw new Exception($"Failed to get data from API: {response.StatusCode}");
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    throw new Exception($"Failed to connect to the API: {ex.Message}");
+                }
+                catch (JsonException ex)
+                {
+                    throw new Exception($"Error parsing JSON response: {ex.Message}");
+                }
+            }
+        }
+
 
 
         private static OperationRecorder init_op_recorder(string str_unitcode, string str_operation)
