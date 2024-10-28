@@ -147,7 +147,7 @@ namespace carddatasync3
             // TODO: 未完成 (沒有 code)
 
             // ====================== Step.9 傳送日誌 use POST Send the Log / => 準備就緒 Ready ========================
-            string orgCode = "S000123"; // "S000123"
+            string orgCode = textBox1.Text; // TODO: "S000123"
             bool postSuccess = await send_org_code_hcm(orgCode);
 
             if (postSuccess)
