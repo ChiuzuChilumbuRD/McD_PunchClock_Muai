@@ -6,20 +6,52 @@ using Newtonsoft.Json.Linq;
 using System.Data;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using Newtonsoft.Json;
+using System.Collections.Specialized;
+using System.IO;
+using System;
+using System.Reflection;
 
 namespace carddatasync3
 {
     public partial class MainPage : ContentPage
     {
+        private string str_log_level = "debug"; //TODO: Need to change after program release.
+        static string _gAPPath = AppContext.BaseDirectory;
+        protected static string databaseKey = "GAIA.EHR";
+        protected static string downloaction;
+        protected static string pglocation;
+
+        // ======================================================================================
+        //將備份目錄提出來變成Config
+        protected static string _gBackUpPath;
+
+        // ======================================================================================
+        //指紋匯出及下載的檔案產生目的地
+        protected static string _gOutFilePath;
+        //For Auto Run Time
+        protected static string autoRunTime;
+
+        protected static string test_org_code;
+
+        protected static DateTime last_check_date = new DateTime();
+
+        public static string eHrToFingerData;
+        public static StringBuilder str_accumulated_log = new StringBuilder();
+        private static int peopleCount = 0;
+        
         // Lock to prevent concurrent UI operations
         private static SpinLock ui_sp = new SpinLock();
         private static string str_current_task = string.Empty;
-        private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        private static string _gOutFilePath = Path.Combine(desktopPath, "FingerData");
-        private static string _gBackUpPath = Path.Combine(desktopPath, "HCMBackUp");
-        private static string pglocation = Path.Combine(desktopPath, "PGFinger.exe");
+        // private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        // private static string _gOutFilePath = Path.Combine(desktopPath, "FingerData");
+        // private static string _gBackUpPath = Path.Combine(desktopPath, "HCMBackUp");
+        // private static string pglocation = Path.Combine(desktopPath, "PGFinger.exe");
+        private bool is_init_completed = true;
+        public static NameValueCollection AppSettings { get; private set; }      
+
+        // private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
+        private static string apiBaseUrl;
         private DBFactory _dbFactory;
-        static string _gAPPath = AppContext.BaseDirectory;
 
 
         public MainPage()
@@ -42,36 +74,100 @@ namespace carddatasync3
 
         #region Initialisation
 
-        private void InitializeApp()
+        private async void InitializeApp()
         {
-            AppendTextToEditor("App initialization started.");
+            // ======================= Step.1 取得目前 APP 版本號並印出 Get Current APP Version =====================
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            AppendTextToEditor(version.ToString());
+            AppendTextToEditor("Form init"); // App initialization started.
 
-            // Step 1: Load appsettings.json content
+            // ======================= Step.2 匯入設定檔 Load Config (AppSettings.json) =======================
+            // 讀取 appsettings.json 存入 AppSettings 中
             LoadAppSettings();
+            AppendTextToEditor("App Settings load successfully.");
 
-            // Step 2: Check if file exists and execute if found
-            // if (!CheckAndExecuteFile(this))
+            // ======================== Step.3 確認資料夾是否存在 Check Folder Exist or Not ====================
+            // 確認 appsettings.json 中的所有資料夾是否存在 -> 不存在則回傳 false
+            
+            // if (!CheckFilesExist(this))
             // {
-
             //     AppendTextToEditor("Required file not found. Closing application.");
             //     return;
             // }
 
 
-            // Step 3: Check internet connection
+            // =============== Step.4 確認網路連線 Check Internet Available ==================================
             if (!IsInternetAvailable())
             {
                 AppendTextToEditor("No internet connection. Closing application.");
                 return;
             }
 
-            // Step 4: Ping server IP address
+            // ================== Step.5 取得目前電腦名稱 Get Current Computer Name(GetOrgCode) ===============
+            // TODO: 未完成 (getCradORGName)
+            getOrgCode();
+
+            // 確認組織代碼名稱
+            if (string.IsNullOrEmpty(textBox1.Text) || textBox1.Text.Length != 8)
+            {
+                string str_msg = "組織代碼錯誤，將關閉程式";
+                AppendTextToEditor(str_msg);
+                // await show_error(str_msg, "組織代碼錯誤");
+                is_init_completed = false;
+                // return;
+            }
+            // ------------------------ 會卡在這裡 --------------------------------
+
+            labStoreName.Text = getCradORGName();
+            if (labStoreName.Text.Length == 0)
+            {
+                string str_msg = $"找不到{textBox1.Text}組織名稱，將關閉程式";
+                // show_error(str_msg, "組織名稱錯誤");
+                AppendTextToEditor(str_msg);
+                is_init_completed = false;
+                // return;
+            }
+
+            // ================= Step.6 確認打卡機就緒 Check Punch Machine Available ==================
+            // TODO: 無法測試，未完成
+            // if (!is_HCM_ready())
+            // {
+            //     string str_msg = "HCM連接發生問題，將關閉程式";
+            //     // await show_error(str_msg, "連線問題");
+            //     AppendTextToEditor(str_msg);
+            //     is_init_completed = false;
+            //     return;
+            // }
+            // ----------------------------------- 會卡在這裡 ------------------------------------------
+            
+            // ====================== Step.7 確認人資系統有沒有上線 (ping IP)​ Check if the HR Server is available ============
+            // Ping server IP address
             if (!PingServer("8.8.8.8")) // Example IP, replace with the actual one
             {
                 AppendTextToEditor("Unable to reach the server. Closing application.");
                 return;
             }
 
+            // ====================== Step.8 以組織代碼APP=>回傳版本 Check GuruOutbound service =======================
+            // TODO: 未完成 (沒有 code)
+
+            // ====================== Step.9 傳送日誌 use POST Send the Log / => 準備就緒 Ready ========================
+            // TODO: 待確認
+            string orgCode = "S000123"; // You can dynamically retrieve the org code if needed.
+            bool postSuccess = await send_org_code_hcm(orgCode);
+
+            if (postSuccess)
+            {
+                AppendTextToEditor("Log sent successfully and data saved to HCM.json.");
+            }
+            else
+            {
+                AppendTextToEditor("Failed to send log or save data.");
+                return;
+            }
+
+            // ====================== Step.10 Unlock Button​ + 初始化成功 App initialization completed =======================
+            set_btns_state(true);
             AppendTextToEditor("App initialization completed.");
         }
 
@@ -79,11 +175,163 @@ namespace carddatasync3
 
         #region Placeholder Functions
 
+        private void getOrgCode()
+        {
+            // TODO: 取得廠商代碼
+            string m_name = Environment.MachineName;
+            AppendTextToEditor("Machine name: " + m_name);
+            textBox1.Text = string.Empty; // 清空 Entry 控件的文本
+
+            if (m_name.Length < 7)
+            {
+                show_err("抓取組織代碼失敗");
+                textBox1.Text = string.Empty; // 清空 Entry
+            }
+            else
+            {
+                string l_name = m_name.Substring(2, 5);
+                if (CommonUtility.is_valid_org_code(l_name))
+                {
+                    textBox1.Text = "S00" + l_name; // 設置 Entry 的值
+                }
+            }
+
+            // if (CommonUtility.is_valid_org_code(test_org_code))
+            // {
+            //     test_org_code = "S00" + test_org_code;
+            //     string message = $"是否使用測試用組織代碼 {test_org_code}?";
+            //     string caption = "測試用組織代碼";
+            //     MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            //     DialogResult result;
+
+            //     // 顯示 MessageBox 讓用戶選擇
+            //     result = MessageBox.Show(message, caption, buttons);
+            //     if (result == System.Windows.Forms.DialogResult.Yes)
+            //     {
+            //         show_info($"使用測試組織代碼 {test_org_code}");
+            //         textBox1.Text = test_org_code; // 設置 Entry 的值
+            //     }
+            // }
+            AppendTextToEditor($"OrgCode: {textBox1.Text}"); // 使用 textBox1.Text 來取得值
+        } // END getOrgCode
+
+        private bool is_HCM_ready()
+        {
+            // TODO: 確認 HCM 連線是否成功
+            AppendTextToEditor("HCM連線中,請等待");
+            // if (ConfigurationManager.ConnectionStrings[databaseKey] != null)
+            // {
+            //     string conn = ConfigurationManager.ConnectionStrings[databaseKey].ConnectionString;
+            //     SqlConnection conns = new SqlConnection(conn);
+            //     try
+            //     {
+            //         conns.Open();
+            //         conns.Close();
+            //         AppendTextToEditor("HCM連線狀態正常");
+            //         return true;
+            //     }
+            //     catch (Exception ex)
+            //     {
+            //         AppendTextToEditor("HCM連線失敗，請洽系統管理員", ex);
+            //         return false;
+            //     }
+            // }
+            // else
+            // {
+            //     AppendTextToEditor("考勤資料庫HCM未配置，請洽系統管理員");
+            //     return false;
+            // } 
+            return false;
+        } // END is_HCM_ready
+
+        public static async Task<bool> send_org_code_hcm(string orgCode)
+        {
+
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                var fileHCMPath = Path.Combine(desktopPath, @"HCM.json");
+
+                // Call the API and get the JSON response
+                string responseData = await GetRequestAsync(orgCode);
+
+                // Write the response data to a JSON file
+                await File.WriteAllTextAsync(fileHCMPath, responseData);
+
+                // Success message (optional)
+                Console.WriteLine("Data has been successfully written to HCM.json");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
+            
+        }
+
+        // Function to handle the API POST request
+        static async Task<string> GetRequestAsync(string orgCode)
+        {
+            // Construct the full URL with the org_code
+            string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
+            string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return await response.Content.ReadAsStringAsync();
+                    }
+                    else   
+
+                    {
+                        throw new Exception($"Failed to get data from API: {response.StatusCode}");
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    throw new Exception($"Failed to connect to the API: {ex.Message}");
+                }
+                catch (JsonException ex)
+                {
+                    throw new Exception($"Error parsing JSON response: {ex.Message}");
+                }
+            }
+        }
+
+        private string getCradORGName()
+        {
+            // TODO: 取得廠商名稱 (不使用 db)
+            string name = string.Empty;
+            // string sql = string.Format(@"SELECT UNITNAME FROM VW_MDS_ORGSTDSTRUCT WHERE UNITCODE='{0}'", this.textBox1.Text);
+            // Database db = DatabaseFactory.CreateDatabase(databaseKey);
+            // DbCommand dc = db.GetSqlStringCommand(sql);
+
+            // DataSet ds = db.ExecuteDataSet(dc);
+
+            // if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            // {
+            //     name = ds.Tables[0].Rows[0][0].ToString();
+            // }
+            // else
+            // {
+            //     name = "";
+            // }
+            return name;
+        } // END getCradORGName
+
+        // 讀取 appsettings.json 並將相關路徑傳入參數中
         private void LoadAppSettings()
         {
+            AppSettings = new NameValueCollection();
             AppendTextToEditor("Loading appsettings.json...");
             // TODO: Add logic to load and parse appsettings.json
-            string appSettingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
+            string appSettingsPath = Path.Combine(_gAPPath, "appsettings.json");
 
             // 檢查檔案是否存在
             if (File.Exists(appSettingsPath))
@@ -92,11 +340,23 @@ namespace carddatasync3
                 {
                     // 讀取檔案內容
                     string jsonContent = File.ReadAllText(appSettingsPath);
-                    AppendTextToEditor(jsonContent); // 將 JSON 內容顯示在 TextEditor
+                    // AppendTextToEditor(jsonContent); // 將 JSON 內容顯示在 TextEditor
+                    
+                    // 反序列化 JSON 到字典
+                    var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonContent);
+                    // var jsonDict = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonContent);
+
+                    // 提取 Settings 部分
+                    if (jsonDict.TryGetValue("Settings", out var settings))
+                    {
+                        foreach (var kvp in settings)
+                        {
+                            AppSettings.Add(kvp.Key, kvp.Value);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
-                    // 處理讀取檔案時的異常
                     AppendTextToEditor("Error reading appsettings.json: " + ex.Message);
                 }
             }
@@ -104,124 +364,67 @@ namespace carddatasync3
             {
                 AppendTextToEditor("appsettings.json not found.");
             }
-        }
 
-        private bool CheckAndExecuteFile(MainPage page)
+            downloaction = AppSettings["downloadlocation"];
+            pglocation = AppSettings["pgfingerlocation"];
+            _gBackUpPath = AppSettings["BackUpPath"];
+            _gOutFilePath = AppSettings["fileOutPath"];
+            autoRunTime = AppSettings["AutoRunTime"];
+            test_org_code = AppSettings["test_org_code"];
+            // 正確獲取 LastCheckDate 並解析
+            if (AppSettings["LastCheckDate"] != null)
+            {
+                last_check_date = DateTime.ParseExact(
+                    AppSettings["LastCheckDate"],
+                    "yyyy-MM-dd",
+                    System.Globalization.CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                AppendTextToEditor("LastCheckDate is not set.");
+            }
+            AppendTextToEditor("step1");
+            apiBaseUrl = AppSettings["serverInfo"] + "/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
+            AppendTextToEditor("step1");
+        } // END LoadAppSettings
+
+        private bool CheckFilesExist(MainPage page)
         {
-            string date = "";
-            bool blResult = true;
-            var content = new List<string>();
+            // Load settings from appsettings.json
 
-            if (blResult)
+            var downloadLocation = AppSettings["downloadlocation"];
+            var pgFingerLocation = AppSettings["pgfingerlocation"];
+            var fileOutPath = AppSettings["fileOutPath"];
+            var BackUpPath = AppSettings["BackUpPath"];
+
+            // Check if the directories exist
+            if (!Directory.Exists(downloadLocation))
             {
-                blResult = page.ensureFilePathExists();
-                if (!blResult)
-                {
-                    AppendTextToEditor("The folder for storing PGFinger data does not exist.");
-                    return false;
-                }
+                AppendTextToEditor($"The download folder does not exist: {downloadLocation}");
+                return false;
             }
 
-            if (blResult)
+            if (!Directory.Exists(pgFingerLocation))
             {
-                blResult = page.validatePGFingerExe();
-                if (!blResult)
-                {
-                    AppendTextToEditor("PGFinger.exe does not exist.");
-                    return false;
-                }
+                AppendTextToEditor($"The PGFinger folder does not exist: {pgFingerLocation}");
+                return false;
             }
 
-            if (blResult)
+            if (!Directory.Exists(fileOutPath))
             {
-                if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
-                {
-                    try
-                    {
-                        File.Delete(_gOutFilePath + @"\FingerOut.txt");
-                    }
-                    catch
-                    {
-                        page.show_err("Cannot delete FingerOut.txt file.");
-                        blResult = false;
-                    }
-                }
-                // AppendTextToEditor("Pass validatePGFingerExe");
+                AppendTextToEditor($"The BackUpPath folder does not exist: {fileOutPath}");
+                return false;
             }
 
-            // Call the PGFinger.exe process
-            if (blResult)
+            if (!Directory.Exists(BackUpPath))
             {
-                // AppendTextToEditor("Call the PGFinger.exe process");
-                date = DateTime.Now.ToString("yyyy-MM-dd");
-                try
-                {
-                    AppendTextToEditor("Reading fingerprint data from the machine...");
-                    Process.Start(desktopPath + @"\PGFinger.exe");
-
-                    wait_for_devicecontrol_complete();
-                    AppendTextToEditor("Fingerprint data read completed.");
-                }
-                catch (Exception ex)
-                {
-                    AppendTextToEditor("Error running PGFinger.exe: " + ex.Message);
-                    return false;
-                }
-
-                int counter = 0;
-                while (!File.Exists(_gOutFilePath + @"\FingerOut.txt"))
-                {
-                    Thread.Sleep(1000);
-                    counter++;
-                    if (counter > 20)
-                    {
-                        AppendTextToEditor("FingerOut.txt not generated. Please check the system.");
-                        return false;
-                    }
-                }
+                AppendTextToEditor($"The BackUp folder does not exist: {BackUpPath}");
+                return false;
             }
 
-
-            // Process the fingerprint data
-            if (File.Exists(_gOutFilePath + @"\FingerOut.txt"))
-            {
-                try
-                {
-                    using (var sr = new StreamReader(_gOutFilePath + @"\FingerOut.txt"))
-                    {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            if (line.Trim().Length > 0)
-                                content.Add(line);
-                        }
-                    }
-
-                    if (content.Count <= 0)
-                    {
-                        AppendTextToEditor("FingerOut.txt is empty.");
-                        return false;
-                    }
-
-                    // Backup the file
-                    page.getFilePath1(date);
-                    File.Copy(_gOutFilePath + @"\FingerOut.txt", _gBackUpPath + @"\FingerprintData" + date.Replace("-", "") + ".txt", true);
-
-                    // Simulate updating the card number and employee data
-                    int successCount = content.Count;
-                    AppendTextToEditor($"{successCount} fingerprint records uploaded to HCM.");
-
-                }
-                catch (Exception ex)
-                {
-                    AppendTextToEditor("Error processing FingerOut.txt: " + ex.Message);
-                    return false;
-                }
-            }
-
+            // If both directories exist, return true
             return true;
         }
-
 
         // Utility functions in MainPage class
         public bool ensureFilePathExists()
@@ -231,13 +434,13 @@ namespace carddatasync3
                 Directory.CreateDirectory(_gOutFilePath);
             }
             return true;
-        }
+        } // END ensureFilePathExists
 
-        public bool validatePGFingerExe()
-        {
-            // AppendTextToEditor(File.Exists(pglocation + @"\PGFinger.exe").ToString());
-            return File.Exists(desktopPath + @"\PGFinger.exe");
-        }
+        // public bool validatePGFingerExe()
+        // {
+        //     // AppendTextToEditor(File.Exists(pglocation + @"\PGFinger.exe").ToString());
+        //     return File.Exists(desktopPath + @"\PGFinger.exe");
+        // } // END validatePGFingerExe
 
 
 
@@ -261,7 +464,7 @@ namespace carddatasync3
                 AppendTextToEditor("No internet connection available.");
                 return false;
             }
-        }
+        } // END IsInternetAvailable
 
 
 
@@ -297,40 +500,39 @@ namespace carddatasync3
                 AppendTextToEditor($"Unexpected error: {ex.Message}");
                 return false;
             }
-        }
-
+        } // END PingServer
 
         private void DisplayErrorMessage(string message)
         {
             AppendTextToEditor(message);
             Log.Error(message);
             DisplayAlert("Error", message, "OK");
-        }
+        } // END DisplayErrorMessage
 
         #endregion
 
 
-        // Helper function to append text to XmlEditor
+        // Helper function to append text to textBox2
         private void AppendTextToEditor(string text)
         {
-            if (XmlEditor != null)
+            if (textBox2 != null)
             {
-                XmlEditor.Text += $"{text}\n"; // Append the text line by line
+                textBox2.Text += $"{text}\n"; // Append the text line by line
             }
-        }
+        } // END AppendTextToEditor
 
 
 		#region banner Org code
         private void OnOrgTextChanged(object sender, TextChangedEventArgs e)
         {
             // Update the Label's text with the new value from the Entry
-            outputOrg.Text = e.NewTextValue;
-        }
+            labStoreName.Text = e.NewTextValue;
+        } // END OnOrgTextChanged
 
 
 		#endregion
 
-         #region download from hcm
+        #region download from hcm
         
          // Event handler for the button that downloads data from the external API
         // private async void btn_HCM_to_fingerprint(object sender, EventArgs e)
@@ -1013,26 +1215,30 @@ namespace carddatasync3
             }
         }
 
-         private void show_info(string message)
+        private void show_info(string message)
         {
-            // Display information message (e.g., in UI)
-            XmlEditor.Text += $"{message}\n";
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await DisplayAlert("Info", message, "OK");
+            });
         }
 
         private void show_err(string message)
         {
-            // Display error message
-            XmlEditor.Text += $"Error: {message}\n";
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await DisplayAlert("Error", message, "OK");
+            });
         }
 
         private void show_info_2(string message)
         {
-            XmlEditor.Text += $"{message}\n";
+            textBox2.Text += $"{message}\n";
         }
 
         private void show_err_2(string message)
         {
-            XmlEditor.Text += $"Error: {message}\n";
+            textBox2.Text += $"Error: {message}\n";
         }
 
         private static void wait_for_devicecontrol_complete()
