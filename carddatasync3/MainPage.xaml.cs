@@ -43,7 +43,7 @@ namespace carddatasync3
         public static NameValueCollection AppSettings { get; private set; }      
 
         // private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
-        private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
+        private static string apiBaseUrl;
         private async Task show_error(string message, string caption)
         {
             await DisplayAlert(caption, message, "OK");
@@ -400,6 +400,7 @@ namespace carddatasync3
                                     AppSettings["LastCheckDate"],
                                     "yyyy-MM-dd",
                                     System.Globalization.CultureInfo.InvariantCulture);
+            apiBaseUrl = AppSettings["serverInfo"] + "/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
         } // END LoadAppSettings
 
          private bool CheckFilesExist(MainPage page)
@@ -758,7 +759,7 @@ namespace carddatasync3
             bool result = true;
 
             // Make the GET request to the API
-            string url = $"{apiBaseUrl}?u=AxtimTmpOrg_List&code=BQ0000"; // Modify the query params as needed
+            string url = "S000123"; // Modify the query params as needed
             string responseData;
 
             try
