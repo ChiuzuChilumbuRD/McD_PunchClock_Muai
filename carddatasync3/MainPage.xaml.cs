@@ -345,106 +345,116 @@ namespace carddatasync3
         }
     
         
-        private async void conduct_HCM_to_fingerprint_work_1()
+        private async Task conduct_HCM_to_fingerprint_work_1()
         {
             set_btns_state(false);
 
             try
             {
-                // Example orgCode and punch card file path
-                // Step 1: Execute HCM to Fingerprint thread
-                await Task.Run(() => HCM_to_fingerprint_thread(this));
+                // Step 1: Run HCM to fingerprint thread
+                bool hcmResult = await Task.Run(() => HCM_to_fingerprint_thread(this));
+                if (!hcmResult)
+                {
+                    await DisplayAlert("Error", "Failed to execute HCM to fingerprint thread.", "OK");
+                    return;
+                }
 
-                //wait time
-                //Thread.Sleep(5000);
-
-                // Step 2: Load Employee Data
+                // Step 2: Load HCM Employee Data
                 dynamic hcmEmployeeData = await LoadHCMEmployeeDataAsync();
-
                 if (hcmEmployeeData == null)
                 {
                     await DisplayAlert("Error", "Failed to load HCM employee JSON data.", "OK");
-                    // return;
+                    return;
                 }
-                        else
+                else
                 {
-                    // 將 hcmEmployeeJson.data 轉換為 JArray
-                    var dataArray = (JArray) hcmEmployeeData.data;
-
-                    // 將每個員工資料轉換為匿名物件
-                    var employeeDataList = dataArray.Select(employee => new
-                    {
-                        EmployeeId = (string)employee["EmpNo"],
-                        Name = (string)employee["DisplayName"],
-                        Finger1 = (string)employee["Finger1"],
-                        Finger2 = (string)employee["Finger2"],
-                        CardNo = (string)employee["CardNo"],
-                        AddFlag = (string)employee["addFlag"]
-                    }).ToList();
+                    ParseEmployeeData(hcmEmployeeData);
                 }
 
-                // Step 3: Read Punch Card Data (LoadPunchCardInfo) - Reena
-                // Reads the punch card data from 'punchcard.json'.
-                // TODO: updateDataByEmployeeId (讀取 fingerprint.dat 轉為 json 儲存)
+                // Step 3: Read Punch Card Data
                 dynamic punchCardData = await updateDataByEmployeeId();
-                
-                // read json data
-                // var punchCardJson = await ReadPunchCardJsonAsync();
+                if (punchCardData == null)
+                {
+                    await DisplayAlert("Error", "Failed to load punch card data.", "OK");
+                    return;
+                }
 
-                // Step 4: Compare Employee Data (Rule 1) -Reena
-                // Applies rule 1 to compare employee data from HCM and PunchCard.
-                AppendTextToEditor("Applying Rule 1...");
-                var result1 = Punch_Data_Changing_rule1(hcmEmployeeData, punchCardData);
+                // Step 4: Compare Employee Data (Rule 1)
+                await ApplyRule1Comparison(hcmEmployeeData, punchCardData);
 
-                object comparisonResult1 = result1.Item1;
-                hcmEmployeeData = result1.Item2;
-                punchCardData = result1.Item3;
+                // Step 5: Compare Fingerprint Data (Rule 2)
+                await ApplyRule2Comparison(hcmEmployeeData, punchCardData);
 
-                // Step 5: Compare Fingerprint Data (Rule 2) - Reena
-                // Applies rule 2 to compare fingerprint data.
-                AppendTextToEditor("Applying Rule 2...");
-                var result2 = Punch_Data_Changing_rule2(hcmEmployeeData, punchCardData);
-                object comparisonResult2 = result2.Item1;
-                hcmEmployeeData = result2.Item2;
-                punchCardData = result2.Item3;
-                await DisplayAlert("Compare Result (Rules)", $"Rule1 Result:\n{JsonConvert.SerializeObject(comparisonResult1)}\nRule2 Result:\n{JsonConvert.SerializeObject(comparisonResult2)}", "OK");
-                AppendTextToEditor(JsonConvert.SerializeObject(hcmEmployeeData));
-                AppendTextToEditor(JsonConvert.SerializeObject(punchCardData));
+                // Step 6: Write Data to JSON File
+                WriteDataToFile(punchCardData);
 
-                // Write to .json file
-                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                var fileFingerprintPath = Path.Combine(desktopPath, "FingerData/fingerprint_update.json");
-
-                File.WriteAllText(fileFingerprintPath, JsonConvert.SerializeObject(punchCardData));
-
-                // Step 6: Update Status if Necessary (PSNModify) 
-                // If comparison result shows differences, update employee records.
-                // if (comparisonResult2.NeedsUpdate)
-                // {
-                //     await UpdateEmployeeDataAsync(comparisonResult2);
-                // }
-
-                // Step 7: Save Updated Employee Data (LoadEmpSave)
-                // Saves updated employee data after applying changes.
+                // Step 7: Save Updated Employee Data
                 await SaveEmployeeDataAsync();
 
-                // Step 8: Log the Sync Process (PSNLog)
-                // Logs the synchronization process for audit purposes.
+                // Step 8: Log the Sync Process
                 await LogSyncProcessAsync();
 
-                // Step 9: Return Success
-                // Finalizes the process and returns a success result.
+                // Finalize the process
                 ReturnSuccess();
             }
             catch (Exception ex)
             {
-                // Handles exceptions and returns error message/logs it.
+                // Handle any exceptions and log them
                 HandleError(ex);
             }
-
-            // Optionally, set buttons state back to true after the task completes
-            set_btns_state(true);
+            finally
+            {
+                // Restore the button state after the task completes
+                set_btns_state(true);
+            }
         }
+
+        private async Task<bool> HCM_to_fingerprint_thread(MainPage page)
+        {
+            await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Downloading fingerprint data from HCM..."));
+            bool result = await send_org_code_hcm("S000123"); // Assuming `send_org_code_hcm` returns bool
+            return result;
+        }
+
+        private void ParseEmployeeData(dynamic hcmEmployeeData)
+        {
+            AppendTextToEditor("Parsing HCM employee data...");
+            var dataArray = (JArray)hcmEmployeeData.data;
+            var employeeDataList = dataArray.Select(employee => new
+            {
+                EmployeeId = (string)employee["EmpNo"],
+                Name = (string)employee["DisplayName"],
+                Finger1 = (string)employee["Finger1"],
+                Finger2 = (string)employee["Finger2"],
+                CardNo = (string)employee["CardNo"],
+                AddFlag = (string)employee["addFlag"]
+            }).ToList();
+        }
+
+        private async Task ApplyRule1Comparison(dynamic hcmEmployeeData, dynamic punchCardData)
+        {
+            AppendTextToEditor("Applying Rule 1...");
+            var result = Punch_Data_Changing_rule1(hcmEmployeeData, punchCardData);
+            hcmEmployeeData = result.Item2;
+            punchCardData = result.Item3;
+        }
+
+        private async Task ApplyRule2Comparison(dynamic hcmEmployeeData, dynamic punchCardData)
+        {
+            AppendTextToEditor("Applying Rule 2...");
+            var result = Punch_Data_Changing_rule2(hcmEmployeeData, punchCardData);
+            hcmEmployeeData = result.Item2;
+            punchCardData = result.Item3;
+        }
+
+        private void WriteDataToFile(dynamic punchCardData)
+        {
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var fileFingerprintPath = Path.Combine(desktopPath, "fingerprint_update.json");
+            File.WriteAllText(fileFingerprintPath, JsonConvert.SerializeObject(punchCardData));
+            AppendTextToEditor("Data successfully written to fingerprint_update.json");
+        }
+
 
 
         private async void HCM_to_fingerprint_thread(object obj)
