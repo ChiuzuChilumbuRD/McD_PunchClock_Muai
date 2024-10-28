@@ -2,11 +2,11 @@
 using Serilog;
 using System.Text;
 using System.Net.NetworkInformation;
-using System.Text.Json;
 using System.Collections.Specialized;
 using System.IO;
 using System;
 using System.Reflection;
+using Newtonsoft.Json;
 
 namespace carddatasync3
 {
@@ -29,6 +29,7 @@ namespace carddatasync3
         protected static string autoRunTime;
 
         protected static string test_org_code;
+        protected static string machineIP;
 
         protected static DateTime last_check_date = new DateTime();
 
@@ -107,7 +108,7 @@ namespace carddatasync3
                 AppendTextToEditor(str_msg);
                 // await show_error(str_msg, "組織代碼錯誤");
                 is_init_completed = false;
-                return;
+                // return;
             }
             // ------------------------ 會卡在這裡 --------------------------------
 
@@ -118,7 +119,7 @@ namespace carddatasync3
                 // show_error(str_msg, "組織名稱錯誤");
                 AppendTextToEditor(str_msg);
                 is_init_completed = false;
-                return;
+                // return;
             }
 
             // ================= Step.6 確認打卡機就緒 Check Punch Machine Available ==================
@@ -135,7 +136,7 @@ namespace carddatasync3
 
             // ====================== Step.7 確認人資系統有沒有上線 (ping IP)​ Check if the HR Server is available ============
             // Ping server IP address
-            if (!PingServer("8.8.8.8")) // Example IP, replace with the actual one
+            if (!PingServer(machineIP)) // Example IP, replace with the actual one
             {
                 AppendTextToEditor("Unable to reach the server. Closing application.");
                 return;
@@ -237,39 +238,6 @@ namespace carddatasync3
             return false;
         } // END is_HCM_ready
 
-        // static async Task<string> GetRequestAsync(string orgCode)
-        // {
-        //     // Construct the full URL with the org_code
-        //     string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
-        //     string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
-
-        //     using (var client = new HttpClient())
-        //     {
-        //         try
-        //         {
-        //             HttpResponseMessage response = await client.GetAsync(fullUrl);
-
-        //             if (response.IsSuccessStatusCode)
-        //             {
-        //                 return await response.Content.ReadAsStringAsync();
-        //             }
-        //             else   
-
-        //             {
-        //                 throw new Exception($"Failed to get data from API: {response.StatusCode}");
-        //             }
-        //         }
-        //         catch (HttpRequestException ex)
-        //         {
-        //             throw new Exception($"Failed to connect to the API: {ex.Message}");
-        //         }
-        //         catch (JsonException ex)
-        //         {
-        //             throw new Exception($"Error parsing JSON response: {ex.Message}");
-        //         }
-        //     }
-        // }
-
         public static async Task<bool> send_org_code_hcm(string orgCode)
         {
 
@@ -369,7 +337,7 @@ namespace carddatasync3
                     // AppendTextToEditor(jsonContent); // 將 JSON 內容顯示在 TextEditor
 
                     // 反序列化 JSON 到字典
-                    var jsonDict = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonContent);
+                    var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonContent);
 
                     // 提取 Settings 部分
                     if (jsonDict.TryGetValue("Settings", out var settings))
@@ -400,6 +368,7 @@ namespace carddatasync3
                                     AppSettings["LastCheckDate"],
                                     "yyyy-MM-dd",
                                     System.Globalization.CultureInfo.InvariantCulture);
+            machineIP = AppSettings["machineIP"];
             apiBaseUrl = AppSettings["serverInfo"] + "/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
         } // END LoadAppSettings
 
@@ -568,163 +537,163 @@ namespace carddatasync3
         // 讀取 test_files/ 中的兩個檔案，套用 rules2 並將結果顯示於 alert 中
         private async void Punch_Data_Changing_rule2(object sender, EventArgs e)
         {
-            try
-            {
-                // 使用絕對路徑來讀取 JSON 檔案
-                var fileHCMPath = Path.Combine(_gAPPath, @"\test_files\HCM_fingerprint.json");
-                var filePunchClockPath = Path.Combine(_gAPPath, @"\test_files\PunchClock_fingerprint.json");
+            // try
+            // {
+            //     // 使用絕對路徑來讀取 JSON 檔案
+            //     var fileHCMPath = Path.Combine(_gAPPath, @"\test_files\HCM_fingerprint.json");
+            //     var filePunchClockPath = Path.Combine(_gAPPath, @"\test_files\PunchClock_fingerprint.json");
 
-                // 讀取檔案內容
-                var fileHCMContent = await File.ReadAllTextAsync(fileHCMPath);
-                var filePunchClockContent = await File.ReadAllTextAsync(filePunchClockPath);
+            //     // 讀取檔案內容
+            //     var fileHCMContent = await File.ReadAllTextAsync(fileHCMPath);
+            //     var filePunchClockContent = await File.ReadAllTextAsync(filePunchClockPath);
 
-                // 解析 JSON 檔案，轉換為 List<Dictionary<string, string>>
-                var fileHCMData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(fileHCMContent);
-                var filePunchClockData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(filePunchClockContent);
+            //     // 解析 JSON 檔案，轉換為 List<Dictionary<string, string>>
+            //     var fileHCMData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(fileHCMContent);
+            //     var filePunchClockData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(filePunchClockContent);
 
-                // 比較兩個檔案的資料
-                var comparisonResults = new List<List<bool>>();
+            //     // 比較兩個檔案的資料
+            //     var comparisonResults = new List<List<bool>>();
 
-                // 檢查 HCM 資料，並對應 PunchClock 資料
-                for (int i = 0; i < fileHCMData.Count; i++)
-                {
-                    var empHCM = fileHCMData[i];
-                    var empPunchClock = filePunchClockData.FirstOrDefault(e => e["empNo"] == empHCM["empNo"]); // PunchClock中找到對應員工資料
+            //     // 檢查 HCM 資料，並對應 PunchClock 資料
+            //     for (int i = 0; i < fileHCMData.Count; i++)
+            //     {
+            //         var empHCM = fileHCMData[i];
+            //         var empPunchClock = filePunchClockData.FirstOrDefault(e => e["empNo"] == empHCM["empNo"]); // PunchClock中找到對應員工資料
 
-                    // 初始化比較結果陣列
-                    List<bool> comparison = new List<bool>(); // 假設 HCM 中的所有欄位都需要比較
+            //         // 初始化比較結果陣列
+            //         List<bool> comparison = new List<bool>(); // 假設 HCM 中的所有欄位都需要比較
 
-                    if (empPunchClock != null)
-                    {
-                        // 比較每個欄位
-                        for (int j = 0; j < empHCM.Keys.Count; j++)
-                        {
-                            var key = empHCM.Keys.ElementAt(j); // 取得當前欄位的鍵
-                            if (key != "empNo" && key != "displayName" && key != "addFlag") // 忽略 empNo 欄位的比較
-                            {
-                                // 比較值並將結果存入 comparison 陣列
-                                comparison.Add(empPunchClock[key] == empHCM[key]);
-                            }
-                        }
-                        comparisonResults.Add(comparison);
-                    }
-                }
+            //         if (empPunchClock != null)
+            //         {
+            //             // 比較每個欄位
+            //             for (int j = 0; j < empHCM.Keys.Count; j++)
+            //             {
+            //                 var key = empHCM.Keys.ElementAt(j); // 取得當前欄位的鍵
+            //                 if (key != "empNo" && key != "displayName" && key != "addFlag") // 忽略 empNo 欄位的比較
+            //                 {
+            //                     // 比較值並將結果存入 comparison 陣列
+            //                     comparison.Add(empPunchClock[key] == empHCM[key]);
+            //                 }
+            //             }
+            //             comparisonResults.Add(comparison);
+            //         }
+            //     }
 
-                // 將比較結果轉換為 JSON 字串
-                var comparisonResultJson = JsonSerializer.Serialize(comparisonResults, new JsonSerializerOptions { WriteIndented = true });
+            //     // 將比較結果轉換為 JSON 字串
+            //     var comparisonResultJson = JsonSerializer.Serialize(comparisonResults, new JsonSerializerOptions { WriteIndented = true });
 
-                // 將 comparisonResults 轉換為可讀字符串
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i < comparisonResults.Count; i++)
-                {
-                    stringBuilder.AppendLine($"{string.Join("", comparisonResults[i].Select(result => result ? "0" : "1"))}");
-                }
+            //     // 將 comparisonResults 轉換為可讀字符串
+            //     StringBuilder stringBuilder = new StringBuilder();
+            //     for (int i = 0; i < comparisonResults.Count; i++)
+            //     {
+            //         stringBuilder.AppendLine($"{string.Join("", comparisonResults[i].Select(result => result ? "0" : "1"))}");
+            //     }
 
-                await DisplayAlert("JSON Data Comparison Results", stringBuilder.ToString(), "OK");
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", $"Failed to read files: {ex.Message}", "OK");
-            }
+            //     await DisplayAlert("JSON Data Comparison Results", stringBuilder.ToString(), "OK");
+            // }
+            // catch (Exception ex)
+            // {
+            //     await DisplayAlert("Error", $"Failed to read files: {ex.Message}", "OK");
+            // }
         }
 
         private async void Punch_Data_Changing_rule1(object sender, EventArgs e)
         {
-            try
-            {
-                // 使用相對路徑來讀取 JSON 檔案
-                var fileHCMPath = Path.Combine(_gAPPath, @"\test_files\HCM.json");
-                var filePunchClockPath = Path.Combine(_gAPPath, @"\test_files\PunchClock.json");
-                // var fileHCMPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\HCM.json"; 
-                // var filePunchClockPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\PunchClock.json"; 
+            // try
+            // {
+            //     // 使用相對路徑來讀取 JSON 檔案
+            //     var fileHCMPath = Path.Combine(_gAPPath, @"\test_files\HCM.json");
+            //     var filePunchClockPath = Path.Combine(_gAPPath, @"\test_files\PunchClock.json");
+            //     // var fileHCMPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\HCM.json"; 
+            //     // var filePunchClockPath = @"C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\test_files\PunchClock.json"; 
 
-                // 讀取檔案內容
-                var fileHCMContent = await File.ReadAllTextAsync(fileHCMPath);
-                var filePunchClockContent = await File.ReadAllTextAsync(filePunchClockPath);
+            //     // 讀取檔案內容
+            //     var fileHCMContent = await File.ReadAllTextAsync(fileHCMPath);
+            //     var filePunchClockContent = await File.ReadAllTextAsync(filePunchClockPath);
 
-                // 解析 JSON 檔案，轉換為 List<Dictionary<string, string>>
-                var fileHCMData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(fileHCMContent);
-                var filePunchClockData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(filePunchClockContent);
+            //     // 解析 JSON 檔案，轉換為 List<Dictionary<string, string>>
+            //     var fileHCMData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(fileHCMContent);
+            //     var filePunchClockData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(filePunchClockContent);
 
-                // 比較兩個檔案的資料
-                var comparisonResults = new List<ComparisonResult>();
+            //     // 比較兩個檔案的資料
+            //     var comparisonResults = new List<ComparisonResult>();
 
-                // 檢查 HCM 資料，並對應 PunchClock 資料
-                for (int i = 0; i < fileHCMData.Count; i++)
-                {
-                    var empHCM = fileHCMData[i];
-                    var empPunchClock = filePunchClockData.FirstOrDefault(e => e["empNo"] == empHCM["empNo"]); // PunchClock中找到對應員工資料
+            //     // 檢查 HCM 資料，並對應 PunchClock 資料
+            //     for (int i = 0; i < fileHCMData.Count; i++)
+            //     {
+            //         var empHCM = fileHCMData[i];
+            //         var empPunchClock = filePunchClockData.FirstOrDefault(e => e["empNo"] == empHCM["empNo"]); // PunchClock中找到對應員工資料
 
-                    // 1. 當 HCM 找得到資料，且 addFlag == "D"，但 PunchClock 找不到該筆資料，result="不變"
-                    if (empHCM["addFlag"] == "D" && empPunchClock == null)
-                    {
-                        comparisonResults.Add(new ComparisonResult
-                        {
-                            Key = empHCM["empNo"],
-                            Result = "True",
-                            Failure = "case1: no change"
-                        });
-                    }
-                    // 2. 當 HCM 找得到資料，且 addFlag == "D"，且 PunchClock 找得到該筆資料，result="卡鐘刪除"
-                    else if (empHCM["addFlag"] == "D" && empPunchClock != null)
-                    {
-                        comparisonResults.Add(new ComparisonResult
-                        {
-                            Key = empHCM["empNo"],
-                            Result = "False",
-                            Failure = "case2: PunchClock Deleted"
-                        });
+            //         // 1. 當 HCM 找得到資料，且 addFlag == "D"，但 PunchClock 找不到該筆資料，result="不變"
+            //         if (empHCM["addFlag"] == "D" && empPunchClock == null)
+            //         {
+            //             comparisonResults.Add(new ComparisonResult
+            //             {
+            //                 Key = empHCM["empNo"],
+            //                 Result = "True",
+            //                 Failure = "case1: no change"
+            //             });
+            //         }
+            //         // 2. 當 HCM 找得到資料，且 addFlag == "D"，且 PunchClock 找得到該筆資料，result="卡鐘刪除"
+            //         else if (empHCM["addFlag"] == "D" && empPunchClock != null)
+            //         {
+            //             comparisonResults.Add(new ComparisonResult
+            //             {
+            //                 Key = empHCM["empNo"],
+            //                 Result = "False",
+            //                 Failure = "case2: PunchClock Deleted"
+            //             });
 
-                        // 從 PunchClock 資料中刪除該筆資料
-                        filePunchClockData.Remove(empPunchClock);
-                    }
-                    // 5. 當 HCM 找得到資料，且 addFlag == "A"，但 PunchClock 找不到該筆資料，result="卡鐘增加"
-                    else if (empHCM["addFlag"] == "A" && empPunchClock == null)
-                    {
-                        comparisonResults.Add(new ComparisonResult
-                        {
-                            Key = empHCM["empNo"],
-                            Result = "False",
-                            Failure = "case5: PunchClock Added"
-                        });
-                    }
-                }
+            //             // 從 PunchClock 資料中刪除該筆資料
+            //             filePunchClockData.Remove(empPunchClock);
+            //         }
+            //         // 5. 當 HCM 找得到資料，且 addFlag == "A"，但 PunchClock 找不到該筆資料，result="卡鐘增加"
+            //         else if (empHCM["addFlag"] == "A" && empPunchClock == null)
+            //         {
+            //             comparisonResults.Add(new ComparisonResult
+            //             {
+            //                 Key = empHCM["empNo"],
+            //                 Result = "False",
+            //                 Failure = "case5: PunchClock Added"
+            //             });
+            //         }
+            //     }
 
-                // 繼續檢查 PunchClock 資料中的項目，看看 HCM 是否有對應資料
-                for (int i = 0; i < filePunchClockData.Count; i++)
-                {
-                    var empPunchClock = filePunchClockData[i];
-                    var empHCM = fileHCMData.FirstOrDefault(e => e["empNo"] == empPunchClock["empNo"]); // HCM中找到對應員工資料
+            //     // 繼續檢查 PunchClock 資料中的項目，看看 HCM 是否有對應資料
+            //     for (int i = 0; i < filePunchClockData.Count; i++)
+            //     {
+            //         var empPunchClock = filePunchClockData[i];
+            //         var empHCM = fileHCMData.FirstOrDefault(e => e["empNo"] == empPunchClock["empNo"]); // HCM中找到對應員工資料
 
-                    // 3. 當 HCM 找不到資料，但 PunchClock 找得到該筆資料，result="卡鐘刪除"
-                    if (empHCM == null)
-                    {
-                        comparisonResults.Add(new ComparisonResult
-                        {
-                            Key = empPunchClock["empNo"],
-                            Result = "False",
-                            Failure = "case3: PunchClock Deleted"
-                        });
+            //         // 3. 當 HCM 找不到資料，但 PunchClock 找得到該筆資料，result="卡鐘刪除"
+            //         if (empHCM == null)
+            //         {
+            //             comparisonResults.Add(new ComparisonResult
+            //             {
+            //                 Key = empPunchClock["empNo"],
+            //                 Result = "False",
+            //                 Failure = "case3: PunchClock Deleted"
+            //             });
 
-                        // 從 PunchClock 資料中刪除該筆資料
-                        filePunchClockData.Remove(empPunchClock);
-                    }
-                }
+            //             // 從 PunchClock 資料中刪除該筆資料
+            //             filePunchClockData.Remove(empPunchClock);
+            //         }
+            //     }
 
-                // 將比較結果轉換為 JSON 字串
-                var comparisonResultJson = JsonSerializer.Serialize(comparisonResults, new JsonSerializerOptions { WriteIndented = true });
+            //     // 將比較結果轉換為 JSON 字串
+            //     var comparisonResultJson = JsonSerializer.Serialize(comparisonResults, new JsonSerializerOptions { WriteIndented = true });
 
-                // 顯示比較結果在同一個 Alert
-                await DisplayAlert("JSON Data Comparison Results", comparisonResultJson, "OK");
+            //     // 顯示比較結果在同一個 Alert
+            //     await DisplayAlert("JSON Data Comparison Results", comparisonResultJson, "OK");
 
-                // 將 PunchClock 資料寫回到原始檔案中（更新刪除後的資料）
-                var updatedPunchClockContent = JsonSerializer.Serialize(filePunchClockData, new JsonSerializerOptions { WriteIndented = true });
-                await File.WriteAllTextAsync(filePunchClockPath, updatedPunchClockContent);
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", $"Failed to read files: {ex.Message}", "OK");
-            }
+            //     // 將 PunchClock 資料寫回到原始檔案中（更新刪除後的資料）
+            //     var updatedPunchClockContent = JsonSerializer.Serialize(filePunchClockData, new JsonSerializerOptions { WriteIndented = true });
+            //     await File.WriteAllTextAsync(filePunchClockPath, updatedPunchClockContent);
+            // }
+            // catch (Exception ex)
+            // {
+            //     await DisplayAlert("Error", $"Failed to read files: {ex.Message}", "OK");
+            // }
         }
 
         #endregion
