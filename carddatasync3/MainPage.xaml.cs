@@ -17,6 +17,7 @@ namespace carddatasync3
         protected static string databaseKey = "GAIA.EHR";
         protected static string downloaction;
         protected static string pglocation;
+        protected static string responseData;
 
         // ======================================================================================
         //將備份目錄提出來變成Config
@@ -70,7 +71,7 @@ namespace carddatasync3
         private async void InitializeApp()
         {
             // ================================ Step.0 Lock Button ===============================================
-            // set_btns_state(false);
+            set_btns_state(false);
 
             // ======================= Step.1 取得目前 APP 版本號並印出 Get Current APP Version =====================
             var version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -146,8 +147,7 @@ namespace carddatasync3
             // TODO: 未完成 (沒有 code)
 
             // ====================== Step.9 傳送日誌 use POST Send the Log / => 準備就緒 Ready ========================
-            // TODO: 待確認
-            string orgCode = "S000123"; // You can dynamically retrieve the org code if needed.
+            string orgCode = "S000123"; // "S000123"
             bool postSuccess = await send_org_code_hcm(orgCode);
 
             if (postSuccess)
@@ -171,8 +171,8 @@ namespace carddatasync3
 
         private void getOrgCode()
         {
-            // TODO: 取得廠商代碼
-            string m_name = Environment.MachineName;
+            // TODO: 修改廠商代碼的取得方式
+            string m_name = "S000123"; // TODO: Environment.MachineName
             AppendTextToEditor("Machine name: " + m_name);
             textBox1.Text = string.Empty; // 清空 Entry 控件的文本
 
@@ -729,7 +729,6 @@ namespace carddatasync3
 
             // Make the GET request to the API
             string url = "S000123"; // Modify the query params as needed
-            string responseData;
 
             try
             {
@@ -758,7 +757,7 @@ namespace carddatasync3
         {
             MainThread.InvokeOnMainThreadAsync(() =>
             {
-                textBox2.Text = data; // Update the Editor control with the response data
+                textBox2.Text += data; // Update the Editor control with the response data
             });
         }
 
