@@ -10,17 +10,17 @@
 
             <Grid Padding="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/> <!-- 0-->
-                    <ColumnDefinition Width="*"/><!-- 1-->
-                    <ColumnDefinition Width="*"/><!-- 2-->
-                    <ColumnDefinition Width="*"/> <!-- 3-->
-                    <ColumnDefinition Width="*"/> <!-- 4-->
-                    <ColumnDefinition Width="*"/><!-- 5-->
-                    <ColumnDefinition Width="*"/><!-- 6-->
-                    <ColumnDefinition Width="*"/><!-- 7-->
-                    <ColumnDefinition Width="*"/><!-- 8-->
-                    <ColumnDefinition Width="*"/><!-- 9-->
-                    <ColumnDefinition Width="*"/><!-- 10-->
+                    <ColumnDefinition Width="*"/> <!-- 0 -->
+                    <ColumnDefinition Width="*"/> <!-- 1-->
+                    <ColumnDefinition Width="*"/> <!-- 2 -->
+                    <ColumnDefinition Width="*"/> <!-- 3 -->
+                    <ColumnDefinition Width="*"/> <!-- 4 -->
+                    <ColumnDefinition Width="*"/> <!-- 5 -->
+                    <ColumnDefinition Width="*"/> <!-- 6 -->
+                    <ColumnDefinition Width="*"/> <!-- 7 -->
+                    <ColumnDefinition Width="*"/> <!-- 8 -->
+                    <ColumnDefinition Width="*"/> <!-- 9 -->
+                    <ColumnDefinition Width="*"/> <!-- 10 -->
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/> <!-- 圖例項目行 -->

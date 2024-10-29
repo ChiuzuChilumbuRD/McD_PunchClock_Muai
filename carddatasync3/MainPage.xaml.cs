@@ -97,7 +97,6 @@ namespace carddatasync3
             {
                 AppendTextToEditor("Required file not found. Closing application.");
                 CheckFilesExistLayout.IsVisible = true;
-                CheckFilesExistLabel.TextColor = Colors.Blue;
                 return;
             }
             else CheckFilesExistLayout.IsVisible = false;
@@ -108,7 +107,6 @@ namespace carddatasync3
             {
                 AppendTextToEditor("No internet connection. Closing application.");
                 IsInternetAvailableLayout.IsVisible = true;
-                IsInternetAvailableLabel.TextColor = Colors.Blue;
                 return;
             }
             else IsInternetAvailableLayout.IsVisible = false;
@@ -125,10 +123,9 @@ namespace carddatasync3
                 // await show_error(str_msg, "組織代碼錯誤");
                 is_init_completed = false;
                 GetOrgCodeLayout.IsVisible = true;
-                GetOrgCodeLabel.TextColor = Colors.Blue;
                 // return;
             }
-            else GetOrgCodeLayout.IsEnabled = false;
+            else GetOrgCodeLayout.IsVisible = false;
             // ------------------------ 會卡在這裡 --------------------------------
 
             labStoreName.Text = getCradORGName();
@@ -138,11 +135,10 @@ namespace carddatasync3
                 // show_error(str_msg, "組織名稱錯誤");
                 AppendTextToEditor(str_msg);
                 is_init_completed = false;
-                GetOrgCodeLayout.IsEnabled = true;
-                GetOrgCodeLabel.TextColor = Colors.Blue;
+                GetOrgCodeLayout.IsVisible = true;
                 // return;
             }
-            else GetOrgCodeLayout.IsEnabled = false;
+            else GetOrgCodeLayout.IsVisible = false;
 
             // ================= Step.6 確認打卡機就緒 Check Punch Machine Available ==================
             // TODO: 無法測試，未完成
@@ -152,11 +148,10 @@ namespace carddatasync3
                 // await show_error(str_msg, "連線問題");
                 AppendTextToEditor(str_msg);
                 is_init_completed = false;
-                IsHCMReadyLayout.IsEnabled = true;
-                IsHCMReadyLabel.TextColor = Colors.Blue;
+                IsHCMReadyLayout.IsVisible = true;
                 // return;
             }
-            else IsHCMReadyLayout.IsEnabled = false;
+            else IsHCMReadyLayout.IsVisible = false;
             // ----------------------------------- 會卡在這裡 ------------------------------------------
 
             // ====================== Step.7 確認人資系統有沒有上線 (ping IP)​ Check if the HR Server is available ============
@@ -164,11 +159,10 @@ namespace carddatasync3
             if (!PingServer(machineIP)) // Example IP, replace with the actual one
             {
                 AppendTextToEditor("Unable to reach the server. Closing application.");
-                PingServerLayout.IsEnabled = true;
-                PingServerLabel.TextColor = Colors.Blue;
+                PingServerLayout.IsVisible = true;
                 return;
             }
-            else PingServerLayout.IsEnabled = false;
+            else PingServerLayout.IsVisible = false;
 
             // ====================== Step.8 以組織代碼APP=>回傳版本 Check GuruOutbound service =======================
             // TODO: 未完成 (沒有 code)
@@ -183,13 +177,12 @@ namespace carddatasync3
             if (postSuccess)
             {
                 AppendTextToEditor("Log sent successfully and data saved to FingerIn.json.");
-                SendLogLayout.IsEnabled = false;
+                SendLogLayout.IsVisible = false;
             }
             else
             {
                 AppendTextToEditor("Failed to send log or save data.");
-                SendLogLayout.IsEnabled = true;
-                SendLogLabel.TextColor = Colors.Blue;
+                SendLogLayout.IsVisible = true;
                 return;
             }
 
@@ -390,13 +383,13 @@ namespace carddatasync3
                 catch (Exception ex)
                 {
                     AppendTextToEditor("Error reading appsettings.json: " + ex.Message);
-                    LoadAppSettingsLayout.IsEnabled = true;
+                    LoadAppSettingsLayout.IsVisible = true;
                 }
             }
             else
             {
                 AppendTextToEditor("appsettings.json not found.");
-                LoadAppSettingsLayout.IsEnabled = true;
+                LoadAppSettingsLayout.IsVisible = true;
             }
             
             downloaction = AppSettings["downloadlocation"];
