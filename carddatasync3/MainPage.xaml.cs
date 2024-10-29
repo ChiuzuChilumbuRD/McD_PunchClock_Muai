@@ -164,7 +164,7 @@ namespace carddatasync3
 
             if (postSuccess)
             {
-                AppendTextToEditor("Log sent successfully and data saved to HCM.json.");
+                AppendTextToEditor("Log sent successfully and data saved to FingerIn.json.");
             }
             else
             {
@@ -255,8 +255,18 @@ namespace carddatasync3
 
             try
             {
+                // Define the path for the FingerData directory on the Desktop
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                var fileHCMPath = Path.Combine(desktopPath, @"HCM.json");
+                string fingerDataPath = Path.Combine(desktopPath, "FingerData");
+
+                // Ensure the FingerData directory exists; create if not
+                if (!Directory.Exists(fingerDataPath))
+                {
+                    Directory.CreateDirectory(fingerDataPath);
+                }
+
+                // Define the path for FingerIn.json within FingerData
+                var fileHCMPath = Path.Combine(fingerDataPath, "FingerIn.json");
 
                 // Call the API and get the JSON response
                 string responseData = await GetRequestAsync(orgCode);
@@ -266,7 +276,7 @@ namespace carddatasync3
                 await File.WriteAllTextAsync(fileHCMPath, responseData);
 
                 // Success message (optional)
-                Console.WriteLine("Data has been successfully written to HCM.json");
+                Console.WriteLine("Data has been successfully written to FingerIn.json");
                 return true;
             }
             catch (Exception ex)
@@ -274,7 +284,6 @@ namespace carddatasync3
                 Console.WriteLine($"Error: {ex.Message}");
                 return false;
             }
-            
         }
         
         // Function to handle the API POST request
@@ -638,7 +647,7 @@ namespace carddatasync3
         private void WriteDataToFile(dynamic punchCardData)
         {
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            var fileFingerprintPath = Path.Combine(desktopPath, "fingerprint_update.json");
+            var fileFingerprintPath = Path.Combine(desktopPath, "FingerData/fingerprint_update.json");
             File.WriteAllText(fileFingerprintPath, JsonConvert.SerializeObject(punchCardData));
             AppendTextToEditor("Data successfully written to fingerprint_update.json");
         }
@@ -783,9 +792,9 @@ namespace carddatasync3
                 // Call send_org_code_hcm and check for success
                 bool isSuccessful = await send_org_code_hcm("S000123");
 
-                if (isSuccessful) // Proceed only if HCM.json was created successfully
+                if (isSuccessful) // Proceed only if FingerIn.json was created successfully
                 {
-                    MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("HCM.json created successfully on desktop."));
+                    MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("FingerIn.json created successfully on desktop."));
                     blResult = true; // Set blResult to true, indicating success
                 }
                 else
@@ -1185,7 +1194,7 @@ namespace carddatasync3
             try
             {
                 // string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                // var fileHCMPath = Path.Combine(desktopPath, "FingerData/HCM.json");
+                // var fileHCMPath = Path.Combine(desktopPath, "FingerData/FingerIn.json");
 
                 string jsonContent = hcmEmployeeJsonData; // await File.ReadAllTextAsync(fileHCMPath)
                 dynamic employeeData = JsonConvert.DeserializeObject<dynamic>(jsonContent);
@@ -1204,7 +1213,7 @@ namespace carddatasync3
             // Placeholder for reading punch card data from 'punchcard.json'.
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string inputFilePath = Path.Combine(desktopPath, "fingerprint.dat");
-            string outputFilePath = Path.Combine(desktopPath, "fingerprint.json");
+            string outputFilePath = Path.Combine(desktopPath, "FingerData/fingerprint.json");
 
             // 讀取文件內容
             // 準備 JSON 結構
