@@ -39,6 +39,4 @@ namespace carddatasync3
             return ret_obj;
         }
     }
-
-
 }

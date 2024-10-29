@@ -70,7 +70,7 @@ namespace carddatasync3
             // Call initialization sequence
             InitializeApp();
             //Database Factory 
-             _dbFactory = new DBFactory();
+            _dbFactory = new DBFactory();
         }
 
         #region Initialisation
@@ -156,7 +156,10 @@ namespace carddatasync3
             // TODO: 未完成 (沒有 code)
 
             // ====================== Step.9 傳送日誌 use POST Send the Log / => 準備就緒 Ready ========================
-            string orgCode = "S000123"; // TODO: "S000123"
+            string orgCode = "S000123"; // TODO: textBox1.Text.ToString()
+            string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
+            string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
+            AppendTextToEditor($"url: {fullUrl}");
             bool postSuccess = await send_org_code_hcm(orgCode);
 
             if (postSuccess)
@@ -260,7 +263,7 @@ namespace carddatasync3
                 hcmEmployeeJsonData = responseData;
 
                 // Write the response data to a JSON file
-                // await File.WriteAllTextAsync(fileHCMPath, responseData);
+                await File.WriteAllTextAsync(fileHCMPath, responseData);
 
                 // Success message (optional)
                 Console.WriteLine("Data has been successfully written to HCM.json");
