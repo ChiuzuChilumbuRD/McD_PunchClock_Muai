@@ -87,7 +87,7 @@ namespace carddatasync3
             // ======================= Step.2 匯入設定檔 Load Config (AppSettings.json) =======================
             // 讀取 appsettings.json 存入 AppSettings 中
             LoadAppSettings();
-            LoadAppSettingsLayout.IsEnabled = false;
+            LoadAppSettingsLayout.IsVisible = false;
 
             // Step 2: Check if file exists and execute if found
             // ======================== Step.3 確認資料夾是否存在 Check Folder Exist or Not ====================
