@@ -353,6 +353,7 @@ namespace carddatasync3
             {
                 // Step 1: Run HCM to fingerprint thread
                 bool hcmResult = await Task.Run(() => HCM_to_fingerprint_thread(this));
+                
                 if (!hcmResult)
                 {
                     await DisplayAlert("Error", "Failed to execute HCM to fingerprint thread.", "OK");
