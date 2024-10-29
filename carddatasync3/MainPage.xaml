@@ -7,6 +7,68 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+
+            <Grid Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/> <!-- 第一個項目 -->
+                    <ColumnDefinition Width="*"/> <!-- 第二個項目 -->
+                    <ColumnDefinition Width="*"/> <!-- 第三個項目 -->
+                    <ColumnDefinition Width="*"/> <!-- 第四個項目 -->
+                    <ColumnDefinition Width="*"/> <!-- 第五個項目 -->
+                    <ColumnDefinition Width="*"/> <!-- 第六個項目 -->
+                    <ColumnDefinition Width="*"/> <!-- 第七個項目 -->
+                    <ColumnDefinition Width="*"/> <!-- 第八個項目 -->
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> <!-- 圖例項目行 -->
+                </Grid.RowDefinitions>
+
+                <!-- Step.2: Load Config -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" x:Name="LoadAppSettingsLayout">
+                    <Image Source="load_settings.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="LoadAppSettingsLabel" Text="設定檔不存在" TextColor="{StaticResource Blue}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Step.3: CheckFilesExist -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" x:Name="CheckFilesExistLayout">
+                    <Image Source="folder_not_exist.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="CheckFilesExistLabel" Text="資料夾不存在" TextColor="{StaticResource Blue}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                
+                <!-- Step.4: IsInternetAvailable -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsInternetAvailableLayout">
+                    <Image Source="wifi_disconnected.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="IsInternetAvailableLabel" Text="無網路" TextColor="{StaticResource Blue}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Step.5: Get Current Computer Name -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" x:Name="GetOrgCodeLayout">
+                    <Image Source="org_code.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="GetOrgCodeLabel" Text="組織代碼錯誤" TextColor="{StaticResource Blue}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Step.6: is_HCM_ready -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsHCMReadyLayout">
+                    <Image Source="punch_clock.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="IsHCMReadyLabel" Text="打卡機尚未就緒" TextColor="{StaticResource Blue}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                
+                <!-- Step.7: PingServer -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="5" HorizontalOptions="Center" VerticalOptions="Center" x:Name="PingServerLayout">
+                    <Image Source="ip.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="PingServerLabel" Text="HCM 沒有上線" TextColor="{StaticResource Blue}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Step.9: send_org_code_hcm -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="6" HorizontalOptions="Center" VerticalOptions="Center" x:Name="SendLogLayout">
+                    <Image Source="log.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="SendLogLabel" Text="傳送日誌失敗" TextColor="{StaticResource Blue}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <ImageButton Source="refresh.png" Grid.Row="0" Grid.Column="7" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnRefreshButtonClicked" />
+            </Grid>
+
+
             <!-- HorizontalStackLayout to hold three Entry controls -->
             <FlexLayout 
                 Direction="Row"
@@ -19,7 +81,6 @@
                 <Label Text="組織代碼" Margin="0,10,10,0"/>
                 <Entry x:Name="textBox1" Placeholder="" WidthRequest="300" Margin="0,10,10,0" TextChanged="OnOrgTextChanged" />
                 <Label x:Name="labStoreName" Text="None" TextColor="Red" FontAttributes="Bold" Margin="0,10,10,0" />
-
             </FlexLayout>
 
             <ScrollView>
@@ -29,7 +90,6 @@
                         VerticalOptions="FillAndExpand"
                         HorizontalOptions="FillAndExpand"/>
             </ScrollView>
-
             <Grid VerticalOptions="Center" HorizontalOptions="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -91,7 +151,6 @@
                     <Label Text="趟次資料傳回後端系統，匯入資料庫" WidthRequest="300" HeightRequest="50" FontSize="15" Margin="0,10,0,0" VerticalOptions="FillAndExpand"/>
                 </VerticalStackLayout>
             </Grid>
-            
         </VerticalStackLayout>
     </ScrollView>
 

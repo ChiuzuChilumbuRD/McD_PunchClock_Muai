@@ -54,6 +54,14 @@ dotnet_bot.scale-200.png
 dotnet_bot.scale-400.png
 fingerprint_d.scale-100.png
 fingerprint_u.scale-100.png
+folder_not_exist.scale-100.png
+ip.scale-100.png
+load_settings.scale-100.png
+log.scale-100.png
+org_code.scale-100.png
+punch_clock.scale-100.png
+refresh.scale-100.png
+wifi_disconnected.scale-100.png
 splashSplashScreen.scale-100.png
 splashSplashScreen.scale-125.png
 splashSplashScreen.scale-150.png

@@ -10,7 +10,6 @@ using Microsoft.Practices.EnterpriseLibrary.Data;
 using Newtonsoft.Json;
 using System.Reflection;
 
-
 namespace carddatasync3
 {
     public partial class MainPage : ContentPage
@@ -50,10 +49,7 @@ namespace carddatasync3
         // private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
         private static string apiBaseUrl;
         private static string hcmEmployeeJsonData;
-        private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);        private DBFactory _dbFactory;
-        
-
-
+        private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
         public MainPage()
         {
@@ -69,11 +65,14 @@ namespace carddatasync3
 
             // Call initialization sequence
             InitializeApp();
-            //Database Factory 
-            _dbFactory = new DBFactory();
         }
 
         #region Initialisation
+
+        private void OnRefreshButtonClicked(object sender, EventArgs e)
+        {
+            InitializeApp();
+        }
 
         private async void InitializeApp()
         {
@@ -87,7 +86,11 @@ namespace carddatasync3
 
             // ======================= Step.2 匯入設定檔 Load Config (AppSettings.json) =======================
             // 讀取 appsettings.json 存入 AppSettings 中
-            LoadAppSettings();
+            if(!LoadAppSettings()) {
+                LoadAppSettingsLayout.IsEnabled = true;
+                LoadAppSettingsLabel.TextColor = Colors.Blue;
+            }
+            else LoadAppSettingsLayout.IsEnabled = false;
 
             // Step 2: Check if file exists and execute if found
             // ======================== Step.3 確認資料夾是否存在 Check Folder Exist or Not ====================
@@ -96,16 +99,22 @@ namespace carddatasync3
             if (!CheckFilesExist(this))
             {
                 AppendTextToEditor("Required file not found. Closing application.");
+                CheckFilesExistLayout.IsVisible = true;
+                CheckFilesExistLabel.TextColor = Colors.Blue;
                 return;
             }
+            else CheckFilesExistLayout.IsVisible = false;
 
 
             // =============== Step.4 確認網路連線 Check Internet Available ==================================
             if (!IsInternetAvailable())
             {
                 AppendTextToEditor("No internet connection. Closing application.");
+                IsInternetAvailableLayout.IsVisible = true;
+                IsInternetAvailableLabel.TextColor = Colors.Blue;
                 return;
             }
+            else IsInternetAvailableLayout.IsVisible = false;
 
             // ================== Step.5 取得目前電腦名稱 Get Current Computer Name(GetOrgCode) ===============
             // TODO: 未完成 (getCradORGName)
@@ -118,8 +127,11 @@ namespace carddatasync3
                 AppendTextToEditor(str_msg);
                 // await show_error(str_msg, "組織代碼錯誤");
                 is_init_completed = false;
+                GetOrgCodeLayout.IsVisible = true;
+                GetOrgCodeLabel.TextColor = Colors.Blue;
                 // return;
             }
+            else GetOrgCodeLayout.IsEnabled = false;
             // ------------------------ 會卡在這裡 --------------------------------
 
             labStoreName.Text = getCradORGName();
@@ -129,19 +141,25 @@ namespace carddatasync3
                 // show_error(str_msg, "組織名稱錯誤");
                 AppendTextToEditor(str_msg);
                 is_init_completed = false;
+                GetOrgCodeLayout.IsEnabled = true;
+                GetOrgCodeLabel.TextColor = Colors.Blue;
                 // return;
             }
+            else GetOrgCodeLayout.IsEnabled = false;
 
             // ================= Step.6 確認打卡機就緒 Check Punch Machine Available ==================
             // TODO: 無法測試，未完成
-            // if (!is_HCM_ready())
-            // {
-            //     string str_msg = "HCM連接發生問題，將關閉程式";
-            //     // await show_error(str_msg, "連線問題");
-            //     AppendTextToEditor(str_msg);
-            //     is_init_completed = false;
-            //     return;
-            // }
+            if (!is_HCM_ready())
+            {
+                string str_msg = "HCM連接發生問題，將關閉程式";
+                // await show_error(str_msg, "連線問題");
+                AppendTextToEditor(str_msg);
+                is_init_completed = false;
+                IsHCMReadyLayout.IsEnabled = true;
+                IsHCMReadyLabel.TextColor = Colors.Blue;
+                // return;
+            }
+            else IsHCMReadyLayout.IsEnabled = false;
             // ----------------------------------- 會卡在這裡 ------------------------------------------
 
             // ====================== Step.7 確認人資系統有沒有上線 (ping IP)​ Check if the HR Server is available ============
@@ -149,8 +167,11 @@ namespace carddatasync3
             if (!PingServer(machineIP)) // Example IP, replace with the actual one
             {
                 AppendTextToEditor("Unable to reach the server. Closing application.");
+                PingServerLayout.IsEnabled = true;
+                PingServerLabel.TextColor = Colors.Blue;
                 return;
             }
+            else PingServerLayout.IsEnabled = false;
 
             // ====================== Step.8 以組織代碼APP=>回傳版本 Check GuruOutbound service =======================
             // TODO: 未完成 (沒有 code)
@@ -165,10 +186,13 @@ namespace carddatasync3
             if (postSuccess)
             {
                 AppendTextToEditor("Log sent successfully and data saved to FingerIn.json.");
+                SendLogLayout.IsEnabled = false;
             }
             else
             {
                 AppendTextToEditor("Failed to send log or save data.");
+                SendLogLayout.IsEnabled = true;
+                SendLogLabel.TextColor = Colors.Blue;
                 return;
             }
 
@@ -178,9 +202,9 @@ namespace carddatasync3
         }
 
         #endregion
-
+        
         #region Placeholder Functions
-
+        
         private void getOrgCode()
         {
             // TODO: 修改廠商代碼的取得方式
@@ -338,7 +362,7 @@ namespace carddatasync3
         } // END getCradORGName
 
         // 讀取 appsettings.json 並將相關路徑傳入參數中
-        private void LoadAppSettings()
+        private bool LoadAppSettings()
         {
             AppSettings = new NameValueCollection();
             AppendTextToEditor("Loading appsettings.json...");
@@ -369,11 +393,13 @@ namespace carddatasync3
                 catch (Exception ex)
                 {
                     AppendTextToEditor("Error reading appsettings.json: " + ex.Message);
+                    return false;
                 }
             }
             else
             {
                 AppendTextToEditor("appsettings.json not found.");
+                return false;
             }
             
             downloaction = AppSettings["downloadlocation"];
@@ -388,6 +414,7 @@ namespace carddatasync3
                                     System.Globalization.CultureInfo.InvariantCulture);
             machineIP = AppSettings["machineIP"];
             apiBaseUrl = AppSettings["serverInfo"] + "/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
+            return true;
         } // END LoadAppSettings
 
         private bool CheckFilesExist(MainPage page)
@@ -458,12 +485,12 @@ namespace carddatasync3
 
             if (isConnected)
             {
-                AppendTextToEditor("Internet connection is available.");
+                // AppendTextToEditor("Internet connection is available.");
                 return true;
             }
             else
             {
-                AppendTextToEditor("No internet connection available.");
+                // AppendTextToEditor("No internet connection available.");
                 return false;
             }
         } // END IsInternetAvailable
