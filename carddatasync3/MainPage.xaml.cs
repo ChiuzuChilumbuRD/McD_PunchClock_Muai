@@ -86,11 +86,8 @@ namespace carddatasync3
 
             // ======================= Step.2 匯入設定檔 Load Config (AppSettings.json) =======================
             // 讀取 appsettings.json 存入 AppSettings 中
-            if(!LoadAppSettings()) {
-                LoadAppSettingsLayout.IsEnabled = true;
-                LoadAppSettingsLabel.TextColor = Colors.Blue;
-            }
-            else LoadAppSettingsLayout.IsEnabled = false;
+            LoadAppSettings();
+            LoadAppSettingsLayout.IsEnabled = false;
 
             // Step 2: Check if file exists and execute if found
             // ======================== Step.3 確認資料夾是否存在 Check Folder Exist or Not ====================
@@ -362,7 +359,7 @@ namespace carddatasync3
         } // END getCradORGName
 
         // 讀取 appsettings.json 並將相關路徑傳入參數中
-        private bool LoadAppSettings()
+        private void LoadAppSettings()
         {
             AppSettings = new NameValueCollection();
             AppendTextToEditor("Loading appsettings.json...");
@@ -393,13 +390,13 @@ namespace carddatasync3
                 catch (Exception ex)
                 {
                     AppendTextToEditor("Error reading appsettings.json: " + ex.Message);
-                    return false;
+                    LoadAppSettingsLayout.IsEnabled = true;
                 }
             }
             else
             {
                 AppendTextToEditor("appsettings.json not found.");
-                return false;
+                LoadAppSettingsLayout.IsEnabled = true;
             }
             
             downloaction = AppSettings["downloadlocation"];
@@ -414,7 +411,6 @@ namespace carddatasync3
                                     System.Globalization.CultureInfo.InvariantCulture);
             machineIP = AppSettings["machineIP"];
             apiBaseUrl = AppSettings["serverInfo"] + "/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
-            return true;
         } // END LoadAppSettings
 
         private bool CheckFilesExist(MainPage page)
@@ -550,15 +546,6 @@ namespace carddatasync3
                 textBox2.Text += $"{text}\n"; // Append the text line by line
             }
         } // END AppendTextToEditor
-
-
-		#region banner Org code
-        private void OnOrgTextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Update the Label's text with the new value from the Entry
-            labStoreName.Text = e.NewTextValue;
-        } // END OnOrgTextChanged
-		#endregion
 
          #region download from hcm
 
