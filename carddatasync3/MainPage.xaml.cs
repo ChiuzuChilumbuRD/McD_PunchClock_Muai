@@ -1872,7 +1872,7 @@ namespace carddatasync3
             //     string[] detail = person.Split('!');
             //     string emplyeeid = detail[0];
             //     string date = detail[1];
-            //     string actionType = detail[2];//上班or下班   進or出
+            //     string actionType = detail[2]; //上班 or下班   進 or 出
             //     string time = detail[3];
 
             //     string machineid = "";
@@ -1950,13 +1950,106 @@ namespace carddatasync3
         #region delivery Button
         private async void btn_delivery_upload(object sender, EventArgs e)
         {
-            // Disable buttons while the task is running
             set_btns_state(false);
 
-            await DisplayAlert("Upload Started", "Uploading delivery data...", "OK");
+             await DisplayAlert("Upload Started", "Uploading delivery data...", "OK");
+            //await DeliveryUploadWorkAsync(this);
 
             set_btns_state(true);
         }
+
+
+
+        // Async task to handle delivery upload
+        private async Task DeliveryUploadWorkAsync(MainPage page)
+        {
+            bool isLockTaken = false;
+            ui_sp.TryEnter(ref isLockTaken);
+            if (!isLockTaken)
+            {
+                AppendTextToEditor("Work is canceled.");
+                return;
+            }
+
+            str_current_task = "趟次資料上傳"; // Delivery Data Upload
+            bool result = false;
+
+            try
+            {
+                {
+                    //var opRecorder = InitOpRecorder(page.TextBox1.Text, "Upload delivery data.");
+                   
+                    result = await DeliveryUploadImpAsync(page);
+                    
+                    //UploadOpRecorder(opRecorder, result);
+                }
+            }
+            catch (Exception ex)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error during delivery upload: {ex.Message}"));
+            }
+            finally
+            {
+                if (isLockTaken) ui_sp.Exit();
+            }
+        }
+
+        // Main delivery upload implementation
+        private async Task<bool> DeliveryUploadImpAsync(MainPage page)
+        {
+            bool isSuccess = false;
+            int transferCount = 0;
+
+            // try
+            // {
+            //     string dbConnString = ConfigurationManager.ConnectionStrings[databaseKey].ConnectionString;
+            //     string csvFilePath = ConfigurationManager.AppSettings["DeliveryData"].ToString();
+
+            //     var dataProvider = new DataProvider(); // needs DataHandler.cs
+            //     var dataConsumer = new DataConsumer(); //needs DataHandler.cs
+
+
+            //     await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Reading delivery data..."));
+            //     if (!dataProvider.Init(csvFilePath))
+            //     {
+            //         await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("No delivery data file found, please contact the system administrator."));
+            //         return false;
+            //     }
+
+            //     if (!dataConsumer.Init(dbConnString))
+            //     {
+            //         await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Database connection error, please contact the system administrator."));
+            //         return false;
+            //     }
+
+            //     var recordArray = dataProvider.GetData();
+            //     if (recordArray == null)
+            //     {
+            //         await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error reading delivery data, please contact the system administrator."));
+            //         return false;
+            //     }
+
+            //     await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Uploading delivery data..."));
+            //     transferCount = dataConsumer.ProcessData(recordArray);
+
+            //     if (transferCount < 0)
+            //     {
+            //         await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Database error processing delivery data, please contact the system administrator."));
+            //         return false;
+            //     }
+
+            //     dataProvider.BackupSrcFile(_gBackUpPath);
+            //     await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Successfully uploaded {transferCount} delivery data records."));
+            //     isSuccess = true;
+            // }
+            // catch (Exception ex)
+            // {
+            //     await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error transferring delivery data: {ex.Message}"));
+            // }
+
+            return isSuccess;
+        }
+
         #endregion
 
 
@@ -2031,7 +2124,6 @@ namespace carddatasync3
         }
 
         #endregion
-
 
     }
 }
