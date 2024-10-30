@@ -1304,11 +1304,7 @@ namespace carddatasync3
             // Replace with actual error handling and logging logic.
             Console.WriteLine($"Error: {ex.Message}");
         }
-
-        // Mock data classes and comparison result for illustration purposes:
-        public class Employee { /* Add relevant fields */ }
-        public class PunchCard { /* Add relevant fields */ }
-
+        
         #endregion
 
 
@@ -1522,8 +1518,434 @@ namespace carddatasync3
         }
 
 
-        #endregion
+       #endregion
        
+       #region upload to HCM
+
+        // Event handler for the "Upload to HCM" button click
+        // private async void btn_upload_to_HCM(object sender, EventArgs e)
+        // {
+        //     // Disable buttons while the task is running
+        //     set_btns_state(false);
+
+        //     await DisplayAlert("Upload Started", "Uploading fingerprint data to HCM...", "OK");
+
+        //      set_btns_state(true);
+        // }
+
+        private async void btn_upload_to_HCM(object sender, EventArgs e)
+        {
+            set_btns_state(false);
+
+            // Run the background work using Task.Run for async execution in .NET MAUI
+            await Task.Run(() => upload_to_HCM_thread(this));
+
+            set_btns_state(true);
+        }
+
+        
+        private async Task upload_to_HCM_thread(MainPage thisPage)
+        {
+            bool is_lock_taken = false;
+
+            // Try to acquire lock for the operation
+            ui_sp.TryEnter(ref is_lock_taken);
+            if (!is_lock_taken)
+                return;
+
+            string currentTask = "卡鐘與指紋資料上傳";
+            //OperationRecorder opRecorder = null;
+            bool bResult = false;
+
+            await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Starting door and fingerprint upload process..."));
+
+            // Updating or refreshing connection strings if required
+            //update_conn_str_and_refresh();
+
+            try
+            {
+                {
+                    // First task: Get door data and upload it to HCM
+                    //opRecorder = init_op_recorder(thisPage.TextBox1.Text, "Get door and upload to HCM");
+                    
+                    bResult = await download_door_and_upload_to_HCM(thisPage); // Assuming an async method
+                    
+                    //upload_op_recorder(opRecorder, bResult);
+
+                    // Second task: Upload fingerprints to HCM
+                    //opRecorder = init_op_recorder(thisPage.TextBox1.Text, "Upload FP to HCM");
+                    
+                    bResult = await upload_fingerprint_to_HCM(thisPage);
+                    
+                    //upload_op_recorder(opRecorder, bResult);
+                }
+            }
+            finally
+            {
+                //clear_conn_str(); // Clear connection string after operations
+
+                // Release the lock
+                if (is_lock_taken)
+                    ui_sp.Exit();
+            }
+        }
+
+        private async Task<bool> download_door_and_upload_to_HCM(MainPage page)
+        {
+            bool blResult = true;
+            List<string> content = new List<string>();
+            string date = DateTime.Now.ToString("yyyyMMddHHmm");
+            string cardMachineId = "";
+            string cardMachineIdOut = "";
+            string orgid = "";
+
+            // Check if vendor program directory exists
+            blResult = await CheckDownloadFilePathAsync(page);
+            if (!blResult) return false;
+
+            // Check if vendor executable exists
+            blResult = await CheckDownloadExeExistsAsync(page);
+            if (!blResult) return false;
+
+            // Retry processing previous failed card data if it exists
+            blResult = await RetryCardDataAsync(page);
+            if (!blResult) return false;
+
+            // Call vendor program to download punch card data
+            blResult = await ExecuteVendorProgramAsync(page);
+            if (!blResult) return false;
+
+            // Read punch card data from door.dat
+            blResult = await ReadPunchCardDataAsync(page, content);
+            if (!blResult) return false;
+
+            // Validate door.dat format
+            blResult = ValidateDoorDataFormat(page, content);
+            if (!blResult) return false;
+
+            // Check if punch card machine IDs exist
+            blResult = await CheckPunchCardMachineIdsAsync(page, cardMachineId, cardMachineIdOut);
+            if (!blResult) return false;
+
+            // Insert card data into the database
+            blResult = await InsertCardDataAsync(page, content, cardMachineId, cardMachineIdOut, orgid, date);
+            return blResult;
+        }
+
+        private async Task<bool> CheckDownloadFilePathAsync(MainPage page)
+        {
+            bool result = page.checkDownloadFilePath();
+            if (!result)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: Directory not found."));
+            }
+            return result;
+        }
+
+        private async Task<bool> CheckDownloadExeExistsAsync(MainPage page)
+        {
+            bool result = page.checkIsExistDownloadExe();
+            if (!result)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: download.exe not found. Contact system administrator."));
+            }
+            return result;
+        }
+
+        //NEED TO IMPLEMENT Retry Card Data
+        private async Task<bool> RetryCardDataAsync(MainPage page)
+        {
+            string errorDataPath = Path.Combine(_gBackUpPath, "考勤資料", "ErroData.dat");
+            if (File.Exists(errorDataPath))
+            {
+                Log.Information("Processing ErrorData.dat");
+                // TODO: bool result = await RetryCardData(page);
+                return true; //result;
+            }
+            return true;
+        }
+
+        private async Task<bool> ExecuteVendorProgramAsync(MainPage page)
+        {
+            try
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Synchronizing attendance data... Please do not close the application."));
+
+                string exePath = Path.Combine(downloaction, "download.exe");
+                await ExecuteProcessAsync(exePath, "");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error executing download.exe: {ex.Message}"));
+                return false;
+            }
+        }
+
+
+        private async Task<bool> ReadPunchCardDataAsync(MainPage page, List<string> content)
+        {
+            string filePath = Path.Combine(downloaction, "door.dat");
+            if (!File.Exists(filePath))
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: door.dat not found. Contact system administrator."));
+                return false;
+            }
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(filePath))
+                {
+                    string line;
+                    while ((line = await sr.ReadLineAsync()) != null)
+                    {
+                        content.Add(line);
+                    }
+                }
+                Log.Debug($"Total {content.Count} records read from door.dat.");
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Total {content.Count} records read from door.dat."));
+                return content.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error reading door.dat: {ex.Message}"));
+                return false;
+            }
+        }
+
+
+        private bool ValidateDoorDataFormat(MainPage page, List<string> content)
+        {
+            foreach (string data in content)
+            {
+                string[] detail = data.Split('!');
+                if (detail.Length < 6 || string.IsNullOrEmpty(detail[0]) || detail[1].Length < 6)
+                {
+                    page.show_err_2("Invalid door.dat format. Contact system administrator.");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        
+        private async Task<bool> CheckPunchCardMachineIdsAsync(MainPage page, string cardMachineId, string cardMachineIdOut)
+        {
+            cardMachineId = page.GetCardMachineId(1);
+
+            if (string.IsNullOrEmpty(cardMachineId))
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: Check-in card machine ID is empty. Contact system administrator."));
+                return false;
+            }
+
+            cardMachineIdOut = page.GetCardMachineId(2);
+
+            if (string.IsNullOrEmpty(cardMachineIdOut))
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: Check-out card machine ID is empty. Contact system administrator."));
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task<bool> InsertCardDataAsync(MainPage page, List<string> content, string cradMachineId, string cradMachineIdOut, string orgid, string date)
+        {
+            bool result = page.InsertCardData(content, cradMachineId, cradMachineIdOut, orgid);
+
+            if (!result)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error syncing attendance data. Please retry."));
+                await TryDeleteFileAsync(Path.Combine(_gBackUpPath, "考勤資料", $"FroTimeset_{date}.dat"));
+                await TryDeleteFileAsync(Path.Combine(downloaction, "door.dat"));
+                return false;
+            }
+
+            await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Attendance data synchronization with HCM completed."));
+            return true;
+        }
+
+
+
+
+        private bool checkIsExistDownloadExe()
+        {
+            //return File.Exists("C:/Program Files/Timeset/download.exe");
+            return File.Exists(downloaction+@"\download.exe");
+        }
+
+
+           
+        private async Task ExecuteProcessAsync(string exePath, string arguments)
+        {
+            if (!File.Exists(exePath))
+            {
+                throw new FileNotFoundException("Executable not found.", exePath);
+            }
+
+            try
+            {
+                var processStartInfo = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    Arguments = arguments,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+
+                using (var process = new Process { StartInfo = processStartInfo })
+                {
+                    process.Start();
+
+                    // Asynchronously read the output and error streams
+                    var output = await process.StandardOutput.ReadToEndAsync();
+                    var error = await process.StandardError.ReadToEndAsync();
+
+                    await process.WaitForExitAsync(); // Wait for the process to exit
+
+                    if (process.ExitCode != 0)
+                    {
+                        throw new Exception($"Process exited with code {process.ExitCode}. Error: {error}");
+                    }
+
+                    // Optionally, log the output for debugging
+                    if (!string.IsNullOrWhiteSpace(output))
+                    {
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Process output: {output}"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to execute {exePath}: {ex.Message}", ex);
+            }
+        }
+
+        private string GetCardMachineId(int type)
+        {
+            string id = string.Empty;
+
+            // try
+            // {
+            //     Database db = DatabaseFactory.CreateDatabase(databaseKey);
+            //     DbCommand dc = db.GetStoredProcCommand("usp_McDFingerCreateMachine");
+
+            //     // Determine machine suffix based on type and set the store code parameter
+            //     if (type == 1)
+            //     {
+            //         db.AddInParameter(dc, "@StroeCode", DbType.String, StoreCodeProperty + "-A"); // Assuming StoreCodeProperty replaces textBox1.Text
+            //     }
+            //     else if (type == 2)
+            //     {
+            //         db.AddInParameter(dc, "@StroeCode", DbType.String, StoreCodeProperty + "-B"); // Assuming StoreCodeProperty replaces textBox1.Text
+            //     }
+
+            //     // Execute the stored procedure and retrieve the result
+            //     DataSet ds = db.ExecuteDataSet(dc);
+            //     if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            //     {
+            //         id = ds.Tables[0].Rows[0][0].ToString();
+            //     }
+            // }
+            // catch (Exception ex)
+            // {
+            //     await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error retrieving card machine ID: {ex.Message}"));
+            // }
+
+            return id;
+        }
+
+         private bool InsertCardData(List<string> content, string machineidIn, string machineidOut, string orgid)
+        {
+            bool result = true;
+            // string err = string.Empty;
+            // Database db = DatabaseFactory.CreateDatabase(databaseKey);            
+            // string str_conn = ConfigurationManager.ConnectionStrings[databaseKey].ConnectionString;
+            // string str_user_id = DBHandler.get_user_id_in_conn_string(str_conn);
+
+            // foreach (string person in content)
+            // {
+            //     string[] detail = person.Split('!');
+            //     string emplyeeid = detail[0];
+            //     string date = detail[1];
+            //     string actionType = detail[2];//上班or下班   進or出
+            //     string time = detail[3];
+
+            //     string machineid = "";
+
+            //     string date_use = "20" + date.Substring(0, 2) + "-" + date.Substring(2, 2) + "-" + date.Substring(4, 2);
+            //     string time_use = time.Substring(0, 2) + ":" + time.Substring(2, 2) + ":" + time.Substring(4, 2);
+            //     try
+            //     {
+            //         //string sql = string.Format(@"DELETE FROM  ATDTIMECARDDATA WHERE PERSONID IN (SELECT PERSONID FROM PSNACCOUNT WHERE EMPLOYEEID='{5}') AND TIMECARDDATE='{0}' AND TIMECARDTIME='{1}';INSERT INTO ATDTIMECARDDATA SELECT PERSONID,NEWID(),'{0}','{1}','{2}','{3}','{4}','1','0',GETDATE(),'SA',GETDATE(),'SA','',''  FROM PSNACCOUNT WHERE EMPLOYEEID='{5}'", date_use, time_use, DateTime.Now.ToString("yyyy-MM-dd"), machineid, orgid, emplyeeid);
+            //         string sql = "";
+
+            //         switch (actionType)
+            //         {
+            //             case "1":
+            //                 machineid = machineidIn;
+            //                 break;
+
+            //             case "2":
+            //                 machineid = machineidOut;
+            //                 break;
+            //             default:
+            //                 break;
+            //         }
+            //         //string str_sql_template = string.Empty;
+            //         //str_sql_template += @"DELETE FROM  ATDTIMECARDDATA ";
+            //         //str_sql_template += @"WHERE PERSONID IN (SELECT PERSONID FROM VW_MDS_PSNACCOUNT WHERE EMPLOYEEID='{5}') ";
+            //         //str_sql_template += @"AND TIMECARDDATE='{0}' AND TIMECARDTIME='{1}';";
+            //         //str_sql_template += @"INSERT INTO ATDTIMECARDDATA ";
+            //         //str_sql_template += @"(PERSONID, DATAID, TIMECARDDATE, TIMECARDTIME, RECEIVEDATE, MACHINEID, DEPARTMENTID, DATAFROM, BUSINESSUNITID, CREATIONTIME, CREATEDBY, LASTUPDATETIME, LASTUPDATEDBY, REASONID, CONFIGID) "
+            //         //str_sql_template += @"SELECT PERSONID,NEWID(),'{0}','{1}','{2}','{3}','{4}','1','0',GETDATE(),'mds',GETDATE(),'mds','',''  ";
+            //         //str_sql_template += @"FROM VW_MDS_PSNACCOUNT WHERE EMPLOYEEID='{5}'";
+            //         //TODO Need to fix.
+            //         sql = string.Format(@"INSERT INTO ATDTIMECARDDATA (PERSONID, DATAID, TIMECARDDATE, TIMECARDTIME, RECEIVEDATE, MACHINEID, DEPARTMENTID, DATAFROM, BUSINESSUNITID, CREATIONTIME, CREATEDBY, LASTUPDATETIME, LASTUPDATEDBY, REASONID, CONFIGID) SELECT PERSONID,NEWID(),'{0}','{1}','{2}','{3}','{4}','1','0',GETDATE(),'{6}',GETDATE(),'{6}','',''  FROM VW_MDS_PSNACCOUNT WHERE EMPLOYEEID='{5}'", date_use, time_use, DateTime.Now.ToString("yyyy-MM-dd"), machineid, orgid, emplyeeid, str_user_id);
+
+            //         Log.Verbose($"[InsertCardData] SQL command. {sql}");
+            //         DbCommand dc = db.GetSqlStringCommand(sql);
+            //         db.ExecuteNonQuery(dc);
+            //     }
+            //     catch(Exception ex)
+            //     {
+            //         Log.Error(ex, "[InsertCardData] failed.");
+            //         continue; 
+            //         //result = false;
+            //         //StreamWriter sw = new StreamWriter(_gBackUpPath +@"\考勤資料\ErroData.dat",true);
+            //         //sw.WriteLine(person);
+            //         //sw.Close();
+            //     }               
+            // }
+            return result;
+        }
+
+        
+        private async Task TryDeleteFileAsync(string filePath)
+        {
+            try
+            {
+                // Ensures that file deletion is asynchronous to prevent UI blocking.
+                if (File.Exists(filePath))
+                {
+                    await Task.Run(() => File.Delete(filePath)); // Run File.Delete asynchronously
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Successfully deleted file: {filePath}"));
+                }
+            }
+            catch (Exception ex)
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error deleting file: {filePath}. Exception: {ex.Message}"));
+            }
+        }
+
+
+        
+        #endregion
+
 
         #region delivery Button
         private async void btn_delivery_upload(object sender, EventArgs e)
@@ -1535,21 +1957,6 @@ namespace carddatasync3
 
             set_btns_state(true);
         }
-        #endregion
-
-        #region upload to HCM
-
-        // Event handler for the "Upload to HCM" button click
-        private async void btn_upload_to_HCM(object sender, EventArgs e)
-        {
-            // Disable buttons while the task is running
-            set_btns_state(false);
-
-            await DisplayAlert("Upload Started", "Uploading fingerprint data to HCM...", "OK");
-
-             set_btns_state(true);
-        }
-
         #endregion
 
 
