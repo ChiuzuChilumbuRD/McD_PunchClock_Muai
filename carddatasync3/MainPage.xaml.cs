@@ -172,6 +172,7 @@ namespace carddatasync3
             string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
             string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
             AppendTextToEditor($"url: {fullUrl}");
+            
             bool postSuccess = await send_org_code_hcm(orgCode);
 
             if (postSuccess)
@@ -1522,16 +1523,6 @@ namespace carddatasync3
        
        #region upload to HCM
 
-        // Event handler for the "Upload to HCM" button click
-        // private async void btn_upload_to_HCM(object sender, EventArgs e)
-        // {
-        //     // Disable buttons while the task is running
-        //     set_btns_state(false);
-
-        //     await DisplayAlert("Upload Started", "Uploading fingerprint data to HCM...", "OK");
-
-        //      set_btns_state(true);
-        // }
 
         private async void btn_upload_to_HCM(object sender, EventArgs e)
         {
@@ -1653,17 +1644,145 @@ namespace carddatasync3
         }
 
         //NEED TO IMPLEMENT Retry Card Data
+        // private async Task<bool> RetryCardDataAsync(MainPage page)
+        // {
+        //     string errorDataPath = Path.Combine(_gBackUpPath, "考勤資料", "ErroData.dat");
+        //     if (File.Exists(errorDataPath))
+        //     {
+        //         Log.Information("Processing ErrorData.dat");
+        //         // TODO: bool result = await RetryCardData(page);
+        //         return true; //result;
+        //     }
+        //     return true;
+        // }
+
+
         private async Task<bool> RetryCardDataAsync(MainPage page)
         {
-            string errorDataPath = Path.Combine(_gBackUpPath, "考勤資料", "ErroData.dat");
-            if (File.Exists(errorDataPath))
+            bool blResult = true;
+            string orgid = "";
+            List<string> content = new List<string>();
+
+            string machineIdIn = page.GetCardMachineId(1);
+            if (string.IsNullOrEmpty(machineIdIn))
             {
-                Log.Information("Processing ErrorData.dat");
-                // TODO: bool result = await RetryCardData(page);
-                return true; //result;
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: Check-in punch card machine ID is empty. Contact system administrator."));
+                blResult = false;
             }
-            return true;
+
+            string machineIdOut = page.GetCardMachineId(2);
+            if (string.IsNullOrEmpty(machineIdOut))
+            {
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: Check-out punch card machine ID is empty. Contact system administrator."));
+                blResult = false;
+            }
+
+            if (blResult)
+            {
+                //orgid = page.getCradORGId();
+
+                string errorDataPath = Path.Combine(_gBackUpPath, "考勤資料", "ErroData.dat");
+
+                // Read failed data from ErrorData.dat file
+                if (File.Exists(errorDataPath))
+                {
+                    try
+                    {
+                        using (StreamReader sr = new StreamReader(errorDataPath))
+                        {
+                            string line;
+                            while ((line = await sr.ReadLineAsync()) != null)
+                            {
+                                content.Add(line);
+                            }
+                        }
+
+                        Log.Debug($"Loaded {content.Count} failed records from ErrorData.dat.");
+                    }
+                    catch (Exception ex)
+                    {
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error reading ErrorData.dat: {ex.Message}"));
+                        return false;
+                    }
+
+                    if (content.Count > 0)
+                    {
+                        string errorEmployees = string.Empty;
+                        foreach (string person in content)
+                        {
+                            try
+                            {
+                                await RetryIndividualCardDataAsync(person, machineIdIn, machineIdOut, orgid);
+                            }
+                            catch (Exception ex)
+                            {
+                                string employeeId = person.Split('!')[0];
+                                errorEmployees += $"{employeeId}, ";
+                                Log.Error(ex, "Card sync failure for employee ID: " + employeeId);
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(errorEmployees))
+                        {
+                            errorEmployees = errorEmployees.TrimEnd(',', ' ');
+                            await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error: Sync failed for employees: {errorEmployees}. Contact system administrator."));
+                            blResult = false;
+                        }
+                    }
+                }
+            }
+
+            // Delete the ErrorData.dat file if processing was successful
+            if (blResult && File.Exists(Path.Combine(_gBackUpPath, "考勤資料", "ErroData.dat")))
+            {
+                File.Delete(Path.Combine(_gBackUpPath, "考勤資料", "ErroData.dat"));
+            }
+
+            return blResult;
         }
+
+         private async Task RetryIndividualCardDataAsync(string person, string machineIdIn, string machineIdOut, string orgid)
+        {
+            string[] details = person.Split('!');
+            if (details.Length < 4) throw new ArgumentException("Invalid record format in ErrorData.dat.");
+
+            string employeeId = details[0];
+            string date = details[1];
+            string actionType = details[2];
+            string time = details[3];
+
+            string dateFormatted = $"20{date.Substring(0, 2)}-{date.Substring(2, 2)}-{date.Substring(4, 2)}";
+            string timeFormatted = $"{time.Substring(0, 2)}:{time.Substring(2, 2)}:{time.Substring(4, 2)}";
+            string machineId = actionType == "1" ? machineIdIn : machineIdOut;
+
+            // Construct SQL command
+            string sql = $@"
+                DELETE FROM ATDTIMECARDDATA 
+                WHERE PERSONID IN (SELECT PERSONID FROM VW_MDS_PSNACCOUNT WHERE EMPLOYEEID='{employeeId}') 
+                AND TIMECARDDATE='{dateFormatted}' 
+                AND TIMECARDTIME='{timeFormatted}';
+                
+                INSERT INTO ATDTIMECARDDATA (PERSONID, DATAID, TIMECARDDATE, TIMECARDTIME, RECEIVEDATE, MACHINEID, DEPARTMENTID, DATAFROM, BUSINESSUNITID, CREATIONTIME, CREATEDBY, LASTUPDATETIME, LASTUPDATEDBY, REASONID, CONFIGID) 
+                SELECT PERSONID, NEWID(), '{dateFormatted}', '{timeFormatted}', '{DateTime.Now:yyyy-MM-dd}', '{machineId}', '{orgid}', '1', '0', GETDATE(), 'mds', GETDATE(), 'mds', '', ''  
+                FROM VW_MDS_PSNACCOUNT WHERE EMPLOYEEID='{employeeId}'";
+
+            Log.Verbose("Executing SQL: " + sql);
+
+            // Execute the SQL command
+            await ExecuteDatabaseCommandAsync(sql);
+        }
+
+        private async Task ExecuteDatabaseCommandAsync(string sql)
+        {
+            // Database db = DatabaseFactory.CreateDatabase(databaseKey);
+            // using (DbCommand command = db.GetSqlStringCommand(sql))
+            // {
+            //     await Task.Run(() => db.ExecuteNonQuery(command));  // Executing synchronously within Task.Run for async compatibility
+            // }
+        }
+
+
+
 
         private async Task<bool> ExecuteVendorProgramAsync(MainPage page)
         {
@@ -1947,7 +2066,9 @@ namespace carddatasync3
         #endregion
 
 
+
         #region delivery Button
+        
         private async void btn_delivery_upload(object sender, EventArgs e)
         {
             set_btns_state(false);
