@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="carddatasync3.M">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20,0"
+            Spacing="25"
+            >
+
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/> <!-- 0-->
+                    <ColumnDefinition Width="200"/><!-- 1-->
+                    <ColumnDefinition Width="*"/><!-- 2-->
+                    <ColumnDefinition Width="*"/> <!-- 3-->
+                    <ColumnDefinition Width="*"/> <!-- 4-->
+                    <ColumnDefinition Width="*"/><!-- 5-->
+                    <ColumnDefinition Width="*"/><!-- 6-->
+                    <ColumnDefinition Width="*"/><!-- 7-->
+                    <ColumnDefinition Width="*"/><!-- 8-->
+                    <ColumnDefinition Width="*"/><!-- 9-->
+                    <ColumnDefinition Width="*"/><!-- 10-->
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> <!-- 圖例項目行 -->
+                </Grid.RowDefinitions>
+
+               <!--Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" Text="組織代碼"  FontAttributes="Bold" FontSize="20"/-->
+                <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" x:Name="labStoreName" Text="範例餐廳" FontSize="20"  FontAttributes="Bold" />
+
+
+              <Entry Grid.Row="0" Grid.Column="1"
+       HorizontalOptions="FillAndExpand"
+       VerticalOptions="FillAndExpand"
+       x:Name="textBox1"
+       Placeholder=""
+       BackgroundColor="Transparent"
+       HeightRequest="30" />
+                
+                
+                <!-- Step.2: Load Config -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" x:Name="LoadAppSettingsLayout">
+                    <Image Source="load_settings.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="LoadAppSettingsLabel" Text="設定檔不存在" TextColor="{StaticResource Blue}" HorizontalOptions="Center" FontSize="8"/>
+                </VerticalStackLayout>
+
+                <!-- Step.3: CheckFilesExist -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" x:Name="CheckFilesExistLayout">
+                    <Image Source="folder_not_exist.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="CheckFilesExistLabel" Text="資料夾不存在" TextColor="{StaticResource Blue}" HorizontalOptions="Center"  FontSize="8"/>
+                </VerticalStackLayout>
+                
+                <!-- Step.4: IsInternetAvailable -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="5" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsInternetAvailableLayout">
+                    <Image Source="wifi_disconnected.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="IsInternetAvailableLabel" Text="無網路" TextColor="{StaticResource Blue}" HorizontalOptions="Center"  FontSize="8"/>
+                </VerticalStackLayout>
+
+                <!-- Step.5: Get Current Computer Name -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="6" HorizontalOptions="Center" VerticalOptions="Center" x:Name="GetOrgCodeLayout">
+                    <Image Source="org_code.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="GetOrgCodeLabel" Text="組織代碼錯誤" TextColor="{StaticResource Blue}" HorizontalOptions="Center"  FontSize="8"/>
+                </VerticalStackLayout>
+
+                <!-- Step.6: is_HCM_ready -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="7" HorizontalOptions="Center" VerticalOptions="Center" x:Name="PingServerLayout">
+                    <Image Source="punch_clock.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="PingServerLabel" Text="打卡機尚未就緒" TextColor="{StaticResource Blue}" HorizontalOptions="Center"  FontSize="8"/>
+                </VerticalStackLayout>
+                
+                <!-- Step.7: PingServer -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="8" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsHCMReadyLayout">
+                    <Image Source="ip.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="IsHCMReadyLabel" Text="HCM 沒有上線" TextColor="{StaticResource Blue}" HorizontalOptions="Center"  FontSize="8"/>
+                </VerticalStackLayout>
+
+                <!-- Step.9: send_org_code_hcm -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="9" HorizontalOptions="Center" VerticalOptions="Center" x:Name="SendLogLayout">
+                    <Image Source="log.png" WidthRequest="16" HeightRequest="16" Margin="5,0"/>
+                    <Label x:Name="SendLogLabel" Text="傳送日誌失敗" TextColor="{StaticResource Blue}" HorizontalOptions="Center"  FontSize="8"/>
+                </VerticalStackLayout>
+
+                <ImageButton Source="refresh.png" Grid.Row="0" Grid.Column="10" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnRefreshButtonClicked" />
+            </Grid>
+
+            <ScrollView>
+                <Editor x:Name="textBox2"
+                        AutoSize="TextChanges"
+                        IsReadOnly="True"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="250" />
+            </ScrollView>
+
+            <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- First Button (HCM to Fingerprint) -->
+                <VerticalStackLayout Grid.Column="0" Grid.Row="0" Margin="0,0,10,10">
+                    <ContentView x:Name="btnHCMToFingerprint" WidthRequest="300" HeightRequest="200">
+                        <ContentView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="btn_HCM_to_fingerprint"/> <!-- Event handler for clicks -->
+                        </ContentView.GestureRecognizers>
+                        <Frame BorderColor="Gray" CornerRadius="5" Padding="10" HasShadow="True">
+                            <VerticalStackLayout>
+                                <Label Text="員工資料匯入指紋機" HorizontalOptions="Center" FontSize="20" Margin="0,10,0,0" VerticalOptions="End"/>
+                                <Image Source="fingerprint_d.png" WidthRequest="300" HeightRequest="100" Aspect="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </ContentView>
+                    <!--Label Text="新進、離職、資源維護(調撥)" WidthRequest="300" HeightRequest="50" FontSize="15" Margin="0,10,0,0" VerticalOptions="FillAndExpand"/-->
+                </VerticalStackLayout>
+
+                <!-- Second Button (Upload to HCM) -->
+                <VerticalStackLayout Grid.Column="1" Grid.Row="0" Margin="0,0,10,10">
+                    <ContentView x:Name="btnUploadToHCM" WidthRequest="300" HeightRequest="200">
+                        <ContentView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="btn_upload_to_HCM"/> <!-- Event handler for clicks -->
+                        </ContentView.GestureRecognizers>
+                        <Frame BorderColor="Gray" CornerRadius="5" Padding="10" HasShadow="True">
+                            <VerticalStackLayout>
+                                <Label Text="卡鐘與指紋資料上傳" HorizontalOptions="Center" FontSize="20" Margin="0,10,0,0" VerticalOptions="End"/>
+                                <Image Source="fingerprint_u.png" WidthRequest="300" HeightRequest="100" Aspect="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </ContentView>
+                    <Label Text="卡鐘內刷卡與指紋資料上傳至HCM" WidthRequest="300" HeightRequest="50" FontSize="15" Margin="0,10,0,0" VerticalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
+
+                <!-- Third Button (Delivery Upload) -->
+                <VerticalStackLayout Grid.Column="2" Grid.Row="0" Margin="0,0,10,10">
+                    <ContentView x:Name="btnDeliveryUpload" WidthRequest="300" HeightRequest="200">
+                        <ContentView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="btn_delivery_upload"/> <!-- Event handler for clicks -->
+                        </ContentView.GestureRecognizers>
+                        <Frame BorderColor="Gray" CornerRadius="5" Padding="10" HasShadow="True">
+                            <VerticalStackLayout>
+                                <Label Text="趟次資料上傳" HorizontalOptions="Center" FontSize="20" Margin="0,10,0,0" VerticalOptions="End"/>
+                                <Image Source="btn_delivery_upload.png" WidthRequest="300" HeightRequest="100" Aspect="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </ContentView>
+                    <Label Text="趟次資料傳回後端系統，匯入資料庫" WidthRequest="300" HeightRequest="50" FontSize="15" Margin="0,10,0,0" VerticalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

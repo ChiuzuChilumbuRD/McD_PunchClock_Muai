@@ -54,6 +54,7 @@ C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Re
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\appiconWideTile.scale-200.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\appiconWideTile.scale-400.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\btn_delivery_upload.scale-100.png
+C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\configuration.scale-100.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\dotnet_bot.scale-100.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\dotnet_bot.scale-125.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\dotnet_bot.scale-150.png
@@ -68,6 +69,7 @@ C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Re
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\org_code.scale-100.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\punch_clock.scale-100.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\refresh.scale-100.png
+C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\save.scale-100.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\wifi_disconnected.scale-100.png
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\appsettings.json
 C:\Users\reena.tsai\Documents\maui-guru\McD_PunchClock_Muai\carddatasync3\bin\Release\net8.0-windows10.0.19041.0\win10-x64\publish\CoreMessagingXP.dll

@@ -1,0 +1,1514 @@
+00:47:07 App initialization Start
+00:47:07 Loading appsettings.json...
+00:47:07 
+00:47:07 The Folders are all ready.
+00:47:07 Checking Internet connection...
+00:47:07 將組織代碼代入
+00:47:07 Machine name: CHENGCHEN24E7
+00:47:07 test_org_code 00106
+00:47:07 使用測試用帳號
+00:47:07 tOrgCode: S0000106
+00:47:09 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:47:10 Pinging server at 8.8.8.8...
+00:47:10 Server at 8.8.8.8 is reachable. Response time: 54 ms
+00:47:10 okay get Data:Your log data here
+
+00:47:10 Log sent successfully 
+00:47:10 App initialization completed.
+00:47:29 App initialization Start
+00:47:29 Loading appsettings.json...
+00:47:29 
+00:47:29 The Folders are all ready.
+00:47:29 Checking Internet connection...
+00:47:29 將組織代碼代入
+00:47:29 Machine name: CHENGCHEN24E7
+00:47:29 test_org_code 00106
+00:47:29 使用測試用帳號
+00:47:29 tOrgCode: S0000106
+00:47:30 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:47:30 Pinging server at 8.8.8.8...
+00:47:31 Server at 8.8.8.8 is reachable. Response time: 83 ms
+00:47:31 okay get Data:Your log data here
+
+00:47:31 Log sent successfully 
+00:47:31 App initialization completed.
+00:52:20 App initialization Start
+00:52:21 Loading appsettings.json...
+00:52:21 
+00:52:21 The Folders are all ready.
+00:52:21 Checking Internet connection...
+00:52:21 將組織代碼代入
+00:52:21 Machine name: CHENGCHEN24E7
+00:52:21 test_org_code 00106
+00:52:21 使用測試用帳號
+00:52:21 tOrgCode: S0000106
+00:52:22 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:52:22 Pinging server at 8.8.8.8...
+00:52:22 Server at 8.8.8.8 is reachable. Response time: 129 ms
+00:52:25 okay get Data:Your log data here
+
+00:52:26 Log sent successfully 
+00:52:26 App initialization completed.
+00:53:49 App initialization Start
+00:53:49 Loading appsettings.json...
+00:53:49 
+00:53:49 The Folders are all ready.
+00:53:49 Checking Internet connection...
+00:53:49 將組織代碼代入
+00:53:49 Machine name: CHENGCHEN24E7
+00:53:49 test_org_code 00106
+00:53:49 使用測試用帳號
+00:53:49 tOrgCode: S0000106
+00:53:50 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:53:50 Pinging server at 8.8.8.8...
+00:53:50 Server at 8.8.8.8 is reachable. Response time: 38 ms
+00:53:50 okay get Data:Your log data here
+
+00:53:50 Log sent successfully 
+00:53:50 App initialization completed.
+00:55:06 App initialization Start
+00:55:06 Loading appsettings.json...
+00:55:06 
+00:55:06 The Folders are all ready.
+00:55:06 Checking Internet connection...
+00:55:06 將組織代碼代入
+00:55:06 Machine name: CHENGCHEN24E7
+00:55:06 test_org_code 00106
+00:55:06 使用測試用帳號
+00:55:06 tOrgCode: S0000106
+00:55:07 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:55:07 Pinging server at 8.8.8.8...
+00:55:07 Server at 8.8.8.8 is reachable. Response time: 111 ms
+00:55:08 okay get Data:Your log data here
+
+00:55:08 Log sent successfully 
+00:55:08 App initialization completed.
+00:55:56 App initialization Start
+00:55:56 Loading appsettings.json...
+00:55:56 
+00:55:56 The Folders are all ready.
+00:55:56 Checking Internet connection...
+00:55:56 將組織代碼代入
+00:55:56 Machine name: CHENGCHEN24E7
+00:55:56 test_org_code 00106
+00:55:56 使用測試用帳號
+00:55:56 tOrgCode: S0000106
+00:55:58 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:55:58 Pinging server at 8.8.8.8...
+00:55:58 Server at 8.8.8.8 is reachable. Response time: 45 ms
+00:55:58 okay get Data:Your log data here
+
+00:55:58 Log sent successfully 
+00:55:58 App initialization completed.
+00:58:29 App initialization Start
+00:58:29 Loading appsettings.json...
+00:58:29 
+00:58:29 The Folders are all ready.
+00:58:29 Checking Internet connection...
+00:58:29 將組織代碼代入
+00:58:29 Machine name: CHENGCHEN24E7
+00:58:29 test_org_code 00106
+00:58:29 使用測試用帳號
+00:58:29 tOrgCode: S0000106
+00:58:30 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:58:30 Pinging server at 8.8.8.8...
+00:58:30 Server at 8.8.8.8 is reachable. Response time: 112 ms
+00:58:31 okay get Data:Your log data here
+
+00:58:31 Log sent successfully 
+00:58:31 App initialization completed.
+01:02:08 App initialization Start
+01:02:08 Loading appsettings.json...
+01:02:08 
+01:02:08 The Folders are all ready.
+01:02:08 Checking Internet connection...
+01:02:08 將組織代碼代入
+01:02:08 Machine name: CHENGCHEN24E7
+01:02:08 test_org_code 00106
+01:02:08 使用測試用帳號
+01:02:08 tOrgCode: S0000106
+01:02:09 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+01:02:09 Pinging server at 8.8.8.8...
+01:02:09 Server at 8.8.8.8 is reachable. Response time: 45 ms
+01:02:10 okay get Data:Your log data here
+
+01:02:10 Log sent successfully 
+01:02:10 App initialization completed.
+01:04:05 App initialization Start
+01:04:05 Loading appsettings.json...
+01:04:05 
+01:04:05 The Folders are all ready.
+01:04:05 Checking Internet connection...
+01:04:05 將組織代碼代入
+01:04:05 Machine name: CHENGCHEN24E7
+01:04:05 test_org_code 00106
+01:04:05 使用測試用帳號
+01:04:05 tOrgCode: S0000106
+01:04:06 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+01:04:06 Pinging server at 8.8.8.8...
+01:04:06 Server at 8.8.8.8 is reachable. Response time: 141 ms
+01:04:06 okay get Data:Your log data here
+
+01:04:06 Log sent successfully 
+01:04:06 App initialization completed.
+08:50:05 App initialization Start
+08:50:05 Loading appsettings.json...
+08:50:05 
+08:50:05 The Folders are all ready.
+08:50:05 Checking Internet connection...
+08:50:05 將組織代碼代入
+08:50:05 Machine name: CHENGCHEN24E7
+08:50:05 test_org_code 00106
+08:50:05 使用測試用帳號
+08:50:05 tOrgCode: S0000106
+08:50:08 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+08:50:08 Pinging server at 8.8.8.8...
+08:50:08 Server at 8.8.8.8 is reachable. Response time: 7 ms
+08:50:08 okay get Data:Your log data here
+
+08:50:08 Log sent successfully 
+08:50:08 App initialization completed.
+08:50:37 App initialization Start
+08:50:37 Loading appsettings.json...
+08:50:37 
+08:50:37 The Folders are all ready.
+08:50:37 Checking Internet connection...
+08:50:37 將組織代碼代入
+08:50:37 Machine name: CHENGCHEN24E7
+08:50:37 test_org_code 00106
+08:50:37 使用測試用帳號
+08:50:37 tOrgCode: S0000106
+08:50:37 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+08:50:38 Pinging server at 8.8.8.8...
+08:50:38 Server at 8.8.8.8 is reachable. Response time: 15 ms
+08:50:38 okay get Data:Your log data here
+
+08:50:38 Log sent successfully 
+08:50:38 App initialization completed.
+08:56:09 App initialization Start
+08:56:09 Loading appsettings.json...
+08:56:09 
+08:56:09 The Folders are all ready.
+08:56:09 Checking Internet connection...
+08:56:09 將組織代碼代入
+08:56:09 Machine name: CHENGCHEN24E7
+08:56:09 test_org_code 00106
+08:56:09 使用測試用帳號
+08:56:09 tOrgCode: S0000106
+08:56:10 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+08:56:10 Pinging server at 8.8.8.8...
+08:56:10 Server at 8.8.8.8 is reachable. Response time: 8 ms
+08:56:11 okay get Data:Your log data here
+
+08:56:11 Log sent successfully 
+08:56:11 App initialization completed.
+08:56:47 Downloading fingerprint data from HCM...
+08:56:48 Data has been successfully written to FingerIn.json
+08:56:48 Data has been successfully written to FingerIn.json. Time spent: 261.6544 ms
+08:56:48 C:\Program Files\Timeset\PGFinger.exe
+08:56:48 C:\Finger\FingerOut.txt
+08:56:48 工號005,員工姓名9vv,A123456789,AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX,ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX,A
+08:56:48 工號006,員工姓名4542,B123456789,BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX,YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX,A
+08:56:48 工號007,員工姓名777,C123456789,CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX,XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX,A
+08:56:48 {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號005",
+      "displayName": "員工姓名9vv",
+      "cardNo": "A123456789",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號006",
+      "displayName": "員工姓名4542",
+      "cardNo": "B123456789",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號007",
+      "displayName": "員工姓名777",
+      "cardNo": "C123456789",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+08:59:01 App initialization Start
+08:59:01 Loading appsettings.json...
+08:59:01 
+08:59:01 The Folders are all ready.
+08:59:01 Checking Internet connection...
+08:59:01 將組織代碼代入
+08:59:01 Machine name: CHENGCHEN24E7
+08:59:01 test_org_code 00106
+08:59:01 使用測試用帳號
+08:59:01 tOrgCode: S0000106
+08:59:02 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+08:59:02 Pinging server at 8.8.8.8...
+08:59:02 Server at 8.8.8.8 is reachable. Response time: 7 ms
+08:59:03 okay get Data:Your log data here
+
+08:59:03 Log sent successfully 
+08:59:03 App initialization completed.
+09:01:57 App initialization Start
+09:01:57 Loading appsettings.json...
+09:01:57 
+09:01:57 The Folders are all ready.
+09:01:57 Checking Internet connection...
+09:01:57 將組織代碼代入
+09:01:57 Machine name: CHENGCHEN24E7
+09:01:57 test_org_code 00106
+09:01:57 使用測試用帳號
+09:01:57 tOrgCode: S0000106
+09:01:58 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:01:58 Pinging server at 8.8.8.8...
+09:01:58 Server at 8.8.8.8 is reachable. Response time: 6 ms
+09:01:58 okay get Data:Your log data here
+
+09:01:58 Log sent successfully 
+09:01:58 App initialization completed.
+09:19:47 App initialization Start
+09:19:47 Loading appsettings.json...
+09:19:47 
+09:19:47 The Folders are all ready.
+09:19:47 Checking Internet connection...
+09:19:47 將組織代碼代入
+09:19:47 Machine name: CHENGCHEN24E7
+09:19:47 test_org_code 00106
+09:19:47 使用測試用帳號
+09:19:47 tOrgCode: S0000106
+09:19:48 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:19:48 Pinging server at 8.8.8.8...
+09:19:48 Server at 8.8.8.8 is reachable. Response time: 64 ms
+09:19:49 okay get Data:Your log data here
+
+09:19:49 Log sent successfully 
+09:19:49 App initialization completed.
+09:23:47 App initialization Start
+09:23:47 Loading appsettings.json...
+09:23:47 
+09:23:47 The Folders are all ready.
+09:23:47 Checking Internet connection...
+09:23:47 將組織代碼代入
+09:23:47 Machine name: CHENGCHEN24E7
+09:23:47 test_org_code 00106
+09:23:47 使用測試用帳號
+09:23:47 tOrgCode: S0000106
+09:23:47 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:23:48 Pinging server at 8.8.8.8...
+09:23:48 Server at 8.8.8.8 is reachable. Response time: 7 ms
+09:23:48 okay get Data:Your log data here
+
+09:23:48 Log sent successfully 
+09:23:48 App initialization completed.
+09:24:53 App initialization Start
+09:24:53 Loading appsettings.json...
+09:24:53 
+09:24:53 The Folders are all ready.
+09:24:53 Checking Internet connection...
+09:24:53 將組織代碼代入
+09:24:53 Machine name: CHENGCHEN24E7
+09:24:53 test_org_code 00106
+09:24:53 使用測試用帳號
+09:24:53 tOrgCode: S0000106
+09:24:54 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:24:54 Pinging server at 8.8.8.8...
+09:24:54 Server at 8.8.8.8 is reachable. Response time: 94 ms
+09:24:55 okay get Data:Your log data here
+
+09:24:55 Log sent successfully 
+09:24:55 App initialization completed.
+09:30:08 App initialization Start
+09:30:08 Loading appsettings.json...
+09:30:08 
+09:30:08 The Folders are all ready.
+09:30:08 Checking Internet connection...
+09:30:08 將組織代碼代入
+09:30:08 Machine name: CHENGCHEN24E7
+09:30:08 test_org_code 00106
+09:30:08 使用測試用帳號
+09:30:08 tOrgCode: S0000106
+09:30:09 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:30:09 Pinging server at 8.8.8.8...
+09:30:09 Server at 8.8.8.8 is reachable. Response time: 7 ms
+09:30:09 okay get Data:Your log data here
+
+09:30:09 Log sent successfully 
+09:30:09 App initialization completed.
+09:31:15 App initialization Start
+09:31:15 Loading appsettings.json...
+09:31:15 
+09:31:15 The Folders are all ready.
+09:31:15 Checking Internet connection...
+09:31:15 將組織代碼代入
+09:31:15 Machine name: CHENGCHEN24E7
+09:31:15 test_org_code 00106
+09:31:15 使用測試用帳號
+09:31:15 tOrgCode: S0000106
+09:31:16 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:31:16 Pinging server at 8.8.8.8...
+09:31:16 Server at 8.8.8.8 is reachable. Response time: 17 ms
+09:31:17 okay get Data:Your log data here
+
+09:31:17 Log sent successfully 
+09:31:17 App initialization completed.
+09:32:58 App initialization Start
+09:32:59 Loading appsettings.json...
+09:32:59 
+09:32:59 The Folders are all ready.
+09:32:59 Checking Internet connection...
+09:32:59 將組織代碼代入
+09:32:59 Machine name: CHENGCHEN24E7
+09:32:59 test_org_code 00106
+09:32:59 使用測試用帳號
+09:32:59 tOrgCode: S0000106
+09:32:59 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:32:59 Pinging server at 8.8.8.8...
+09:32:59 Server at 8.8.8.8 is reachable. Response time: 7 ms
+09:33:00 okay get Data:Your log data here
+
+09:33:00 Log sent successfully 
+09:33:00 App initialization completed.
+09:33:59 App initialization Start
+09:33:59 Loading appsettings.json...
+09:33:59 
+09:33:59 The Folders are all ready.
+09:33:59 Checking Internet connection...
+09:33:59 將組織代碼代入
+09:33:59 Machine name: CHENGCHEN24E7
+09:33:59 test_org_code 00106
+09:33:59 使用測試用帳號
+09:33:59 tOrgCode: S0000106
+09:34:00 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:34:00 Pinging server at 8.8.8.8...
+09:34:00 Server at 8.8.8.8 is reachable. Response time: 6 ms
+09:34:00 okay get Data:Your log data here
+
+09:34:00 Log sent successfully 
+09:34:00 App initialization completed.
+23:21:15 App initialization Start
+23:21:15 Loading appsettings.json...
+23:21:15 
+23:21:15 The Folders are all ready.
+23:21:15 Checking Internet connection...
+23:21:15 將組織代碼代入
+23:21:15 Machine name: CHENGCHEN24E7
+23:21:15 test_org_code 00106
+23:21:15 使用測試用帳號
+23:21:15 tOrgCode: S0000106
+23:21:17 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:21:17 Pinging Machine at 8.8.8.8...
+23:21:17 Server at 8.8.8.8 is reachable. Response time: 69 ms
+23:21:17 okay get Data:Your log data here
+
+23:21:17 Log sent successfully 
+23:21:17 App initialization completed.
+23:21:21 Downloading fingerprint data from HCM...
+23:21:22 Data has been successfully written to FingerIn.json
+23:21:22 Data has been successfully written to FingerIn.json. Time spent: 412.1923 ms
+23:21:22 C:\Program Files\Timeset\PGFinger.exe
+23:21:22 Completed reading fingerprint from the fingerprint machine.
+23:21:22 Checking for the FingeOut.txt file...
+23:28:00 App initialization Start
+23:28:00 Loading appsettings.json...
+23:28:00 
+23:28:00 The Folders are all ready.
+23:28:00 Checking Internet connection...
+23:28:00 將組織代碼代入
+23:28:00 Machine name: CHENGCHEN24E7
+23:28:00 test_org_code 00106
+23:28:00 使用測試用帳號
+23:28:00 tOrgCode: S0000106
+23:28:01 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:28:01 Pinging Machine at 8.8.8.8...
+23:28:01 Server at 8.8.8.8 is reachable. Response time: 80 ms
+23:28:01 okay get Data:Your log data here
+
+23:28:01 Log sent successfully 
+23:28:01 App initialization completed.
+23:28:06 Downloading fingerprint data from HCM...
+23:28:07 Data has been successfully written to FingerIn.json
+23:28:07 Data has been successfully written to FingerIn.json. Time spent: 508.0212 ms
+23:28:07 C:\Program Files\Timeset\PGFinger.exe
+23:28:07 378377,陸裕偉,716237236, , ,A
+23:28:07 246724,陳珮丰,1141992155,ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//, ,A
+23:28:07 226211,陳沛鈺, ,DADSADdASDASLDKASDJK;SADSADLASDASLDKSDLKASJD'SADJKALSDJLKSJDASDASDKASDASDSdASDASLDALSDASDASDASD
+23:28:07 ADASDHKASDHASJKDHAKHHkjashjkdjkaskdhasduashda/das/d/asdhiasdh/adasd/sa/d/dasd/sadasd/asd//dasdasdas//das/das/d/asdadas/dksakdaklsdas/dsada/da/sd/asd/as/dadasdsadia/sidiw/i2d3/3dj23kd23/2dkji3dj/23d2/3d2jd3d2jddj32/ddj3d2dj2d23jdjdjd23/2dj,
+23:28:07 jsgcjhhjaghsgdahsdasgdasghdasdhsgdasd21/2/1d/12h12dhi1hd2ioh/12hdi12hdihd1ld1d1h1ld1/hd12dh12dh12di21d1oh2/d1h2d1oidho12hdi21hdh1dh1d12dh12hdh12diH?LJKSADJASDHSAHDHIUSAHIU2I1I21HIU1HIUIU11D1UDUIH2DHUI12DH21IU/2D1Dhd/hhIHIHO/IIDI3O2I/31HE1I21H2LEH/12EHI21HKLE2'E'P2E12E12EPO12EP21PEP'1E1E/12E12E1/2E12'E12EPO12EPO2EP12EP1,B
+23:28:07 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:28:07 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:29:52 App initialization Start
+23:29:53 Loading appsettings.json...
+23:29:53 
+23:29:53 The Folders are all ready.
+23:29:53 Checking Internet connection...
+23:29:53 將組織代碼代入
+23:29:53 Machine name: CHENGCHEN24E7
+23:29:53 test_org_code 00106
+23:29:53 使用測試用帳號
+23:29:53 tOrgCode: S0000106
+23:29:53 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:29:53 Pinging Machine at 8.8.8.8...
+23:29:54 Server at 8.8.8.8 is reachable. Response time: 32 ms
+23:29:54 okay get Data:Your log data here
+
+23:29:54 Log sent successfully 
+23:29:54 App initialization completed.
+23:30:02 Downloading fingerprint data from HCM...
+23:30:02 Data has been successfully written to FingerIn.json
+23:30:02 Data has been successfully written to FingerIn.json. Time spent: 404.8593 ms
+23:30:02 C:\Program Files\Timeset\PGFinger.exe
+23:30:02 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [],
+  "modelStatus": null
+}
+23:30:02 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:02 result: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:04 Downloading fingerprint data from HCM...
+23:30:05 Data has been successfully written to FingerIn.json
+23:30:05 Data has been successfully written to FingerIn.json. Time spent: 1044.3905 ms
+23:30:05 C:\Program Files\Timeset\PGFinger.exe
+23:30:05 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [],
+  "modelStatus": null
+}
+23:30:05 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:05 result: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:06 Downloading fingerprint data from HCM...
+23:30:06 Data has been successfully written to FingerIn.json
+23:30:06 Data has been successfully written to FingerIn.json. Time spent: 419.4384 ms
+23:30:06 C:\Program Files\Timeset\PGFinger.exe
+23:30:06 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [],
+  "modelStatus": null
+}
+23:30:06 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:06 result: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:07 Downloading fingerprint data from HCM...
+23:30:07 Data has been successfully written to FingerIn.json
+23:30:07 Data has been successfully written to FingerIn.json. Time spent: 375.3773 ms
+23:30:07 C:\Program Files\Timeset\PGFinger.exe
+23:30:07 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [],
+  "modelStatus": null
+}
+23:30:07 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:07 result: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:08 Downloading fingerprint data from HCM...
+23:30:08 Data has been successfully written to FingerIn.json
+23:30:08 Data has been successfully written to FingerIn.json. Time spent: 418.784 ms
+23:30:08 C:\Program Files\Timeset\PGFinger.exe
+23:30:09 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [],
+  "modelStatus": null
+}
+23:30:09 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:09 result: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:09 Downloading fingerprint data from HCM...
+23:30:10 Data has been successfully written to FingerIn.json
+23:30:10 Data has been successfully written to FingerIn.json. Time spent: 409.5052 ms
+23:30:10 C:\Program Files\Timeset\PGFinger.exe
+23:30:10 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [],
+  "modelStatus": null
+}
+23:30:10 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:30:10 result: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:31:26 App initialization Start
+23:31:26 Loading appsettings.json...
+23:31:26 
+23:31:26 The Folders are all ready.
+23:31:26 Checking Internet connection...
+23:31:26 將組織代碼代入
+23:31:26 Machine name: CHENGCHEN24E7
+23:31:26 test_org_code 00106
+23:31:26 使用測試用帳號
+23:31:26 tOrgCode: S0000106
+23:31:27 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:31:27 Pinging Machine at 8.8.8.8...
+23:31:27 Server at 8.8.8.8 is reachable. Response time: 51 ms
+23:31:28 okay get Data:Your log data here
+
+23:31:28 Log sent successfully 
+23:31:28 App initialization completed.
+23:31:34 Downloading fingerprint data from HCM...
+23:31:34 Data has been successfully written to FingerIn.json
+23:31:34 Data has been successfully written to FingerIn.json. Time spent: 338.3143 ms
+23:31:34 C:\Program Files\Timeset\PGFinger.exe
+23:31:34 Completed reading fingerprint from the fingerprint machine.
+23:31:34 Checking for the FingeOut.txt file...
+23:31:56 Error: FingeOut.txt file was not generated by PGFinger.exe. Please contact the system administrator.
+23:32:31 App initialization Start
+23:32:31 Loading appsettings.json...
+23:32:31 
+23:32:31 The Folders are all ready.
+23:32:31 Checking Internet connection...
+23:32:31 將組織代碼代入
+23:32:31 Machine name: CHENGCHEN24E7
+23:32:31 test_org_code 00106
+23:32:31 使用測試用帳號
+23:32:31 tOrgCode: S0000106
+23:32:32 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:32:32 Pinging Machine at 8.8.8.8...
+23:32:32 Server at 8.8.8.8 is reachable. Response time: 75 ms
+23:32:33 okay get Data:Your log data here
+
+23:32:33 Log sent successfully 
+23:32:33 App initialization completed.
+23:32:37 Downloading fingerprint data from HCM...
+23:32:37 Data has been successfully written to FingerIn.json
+23:32:37 Data has been successfully written to FingerIn.json. Time spent: 404.7897 ms
+23:32:37 C:\Program Files\Timeset\PGFinger.exe
+23:32:37 Error reading FingeOut.txt: Could not find file 'C:\Finger\FingerOut.txt'.
+23:32:54 Downloading fingerprint data from HCM...
+23:32:55 Data has been successfully written to FingerIn.json
+23:32:55 Data has been successfully written to FingerIn.json. Time spent: 493.1435 ms
+23:32:55 C:\Program Files\Timeset\PGFinger.exe
+23:32:55 378377,陸裕偉,716237236, , ,A
+23:32:55 246724,陳珮丰,1141992155,ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//, ,A
+23:32:55 226211,陳沛鈺, ,DADSADdASDASLDKASDJK;SADSADLASDASLDKSDLKASJD'SADJKALSDJLKSJDASDASDKASDASDSdASDASLDALSDASDASDASD
+23:32:55 ADASDHKASDHASJKDHAKHHkjashjkdjkaskdhasduashda/das/d/asdhiasdh/adasd/sa/d/dasd/sadasd/asd//dasdasdas//das/das/d/asdadas/dksakdaklsdas/dsada/da/sd/asd/as/dadasdsadia/sidiw/i2d3/3dj23kd23/2dkji3dj/23d2/3d2jd3d2jddj32/ddj3d2dj2d23jdjdjd23/2dj,
+23:32:55 jsgcjhhjaghsgdahsdasgdasghdasdhsgdasd21/2/1d/12h12dhi1hd2ioh/12hdi12hdihd1ld1d1h1ld1/hd12dh12dh12di21d1oh2/d1h2d1oidho12hdi21hdh1dh1d12dh12hdh12diH?LJKSADJASDHSAHDHIUSAHIU2I1I21HIU1HIUIU11D1UDUIH2DHUI12DH21IU/2D1Dhd/hhIHIHO/IIDI3O2I/31HE1I21H2LEH/12EHI21HKLE2'E'P2E12E12EPO12EP21PEP'1E1E/12E12E1/2E12'E12EPO12EPO2EP12EP1,B
+23:32:56 Downloading fingerprint data from HCM...
+23:32:56 Data has been successfully written to FingerIn.json
+23:32:56 Data has been successfully written to FingerIn.json. Time spent: 420.2523 ms
+23:32:56 C:\Program Files\Timeset\PGFinger.exe
+23:32:56 378377,陸裕偉,716237236, , ,A
+23:32:57 246724,陳珮丰,1141992155,ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//, ,A
+23:32:57 226211,陳沛鈺, ,DADSADdASDASLDKASDJK;SADSADLASDASLDKSDLKASJD'SADJKALSDJLKSJDASDASDKASDASDSdASDASLDALSDASDASDASD
+23:32:57 ADASDHKASDHASJKDHAKHHkjashjkdjkaskdhasduashda/das/d/asdhiasdh/adasd/sa/d/dasd/sadasd/asd//dasdasdas//das/das/d/asdadas/dksakdaklsdas/dsada/da/sd/asd/as/dadasdsadia/sidiw/i2d3/3dj23kd23/2dkji3dj/23d2/3d2jd3d2jddj32/ddj3d2dj2d23jdjdjd23/2dj,
+23:32:57 jsgcjhhjaghsgdahsdasgdasghdasdhsgdasd21/2/1d/12h12dhi1hd2ioh/12hdi12hdihd1ld1d1h1ld1/hd12dh12dh12di21d1oh2/d1h2d1oidho12hdi21hdh1dh1d12dh12hdh12diH?LJKSADJASDHSAHDHIUSAHIU2I1I21HIU1HIUIU11D1UDUIH2DHUI12DH21IU/2D1Dhd/hhIHIHO/IIDI3O2I/31HE1I21H2LEH/12EHI21HKLE2'E'P2E12E12EPO12EP21PEP'1E1E/12E12E1/2E12'E12EPO12EPO2EP12EP1,B
+23:34:19 App initialization Start
+23:34:19 Loading appsettings.json...
+23:34:20 
+23:34:20 The Folders are all ready.
+23:34:20 Checking Internet connection...
+23:34:20 將組織代碼代入
+23:34:20 Machine name: CHENGCHEN24E7
+23:34:20 test_org_code 00106
+23:34:20 使用測試用帳號
+23:34:20 tOrgCode: S0000106
+23:34:21 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:34:21 Pinging Machine at 8.8.8.8...
+23:34:21 Server at 8.8.8.8 is reachable. Response time: 49 ms
+23:34:21 okay get Data:Your log data here
+
+23:34:21 Log sent successfully 
+23:34:21 App initialization completed.
+23:34:25 Downloading fingerprint data from HCM...
+23:34:27 Data has been successfully written to FingerIn.json
+23:34:27 Data has been successfully written to FingerIn.json. Time spent: 1588.7525 ms
+23:34:27 C:\Program Files\Timeset\PGFinger.exe
+23:34:27 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:34:39 Downloading fingerprint data from HCM...
+23:34:39 Data has been successfully written to FingerIn.json
+23:34:39 Data has been successfully written to FingerIn.json. Time spent: 384.9946 ms
+23:34:39 C:\Program Files\Timeset\PGFinger.exe
+23:34:39 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:34:46 Downloading fingerprint data from HCM...
+23:34:46 Data has been successfully written to FingerIn.json
+23:34:46 Data has been successfully written to FingerIn.json. Time spent: 405.785 ms
+23:34:46 C:\Program Files\Timeset\PGFinger.exe
+23:34:46 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:34:55 Downloading fingerprint data from HCM...
+23:34:56 Data has been successfully written to FingerIn.json
+23:34:56 Data has been successfully written to FingerIn.json. Time spent: 433.737 ms
+23:34:56 C:\Program Files\Timeset\PGFinger.exe
+23:34:56 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:35:44 App initialization Start
+23:35:44 Loading appsettings.json...
+23:35:44 
+23:35:44 The Folders are all ready.
+23:35:44 Checking Internet connection...
+23:35:44 將組織代碼代入
+23:35:44 Machine name: CHENGCHEN24E7
+23:35:44 test_org_code 00106
+23:35:44 使用測試用帳號
+23:35:44 tOrgCode: S0000106
+23:35:45 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:35:45 Pinging Machine at 8.8.8.8...
+23:35:45 Server at 8.8.8.8 is reachable. Response time: 39 ms
+23:35:46 okay get Data:Your log data here
+
+23:35:46 Log sent successfully 
+23:35:46 App initialization completed.
+23:35:51 Downloading fingerprint data from HCM...
+23:35:51 Data has been successfully written to FingerIn.json
+23:35:51 Data has been successfully written to FingerIn.json. Time spent: 384.1381 ms
+23:35:51 C:\Program Files\Timeset\PGFinger.exe
+23:35:51 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:35:51 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:35:53 Downloading fingerprint data from HCM...
+23:35:53 Data has been successfully written to FingerIn.json
+23:35:53 Data has been successfully written to FingerIn.json. Time spent: 337.0618 ms
+23:35:53 C:\Program Files\Timeset\PGFinger.exe
+23:35:53 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:35:53 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:40:29 App initialization Start
+23:40:29 Loading appsettings.json...
+23:40:29 
+23:40:29 The Folders are all ready.
+23:40:29 Checking Internet connection...
+23:40:29 將組織代碼代入
+23:40:29 Machine name: CHENGCHEN24E7
+23:40:29 test_org_code 00106
+23:40:29 使用測試用帳號
+23:40:29 tOrgCode: S0000106
+23:40:30 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:40:30 Pinging Machine at 8.8.8.8...
+23:40:30 Server at 8.8.8.8 is reachable. Response time: 30 ms
+23:40:31 okay get Data:Your log data here
+
+23:40:31 Log sent successfully 
+23:40:31 App initialization completed.
+23:40:36 Downloading fingerprint data from HCM...
+23:40:37 Data has been successfully written to FingerIn.json
+23:40:37 Data has been successfully written to FingerIn.json. Time spent: 632.0762 ms
+23:40:37 C:\Program Files\Timeset\PGFinger.exe
+23:40:37 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:40:37 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:40:37 result: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "D"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "D"
+    }
+  ],
+  "modelStatus": null
+}
+23:48:22 App initialization Start
+23:48:22 Loading appsettings.json...
+23:48:22 
+23:48:22 The Folders are all ready.
+23:48:22 Checking Internet connection...
+23:48:22 將組織代碼代入
+23:48:22 Machine name: CHENGCHEN24E7
+23:48:22 test_org_code 00106
+23:48:22 使用測試用帳號
+23:48:22 tOrgCode: S0000106
+23:48:24 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+23:48:24 Pinging Machine at 8.8.8.8...
+23:48:24 Server at 8.8.8.8 is reachable. Response time: 51 ms
+23:48:24 okay get Data:Your log data here
+
+23:48:24 Log sent successfully 
+23:48:24 App initialization completed.
+23:48:29 Downloading fingerprint data from HCM...
+23:48:29 Data has been successfully written to FingerIn.json
+23:48:29 Data has been successfully written to FingerIn.json. Time spent: 402.7869 ms
+23:48:29 C:\Program Files\Timeset\PGFinger.exe
+23:48:29 Original punchMachineEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:48:29 Original hcmEmployeeJson: {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+23:48:29 result: {
+  "flag": true,
+  "message": "Data processed successfully.",
+  "data": [
+    {
+      "empNo": "工號001",
+      "displayName": "員工姓名1",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "A123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號002",
+      "displayName": "員工姓名2",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "B123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "工號003",
+      "displayName": "員工姓名3",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "cardNo": "C123456789",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "378377",
+      "displayName": "陸裕偉",
+      "cardNo": "716237236",
+      "finger1": "",
+      "finger2": "",
+      "addFlag": "D"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "1141992155",
+      "finger1": "ddssdgagsudygasyusd76ats7d3892y98eiUHIUSH9SH99UHIIUHjjiuiuuUHIUIUHUihiuhiuh9898s7y73297329e9weuqheq9p/.dasdjad//adoiaad[[sda09917diuqwh1hduhudsauhhh/asjhgsdjagdjahdgadgdhdalsydgggo8787G*G*G*uihsdahdkashdaih/S'ASDADDASDSadsadWDdsaDASDf$35Y%4%ETRt///wewRWER?WRwrWr//wERWERWR3@@RERWEFWFDWfwfwefwefjwfhfkjshkfhieuwhfiushdkfhsdkjhfiuewhfiuwheiufhisudhfsdhuieh23989h82h3ihwihhfkjshdjfheh89hfwefewkfwFWFWEFweifh9839whfwef//w/f/fewfweifwjefwefwfwfwfiwf/wfwieof//",
+      "finger2": "",
+      "addFlag": "D"
+    }
+  ],
+  "modelStatus": null
+}

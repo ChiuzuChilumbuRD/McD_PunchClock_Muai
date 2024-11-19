@@ -1,0 +1,503 @@
+09:20:38 App initialization Start
+09:20:38 
+09:20:38 將組織代碼代入
+09:20:38 Machine: REENA-TSAI-5330
+09:20:38 ID: 00106
+09:20:38 使用測試用帳號
+09:20:38 tOrgCode: S0000106
+09:20:38 App initialization Start
+09:20:38 
+09:20:39 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:20:39 Pinging Machine at 8.8.8.8...
+09:20:39 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:20:39 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:20:39 Pinging Machine at 8.8.8.8...
+09:20:39 Server at 8.8.8.8 is reachable. Response time: 3 ms
+09:20:39 okay get Data:Inital Success
+
+09:20:39 App initialization completed.
+09:20:39 okay get Data:Inital Success
+
+09:20:39 App initialization completed.
+09:22:36 App initialization Start
+09:22:36 
+09:22:36 將組織代碼代入
+09:22:36 Machine: REENA-TSAI-5330
+09:22:36 ID: 00106
+09:22:36 使用測試用帳號
+09:22:36 tOrgCode: S0000106
+09:22:36 App initialization Start
+09:22:36 
+09:22:36 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:22:36 Pinging Machine at 8.8.8.8...
+09:22:37 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:22:37 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:22:37 Pinging Machine at 8.8.8.8...
+09:22:37 Server at 8.8.8.8 is reachable. Response time: 3 ms
+09:22:37 okay get Data:Inital Success
+
+09:22:37 App initialization completed.
+09:22:37 okay get Data:Inital Success
+
+09:22:37 App initialization completed.
+09:23:36 App initialization Start
+09:23:36 
+09:23:36 將組織代碼代入
+09:23:36 Machine: REENA-TSAI-5330
+09:23:36 ID: 00106
+09:23:36 使用測試用帳號
+09:23:36 tOrgCode: S0000106
+09:23:36 App initialization Start
+09:23:36 
+09:23:36 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:23:36 Pinging Machine at 8.8.8.8...
+09:23:36 Server at 8.8.8.8 is reachable. Response time: 6 ms
+09:23:36 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:23:36 Pinging Machine at 8.8.8.8...
+09:23:36 Server at 8.8.8.8 is reachable. Response time: 3 ms
+09:23:37 okay get Data:Inital Success
+
+09:23:37 App initialization completed.
+09:23:37 okay get Data:Inital Success
+
+09:23:37 App initialization completed.
+09:26:05 App initialization Start
+09:26:05 
+09:26:05 將組織代碼代入
+09:26:05 Machine: REENA-TSAI-5330
+09:26:05 ID: 00106
+09:26:05 使用測試用帳號
+09:26:05 tOrgCode: S0000106
+09:26:05 App initialization Start
+09:26:05 
+09:26:05 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:26:05 Pinging Machine at 8.8.8.8...
+09:26:05 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:26:05 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:26:05 Pinging Machine at 8.8.8.8...
+09:26:05 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:26:06 okay get Data:Inital Success
+
+09:26:06 App initialization completed.
+09:26:06 okay get Data:Inital Success
+
+09:26:06 App initialization completed.
+09:26:59 App initialization Start
+09:27:00 
+09:27:00 將組織代碼代入
+09:27:00 Machine: REENA-TSAI-5330
+09:27:00 ID: 00106
+09:27:00 使用測試用帳號
+09:27:00 tOrgCode: S0000106
+09:27:00 App initialization Start
+09:27:00 
+09:27:00 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:27:00 Pinging Machine at 8.8.8.8...
+09:27:00 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:27:00 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:27:00 Pinging Machine at 8.8.8.8...
+09:27:00 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:27:01 okay get Data:Inital Success
+
+09:27:01 App initialization completed.
+09:27:01 okay get Data:Inital Success
+
+09:27:01 App initialization completed.
+09:27:37 App initialization Start
+09:27:37 
+09:27:37 將組織代碼代入
+09:27:37 Machine: REENA-TSAI-5330
+09:27:37 ID: 00106
+09:27:37 使用測試用帳號
+09:27:37 tOrgCode: S0000106
+09:27:37 App initialization Start
+09:27:37 
+09:27:38 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:27:38 Pinging Machine at 8.8.8.8...
+09:27:38 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:27:38 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:27:38 Pinging Machine at 8.8.8.8...
+09:27:38 Server at 8.8.8.8 is reachable. Response time: 5 ms
+09:27:38 okay get Data:Inital Success
+
+09:27:38 App initialization completed.
+09:27:38 okay get Data:Inital Success
+
+09:27:38 App initialization completed.
+09:30:28 App initialization Start
+09:30:28 
+09:30:28 將組織代碼代入
+09:30:28 Machine: REENA-TSAI-5330
+09:30:28 ID: 00106
+09:30:28 使用測試用帳號
+09:30:28 tOrgCode: S0000106
+09:30:28 App initialization Start
+09:30:28 
+09:30:28 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:30:28 Pinging Machine at 8.8.8.8...
+09:30:28 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:30:28 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:30:28 Pinging Machine at 8.8.8.8...
+09:30:28 Server at 8.8.8.8 is reachable. Response time: 3 ms
+09:30:29 okay get Data:Inital Success
+
+09:30:29 App initialization completed.
+09:30:29 okay get Data:Inital Success
+
+09:30:29 App initialization completed.
+09:32:31 App initialization Start
+09:32:31 
+09:32:31 將組織代碼代入
+09:32:31 Machine: REENA-TSAI-5330
+09:32:31 ID: 00106
+09:32:31 使用測試用帳號
+09:32:31 tOrgCode: S0000106
+09:32:31 App initialization Start
+09:32:31 
+09:32:32 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:32:32 Pinging Machine at 8.8.8.8...
+09:32:32 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:32:32 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:32:32 Pinging Machine at 8.8.8.8...
+09:32:32 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:32:32 okay get Data:Inital Success
+
+09:32:32 App initialization completed.
+09:32:32 okay get Data:Inital Success
+
+09:32:32 App initialization completed.
+09:33:55 App initialization Start
+09:33:55 
+09:33:56 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:33:56 Pinging Machine at 8.8.8.8...
+09:33:56 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:33:56 okay get Data:Inital Success
+
+09:33:56 App initialization completed.
+09:34:44 App initialization Start
+09:34:44 
+09:34:44 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:34:44 Pinging Machine at 8.8.8.8...
+09:34:44 Server at 8.8.8.8 is reachable. Response time: 5 ms
+09:34:44 okay get Data:Inital Success
+
+09:34:44 App initialization completed.
+09:47:53 App initialization Start
+09:47:53 
+09:47:53 將組織代碼代入
+09:47:53 Machine: REENA-TSAI-5330
+09:47:53 ID: 00106
+09:47:53 使用測試用帳號
+09:47:53 tOrgCode: S0000106
+09:47:53 App initialization Start
+09:47:53 
+09:47:54 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:47:54 Pinging Machine at 8.8.8.8...
+09:47:54 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:47:54 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:47:54 Pinging Machine at 8.8.8.8...
+09:47:54 Server at 8.8.8.8 is reachable. Response time: 3 ms
+09:47:54 okay get Data:Inital Success
+
+09:47:54 App initialization completed.
+09:47:54 okay get Data:Inital Success
+
+09:47:54 App initialization completed.
+09:52:07 App initialization Start
+09:52:08 
+09:52:08 將組織代碼代入
+09:52:08 Machine: REENA-TSAI-5330
+09:52:08 ID: 00106
+09:52:08 使用測試用帳號
+09:52:08 tOrgCode: S0000106
+09:52:08 App initialization Start
+09:52:08 
+09:52:08 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:52:08 Pinging Machine at 8.8.8.8...
+09:52:08 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:52:08 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+09:52:08 Pinging Machine at 8.8.8.8...
+09:52:08 Server at 8.8.8.8 is reachable. Response time: 4 ms
+09:52:08 okay get Data:Inital Success
+
+09:52:08 App initialization completed.
+09:52:08 okay get Data:Inital Success
+
+09:52:09 App initialization completed.
+10:05:27 App initialization Start
+10:05:27 
+10:05:27 將組織代碼代入
+10:05:27 Machine: REENA-TSAI-5330
+10:05:27 ID: 00106
+10:05:28 使用測試用帳號
+10:05:28 tOrgCode: S0000106
+10:05:28 App initialization Start
+10:05:28 
+10:05:29 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+10:05:29 Pinging Machine at 8.8.8.8...
+10:05:29 Server at 8.8.8.8 is reachable. Response time: 50 ms
+10:05:30 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+10:05:30 Pinging Machine at 8.8.8.8...
+10:05:30 Server at 8.8.8.8 is reachable. Response time: 3 ms
+10:05:30 okay get Data:Inital Success
+
+10:05:30 App initialization completed.
+10:05:30 okay get Data:Inital Success
+
+10:05:30 App initialization completed.
+11:05:47 App initialization Start
+11:05:47 
+11:05:47 將組織代碼代入
+11:05:47 Machine: REENA-TSAI-5330
+11:05:47 ID: 00106
+11:05:47 使用測試用帳號
+11:05:47 tOrgCode: S0000106
+11:05:47 App initialization Start
+11:05:47 
+11:05:48 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:05:48 Pinging Machine at 8.8.8.8...
+11:05:48 Server at 8.8.8.8 is reachable. Response time: 6 ms
+11:05:48 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:05:48 Pinging Machine at 8.8.8.8...
+11:05:48 Server at 8.8.8.8 is reachable. Response time: 6 ms
+11:05:48 okay get Data:Inital Success
+
+11:05:48 App initialization completed.
+11:05:48 okay get Data:Inital Success
+
+11:05:48 App initialization completed.
+11:09:14 App initialization Start
+11:09:14 
+11:09:14 將組織代碼代入
+11:09:14 Machine: REENA-TSAI-5330
+11:09:14 ID: 00106
+11:09:14 使用測試用帳號
+11:09:14 tOrgCode: S0000106
+11:09:14 App initialization Start
+11:09:14 
+11:09:15 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:09:15 Pinging Machine at 8.8.8.8...
+11:09:15 Server at 8.8.8.8 is reachable. Response time: 5 ms
+11:09:15 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:09:15 Pinging Machine at 8.8.8.8...
+11:09:15 Server at 8.8.8.8 is reachable. Response time: 4 ms
+11:09:15 okay get Data:Inital Success
+
+11:09:15 App initialization completed.
+11:09:15 okay get Data:Inital Success
+
+11:09:15 App initialization completed.
+11:15:25 App initialization Start
+11:15:26 
+11:15:26 將組織代碼代入
+11:15:26 Machine: REENA-TSAI-5330
+11:15:26 ID: 00106
+11:15:26 使用測試用帳號
+11:15:26 tOrgCode: S0000106
+11:15:26 App initialization Start
+11:15:26 
+11:15:26 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:15:26 Pinging Machine at 8.8.8.8...
+11:15:26 Server at 8.8.8.8 is reachable. Response time: 6 ms
+11:15:27 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:15:27 Pinging Machine at 8.8.8.8...
+11:15:27 Server at 8.8.8.8 is reachable. Response time: 4 ms
+11:15:27 okay get Data:Inital Success
+
+11:15:27 App initialization completed.
+11:15:27 okay get Data:Inital Success
+
+11:15:27 App initialization completed.
+11:15:33 App initialization Start
+11:15:33 
+11:15:34 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:15:34 Pinging Machine at 8.8.8.8...
+11:15:34 Server at 8.8.8.8 is reachable. Response time: 3 ms
+11:15:34 okay get Data:Inital Success
+
+11:15:34 App initialization completed.
+11:16:45 App initialization Start
+11:16:45 
+11:16:45 將組織代碼代入
+11:16:45 Machine: REENA-TSAI-5330
+11:16:45 ID: 00106
+11:16:45 使用測試用帳號
+11:16:45 tOrgCode: S0000106
+11:16:45 App initialization Start
+11:16:45 
+11:16:45 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:16:45 Pinging Machine at 8.8.8.8...
+11:16:45 Server at 8.8.8.8 is reachable. Response time: 4 ms
+11:16:45 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:16:45 Pinging Machine at 8.8.8.8...
+11:16:45 Server at 8.8.8.8 is reachable. Response time: 4 ms
+11:16:45 okay get Data:Inital Success
+
+11:16:45 App initialization completed.
+11:16:46 okay get Data:Inital Success
+
+11:16:46 App initialization completed.
+11:17:02 App initialization Start
+11:17:03 
+11:17:03 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:17:03 Pinging Machine at 8.8.8.8...
+11:17:03 Server at 8.8.8.8 is reachable. Response time: 3 ms
+11:17:03 okay get Data:Inital Success
+
+11:17:03 App initialization completed.
+11:17:07 App initialization Start
+11:17:08 
+11:17:08 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:17:08 Pinging Machine at 8.8.8.8...
+11:17:08 Server at 8.8.8.8 is reachable. Response time: 6 ms
+11:17:08 okay get Data:Inital Success
+
+11:17:08 App initialization completed.
+11:17:17 App initialization Start
+11:17:17 
+11:17:17 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:17:17 Pinging Machine at 8.8.8.8...
+11:17:17 Server at 8.8.8.8 is reachable. Response time: 4 ms
+11:17:17 okay get Data:Inital Success
+
+11:17:17 App initialization completed.
+11:17:29 人事同步開始
+11:17:29 Data has been successfully written to FingerIn.json. Time spent: 153.4243 ms
+11:17:29 Error reading FingerOut.txt: Could not find file 'C:\Finger\FingerOut.txt'.
+11:17:36 App initialization Start
+11:17:36 
+11:17:36 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:17:36 Pinging Machine at 8.8.8.8...
+11:17:36 Server at 8.8.8.8 is reachable. Response time: 4 ms
+11:17:37 okay get Data:Inital Success
+
+11:17:37 App initialization completed.
+11:17:38 App initialization Start
+11:17:38 
+11:17:38 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:17:38 Pinging Machine at 8.8.8.8...
+11:17:38 Server at 8.8.8.8 is reachable. Response time: 4 ms
+11:17:38 okay get Data:Inital Success
+
+11:17:38 App initialization completed.
+11:17:41 App initialization Start
+11:17:41 
+11:17:41 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:17:41 Pinging Machine at 8.8.8.8...
+11:17:41 Server at 8.8.8.8 is reachable. Response time: 27 ms
+11:17:42 okay get Data:Inital Success
+
+11:17:42 App initialization completed.
+11:24:38 App initialization Start
+11:24:38 
+11:24:38 將組織代碼代入
+11:24:38 Machine: REENA-TSAI-5330
+11:24:38 ID: 00106
+11:24:38 使用測試用帳號
+11:24:38 tOrgCode: S0000106
+11:24:38 App initialization Start
+11:24:38 
+11:24:38 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:24:38 Pinging Machine at 8.8.8.8...
+11:24:39 Server at 8.8.8.8 is reachable. Response time: 6 ms
+11:24:39 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:24:39 Pinging Machine at 8.8.8.8...
+11:24:39 Server at 8.8.8.8 is reachable. Response time: 4 ms
+11:24:39 okay get Data:Inital Success
+
+11:24:39 App initialization completed.
+11:24:39 okay get Data:Inital Success
+
+11:24:39 App initialization completed.
+11:24:52 App initialization Start
+11:24:52 
+11:24:52 將組織代碼代入
+11:24:52 Machine: REENA-TSAI-5330
+11:24:52 ID: 00106
+11:24:52 使用測試用帳號
+11:24:52 tOrgCode: S0000106
+11:24:52 App initialization Start
+11:24:52 
+11:24:53 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:24:53 Pinging Machine at 8.8.8.8...
+11:24:53 Server at 8.8.8.8 is reachable. Response time: 6 ms
+11:24:53 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:24:53 Pinging Machine at 8.8.8.8...
+11:24:53 Server at 8.8.8.8 is reachable. Response time: 5 ms
+11:24:53 okay get Data:Inital Success
+
+11:24:53 App initialization completed.
+11:24:53 okay get Data:Inital Success
+
+11:24:53 App initialization completed.
+17:08:42 App initialization Start
+17:08:42 
+17:08:42 將組織代碼代入
+17:08:42 Machine: REENA-TSAI-5330
+17:08:42 ID: 00106
+17:08:42 使用測試用帳號
+17:08:42 tOrgCode: S0000106
+17:08:42 App initialization Start
+17:08:42 
+17:08:43 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:08:43 Pinging Machine at 8.8.8.8...
+17:08:43 Server at 8.8.8.8 is reachable. Response time: 4 ms
+17:08:43 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:08:43 Pinging Machine at 8.8.8.8...
+17:08:43 Server at 8.8.8.8 is reachable. Response time: 5 ms
+17:08:43 okay get Data:Inital Success
+
+17:08:43 App initialization completed.
+17:08:43 okay get Data:Inital Success
+
+17:08:43 App initialization completed.
+17:08:50 App initialization Start
+17:08:50 
+17:08:51 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:08:51 Pinging Machine at 8.8.8.8...
+17:08:51 Server at 8.8.8.8 is reachable. Response time: 3 ms
+17:08:51 okay get Data:Inital Success
+
+17:08:51 App initialization completed.
+17:08:53 人事同步開始
+17:08:53 Data has been successfully written to FingerIn.json. Time spent: 149.9245 ms
+17:08:53 Error reading FingerOut.txt: Could not find file 'C:\Finger\FingerOut.txt'.
+17:11:06 人事同步開始
+17:11:06 Data has been successfully written to FingerIn.json. Time spent: 154.2493 ms
+17:11:06 啟動指紋機程式
+17:11:07 指紋機執行結束
+17:11:07 準備備份 FingerIn.txt...
+17:11:07 備份卡鐘人事資料
+17:11:07 okay get Data:人事同步完成
+
+17:11:07 Log sent successfully 
+17:15:19 App initialization Start
+17:15:19 
+17:15:19 將組織代碼代入
+17:15:19 Machine: REENA-TSAI-5330
+17:15:19 ID: 00106
+17:15:19 使用測試用帳號
+17:15:19 tOrgCode: S0000106
+17:15:19 App initialization Start
+17:15:19 
+17:15:19 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:15:19 Pinging Machine at 8.8.8.8...
+17:15:19 Server at 8.8.8.8 is reachable. Response time: 5 ms
+17:15:20 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:15:20 Pinging Machine at 8.8.8.8...
+17:15:20 Server at 8.8.8.8 is reachable. Response time: 8 ms
+17:15:20 okay get Data:Inital Success
+
+17:15:20 App initialization completed.
+17:15:20 okay get Data:Inital Success
+
+17:15:20 App initialization completed.
+17:15:23 人事同步開始
+17:15:23 Data has been successfully written to FingerIn.json. Time spent: 154.452 ms
+17:15:23 啟動指紋機程式
+17:15:24 指紋機執行結束
+17:15:24 準備備份 FingerIn.txt...
+17:15:24 備份卡鐘人事資料
+17:15:24 okay get Data:人事同步完成
+
+17:15:24 Log sent successfully 

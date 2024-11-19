@@ -1,0 +1,329 @@
+17:03:07 1.0.0.0
+17:03:07 Form init
+17:03:07 Loading appsettings.json...
+17:03:07 
+17:03:07 Checking Internet connection...
+17:03:07 Machine name: CHENGCHEN24E7
+17:03:07 test_org_code 00106
+17:03:07 使用測試用帳號
+17:03:07 OrgCode: 00106
+17:03:07 組織代碼錯誤，將關閉程式
+17:03:08 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:03:08 Pinging server at 8.8.8.8...
+17:03:08 Server at 8.8.8.8 is reachable. Response time: 106 ms
+17:03:08 url: https://qgaia.royal.club.tw/GAIA/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%2200106%22%7D
+17:03:08 Log sent successfully and data saved to FingerIn.json.
+17:03:09 App initialization completed.
+17:24:52 1.0.0.0
+17:24:52 Form init
+17:24:52 Loading appsettings.json...
+17:24:52 
+17:24:52 Checking Internet connection...
+17:24:52 Machine name: CHENGCHEN24E7
+17:24:52 test_org_code 00106
+17:24:52 使用測試用帳號
+17:24:52 OrgCode: 00106
+17:24:52 組織代碼錯誤，將關閉程式
+17:24:53 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:24:53 Pinging server at 8.8.8.8...
+17:24:53 Server at 8.8.8.8 is reachable. Response time: 58 ms
+17:24:54 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:25:10 1.0.0.0
+17:25:10 Form init
+17:25:10 Loading appsettings.json...
+17:25:11 
+17:25:11 Checking Internet connection...
+17:25:11 Machine name: CHENGCHEN24E7
+17:25:11 test_org_code 00106
+17:25:11 使用測試用帳號
+17:25:11 OrgCode: 00106
+17:25:11 組織代碼錯誤，將關閉程式
+17:25:12 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:25:12 Pinging server at 8.8.8.8...
+17:25:12 Server at 8.8.8.8 is reachable. Response time: 183 ms
+17:25:12 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:25:21 1.0.0.0
+17:25:21 Form init
+17:25:21 Loading appsettings.json...
+17:25:21 
+17:25:21 Checking Internet connection...
+17:25:21 Machine name: CHENGCHEN24E7
+17:25:21 test_org_code 00106
+17:25:21 使用測試用帳號
+17:25:21 OrgCode: 00106
+17:25:21 組織代碼錯誤，將關閉程式
+17:25:22 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:25:22 Pinging server at 8.8.8.8...
+17:25:22 Server at 8.8.8.8 is reachable. Response time: 45 ms
+17:25:23 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:28:22 1.0.0.0
+17:28:22 Form init
+17:28:22 Loading appsettings.json...
+17:28:22 
+17:28:22 Checking Internet connection...
+17:28:22 Machine name: CHENGCHEN24E7
+17:28:22 test_org_code 00106
+17:28:22 使用測試用帳號
+17:28:22 OrgCode: 00106
+17:28:22 組織代碼錯誤，將關閉程式
+17:28:24 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:28:24 Pinging server at 8.8.8.8...
+17:28:24 Server at 8.8.8.8 is reachable. Response time: 106 ms
+17:28:24 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:28:31 1.0.0.0
+17:28:31 Form init
+17:28:31 Loading appsettings.json...
+17:28:32 
+17:28:32 Checking Internet connection...
+17:28:32 Machine name: CHENGCHEN24E7
+17:28:32 test_org_code 00106
+17:28:32 使用測試用帳號
+17:28:32 OrgCode: 00106
+17:28:32 組織代碼錯誤，將關閉程式
+17:28:33 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:28:33 Pinging server at 8.8.8.8...
+17:28:33 Server at 8.8.8.8 is reachable. Response time: 76 ms
+17:28:33 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:28:42 1.0.0.0
+17:28:42 Form init
+17:28:42 Loading appsettings.json...
+17:28:42 
+17:28:42 Checking Internet connection...
+17:28:42 Machine name: CHENGCHEN24E7
+17:28:42 test_org_code 00106
+17:28:42 使用測試用帳號
+17:28:42 OrgCode: 00106
+17:28:42 組織代碼錯誤，將關閉程式
+17:28:43 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:28:43 Pinging server at 8.8.8.8...
+17:28:43 Server at 8.8.8.8 is reachable. Response time: 47 ms
+17:28:44 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:28:50 1.0.0.0
+17:28:50 Form init
+17:28:50 Loading appsettings.json...
+17:28:51 
+17:28:51 Checking Internet connection...
+17:28:51 Machine name: CHENGCHEN24E7
+17:28:51 test_org_code 00106
+17:28:51 使用測試用帳號
+17:28:51 OrgCode: 00106
+17:28:51 組織代碼錯誤，將關閉程式
+17:28:52 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:28:52 Pinging server at 8.8.8.8...
+17:28:52 Server at 8.8.8.8 is reachable. Response time: 32 ms
+17:28:52 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:30:31 1.0.0.0
+17:30:31 Form init
+17:30:31 Loading appsettings.json...
+17:30:31 
+17:30:31 Checking Internet connection...
+17:30:31 Machine name: CHENGCHEN24E7
+17:30:31 test_org_code 00106
+17:30:31 使用測試用帳號
+17:30:31 OrgCode: 00106
+17:30:31 組織代碼錯誤
+17:30:35 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:30:35 Pinging server at 8.8.8.8...
+17:30:35 Server at 8.8.8.8 is reachable. Response time: 55 ms
+17:30:35 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:48:25 1.0.0.0
+17:48:25 Form init
+17:48:25 Loading appsettings.json...
+17:48:25 
+17:48:25 Checking Internet connection...
+17:48:25 Machine name: CHENGCHEN24E7
+17:48:25 test_org_code 00106
+17:48:25 使用測試用帳號
+17:48:25 OrgCode: 00106
+17:48:25 組織代碼錯誤
+17:48:26 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:48:26 Pinging server at 8.8.8.8...
+17:48:26 Server at 8.8.8.8 is reachable. Response time: 61 ms
+17:48:26 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:55:19 --- Form Init
+17:55:19 Loading appsettings.json...
+17:55:19 
+17:55:19 Checking Internet connection...
+17:55:19 Machine name: CHENGCHEN24E7
+17:55:19 test_org_code 00106
+17:55:19 使用測試用帳號
+17:55:19 OrgCode: 00106
+17:55:19 組織代碼錯誤
+17:55:20 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:55:20 Pinging server at 8.8.8.8...
+17:55:20 Server at 8.8.8.8 is reachable. Response time: 121 ms
+17:55:20 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:55:39 --- Form Init
+17:55:39 Loading appsettings.json...
+17:55:39 
+17:55:39 Checking Internet connection...
+17:55:39 Machine name: CHENGCHEN24E7
+17:55:39 test_org_code 00106
+17:55:39 使用測試用帳號
+17:55:39 OrgCode: 00106
+17:55:39 組織代碼錯誤
+17:55:40 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:55:40 Pinging server at 8.8.8.8...
+17:55:40 Server at 8.8.8.8 is reachable. Response time: 61 ms
+17:55:41 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:55:47 --- Form Init
+17:55:47 Loading appsettings.json...
+17:55:47 
+17:55:47 Checking Internet connection...
+17:55:47 Machine name: CHENGCHEN24E7
+17:55:47 test_org_code 00106
+17:55:47 使用測試用帳號
+17:55:47 OrgCode: 00106
+17:55:47 組織代碼錯誤
+17:55:48 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:55:48 Pinging server at 8.8.8.8...
+17:55:53 Failed to reach server at 8.8.8.8. Status: TimedOut
+17:55:53 Unable to reach the Machine. 8.8.8.8
+17:55:54 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+17:56:48 --- Form Init
+17:56:48 Loading appsettings.json...
+17:56:48 
+17:56:48 Checking Internet connection...
+17:56:48 Machine name: CHENGCHEN24E7
+17:56:48 test_org_code 00106
+17:56:48 使用測試用帳號
+17:56:48 OrgCode: 00106
+17:56:48 組織代碼錯誤
+17:56:51 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+17:56:51 Pinging server at 8.8.8.8...
+17:56:51 Server at 8.8.8.8 is reachable. Response time: 175 ms
+17:56:52 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+18:02:50 --- Form Init
+18:02:50 Loading appsettings.json...
+18:02:50 
+18:02:50 The Folders are all ready.
+18:03:58 --- Form Init
+18:03:58 Loading appsettings.json...
+18:03:58 
+18:03:58 The Folders are all ready.
+18:03:58 Checking Internet connection...
+18:05:07 --- Form Init
+18:05:07 Loading appsettings.json...
+18:05:07 
+18:05:07 The Folders are all ready.
+18:05:07 Checking Internet connection...
+18:05:07 Machine name: CHENGCHEN24E7
+18:05:07 test_org_code 00106
+18:05:07 使用測試用帳號
+18:05:07 OrgCode: 00106
+18:05:07 組織代碼錯誤
+18:05:08 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+18:07:02 --- Form Init
+18:07:02 Loading appsettings.json...
+18:07:02 
+18:07:02 The Folders are all ready.
+18:07:02 Checking Internet connection...
+18:07:02 Machine name: CHENGCHEN24E7
+18:07:02 test_org_code 00106
+18:07:02 使用測試用帳號
+18:07:02 OrgCode: 00106
+18:07:02 組織代碼錯誤
+18:07:03 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+18:07:03 Pinging server at 8.8.8.8...
+18:07:03 Server at 8.8.8.8 is reachable. Response time: 44 ms
+18:07:03 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+18:08:33 --- Form Init
+18:08:33 Loading appsettings.json...
+18:08:33 
+18:08:33 The Folders are all ready.
+18:08:33 Checking Internet connection...
+18:08:33 Machine name: CHENGCHEN24E7
+18:08:33 test_org_code 00106
+18:08:33 使用測試用帳號
+18:08:33 OrgCode: 00106
+18:08:33 組織代碼錯誤
+18:08:43 --- Form Init
+18:08:43 Loading appsettings.json...
+18:08:43 
+18:08:43 The Folders are all ready.
+18:08:43 Checking Internet connection...
+18:08:43 Machine name: CHENGCHEN24E7
+18:08:43 test_org_code 00106
+18:08:43 使用測試用帳號
+18:08:43 OrgCode: 00106
+18:08:43 組織代碼錯誤
+18:08:44 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+18:08:44 Pinging server at 8.8.8.8...
+18:08:44 Server at 8.8.8.8 is reachable. Response time: 212 ms
+18:08:45 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+18:09:53 --- Form Init
+18:09:53 Loading appsettings.json...
+18:09:53 
+18:09:53 The Folders are all ready.
+18:09:53 Checking Internet connection...
+18:09:53 Machine name: CHENGCHEN24E7
+18:09:53 test_org_code 00106
+18:09:53 使用測試用帳號
+18:09:53 OrgCode: 00106
+18:09:53 組織代碼錯誤
+18:09:54 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+18:09:54 Pinging server at 8.8.8.8...
+18:09:54 Server at 8.8.8.8 is reachable. Response time: 310 ms
+18:09:55 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+18:14:17 App initialization Start
+18:14:17 Loading appsettings.json...
+18:14:17 
+18:14:17 The Folders are all ready.
+18:14:17 Checking Internet connection...
+18:14:17 Machine name: CHENGCHEN24E7
+18:14:17 test_org_code 00106
+18:14:17 使用測試用帳號
+18:14:17 OrgCode: 00106
+18:14:17 組織代碼錯誤
+18:14:18 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+18:14:18 Pinging server at 8.8.8.8...
+18:14:18 Server at 8.8.8.8 is reachable. Response time: 144 ms
+18:14:19 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+18:28:38 App initialization Start
+18:28:38 Loading appsettings.json...
+18:28:38 
+18:28:38 The Folders are all ready.
+18:28:38 Checking Internet connection...
+18:28:38 Machine name: CHENGCHEN24E7
+18:28:38 test_org_code 00106
+18:28:38 使用測試用帳號
+18:28:38 OrgCode: 00106
+18:28:38 組織代碼錯誤
+18:28:40 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null,"OrgName":""}
+18:28:40 Pinging server at 8.8.8.8...
+18:28:40 Server at 8.8.8.8 is reachable. Response time: 237 ms
+18:28:41 {"flag":true,"message":"","data":"共幾筆","modelStatus":null}
+18:30:51 App initialization Start
+18:30:51 Loading appsettings.json...
+18:30:51 
+18:30:51 The Folders are all ready.
+18:30:51 Checking Internet connection...
+18:30:51 Machine name: CHENGCHEN24E7
+18:30:51 test_org_code 00106
+18:30:51 使用測試用帳號
+18:30:51 OrgCode: 00106
+18:30:51 組織代碼錯誤
+18:31:02 App initialization Start
+18:31:02 Loading appsettings.json...
+18:31:02 
+18:31:02 The Folders are all ready.
+18:31:02 Checking Internet connection...
+18:31:02 Machine name: CHENGCHEN24E7
+18:31:02 test_org_code 00106
+18:31:02 使用測試用帳號
+18:31:02 OrgCode: 00106
+18:31:02 組織代碼錯誤
+18:32:21 App initialization Start
+18:32:21 Loading appsettings.json...
+18:32:21 
+18:32:21 The Folders are all ready.
+18:32:21 Checking Internet connection...
+18:32:21 Machine name: CHENGCHEN24E7
+18:32:21 test_org_code 00106
+18:32:21 使用測試用帳號
+18:32:21 OrgCode: 00106
+18:32:21 組織代碼錯誤
+18:32:22 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+18:32:23 Pinging server at 8.8.8.8...
+18:32:23 Server at 8.8.8.8 is reachable. Response time: 39 ms
+18:32:23 {"flag":false,"data":"","message":"Exception occurred: 引動過程的目標傳回例外狀況。"}

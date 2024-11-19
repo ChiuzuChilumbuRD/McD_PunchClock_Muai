@@ -1,0 +1,289 @@
+00:12:10 人事同步開始
+00:12:11 Data has been successfully written to FingerIn.json. Time spent: 572.2979 ms
+00:12:11 C:\Program Files\Timeset\PGFinger.exe
+00:12:11 {
+  "flag": true,
+  "message": "",
+  "data": [
+    {
+      "empNo": "161058",
+      "displayName": "陸裕偉",
+      "cardNo": "A123456789",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "246724",
+      "displayName": "陳珮丰",
+      "cardNo": "B123456789",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "462837",
+      "displayName": "林建宏",
+      "cardNo": "A123456789",
+      "finger1": "AABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "ZABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "918372",
+      "displayName": "張美華",
+      "cardNo": "B987654321",
+      "finger1": "BABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "YABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "374920",
+      "displayName": "王志強",
+      "cardNo": "C234567890",
+      "finger1": "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "591384",
+      "displayName": "陳宜芳",
+      "cardNo": "D876543210",
+      "finger1": "DABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "WABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "743829",
+      "displayName": "李俊傑",
+      "cardNo": "E135792468",
+      "finger1": "EABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "VABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "182736",
+      "displayName": "鄭美惠",
+      "cardNo": "F246813579",
+      "finger1": "FABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "UABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "546371",
+      "displayName": "林志明",
+      "cardNo": "G987651234",
+      "finger1": "GABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "TABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "839201",
+      "displayName": "吳明智",
+      "cardNo": "H876512349",
+      "finger1": "HABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "SABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "274839",
+      "displayName": "黃淑玲",
+      "cardNo": "I345678901",
+      "finger1": "IABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "RABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "193847",
+      "displayName": "劉嘉偉",
+      "cardNo": "J654321098",
+      "finger1": "JABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "QABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    },
+    {
+      "empNo": "928374",
+      "displayName": "楊美芳",
+      "cardNo": "K567890123",
+      "finger1": "KABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "finger2": "PABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+      "addFlag": "A"
+    }
+  ],
+  "modelStatus": null
+}
+00:12:11 啟動指紋機程式
+00:12:11 C:\Program Files\Timeset\PGFinger.exe
+00:12:11 指紋機執行結束
+00:12:11 準備備份 FingerIn.txt...
+00:12:11 備份卡鐘人事資料
+00:12:11 okay get Data:人事同步完成
+
+00:12:11 Log sent successfully 
+10:19:00 App initialization Start
+10:19:00 Loading appsettings.json...
+10:19:00 
+10:19:00 The Folders are all ready.
+10:19:00 Checking Internet connection...
+10:19:00 將組織代碼代入
+10:19:00 Machine name: CHENGCHEN24E7
+10:19:00 test_org_code 00106
+10:19:00 使用測試用帳號
+10:19:00 tOrgCode: S0000106
+10:19:01 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+10:19:01 Pinging Machine at 8.8.8.8...
+10:19:01 Server at 8.8.8.8 is reachable. Response time: 33 ms
+10:19:02 okay get Data:Inital Success
+
+10:19:02 App initialization completed.
+11:22:20 App initialization Start
+11:22:20 Loading appsettings.json...
+11:22:20 
+11:22:20 The Folders are all ready.
+11:22:20 Checking Internet connection...
+11:22:20 將組織代碼代入
+11:22:20 Machine name: CHENGCHEN24E7
+11:22:20 test_org_code 00106
+11:22:20 使用測試用帳號
+11:22:20 tOrgCode: S0000106
+11:22:21 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:22:21 Pinging Machine at 8.8.8.8...
+11:22:21 Server at 8.8.8.8 is reachable. Response time: 9 ms
+11:22:22 okay get Data:Inital Success
+
+11:22:22 App initialization completed.
+11:22:31 人事同步開始
+11:22:31 Data has been successfully written to FingerIn.json. Time spent: 252.6535 ms
+11:22:31 C:\Program Files\Timeset\PGFinger.exe
+11:22:31 啟動指紋機程式
+11:22:31 C:\Program Files\Timeset\PGFinger.exe
+11:22:31 指紋機執行結束
+11:22:31 準備備份 FingerIn.txt...
+11:22:31 備份卡鐘人事資料
+11:22:32 okay get Data:人事同步完成
+
+11:22:32 Log sent successfully 
+11:23:50 App initialization Start
+11:23:50 Loading appsettings.json...
+11:23:51 
+11:23:51 The Folders are all ready.
+11:23:51 Checking Internet connection...
+11:23:51 將組織代碼代入
+11:23:51 Machine name: CHENGCHEN24E7
+11:23:51 test_org_code 00106
+11:23:51 使用測試用帳號
+11:23:51 tOrgCode: S0000106
+11:23:52 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:23:52 Pinging Machine at 8.8.8.8...
+11:23:52 Server at 8.8.8.8 is reachable. Response time: 7 ms
+11:23:52 okay get Data:Inital Success
+
+11:23:52 App initialization completed.
+11:23:57 人事同步開始
+11:23:58 Data has been successfully written to FingerIn.json. Time spent: 510.0491 ms
+11:23:58 C:\Program Files\Timeset\PGFinger.exe
+11:23:58 啟動指紋機程式
+11:23:58 指紋機執行結束
+11:23:58 準備備份 FingerIn.txt...
+11:23:58 備份卡鐘人事資料
+11:23:59 okay get Data:人事同步完成
+
+11:23:59 Log sent successfully 
+11:25:27 App initialization Start
+11:25:27 Loading appsettings.json...
+11:25:27 
+11:25:27 The Folders are all ready.
+11:25:27 Checking Internet connection...
+11:25:27 將組織代碼代入
+11:25:27 Machine name: CHENGCHEN24E7
+11:25:27 test_org_code 00106
+11:25:27 使用測試用帳號
+11:25:27 tOrgCode: S0000106
+11:25:28 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:25:28 Pinging Machine at 8.8.8.8...
+11:25:28 Server at 8.8.8.8 is reachable. Response time: 7 ms
+11:25:29 okay get Data:Inital Success
+
+11:25:29 App initialization completed.
+11:26:59 App initialization Start
+11:26:59 Loading appsettings.json...
+11:26:59 
+11:26:59 The Folders are all ready.
+11:26:59 Checking Internet connection...
+11:26:59 將組織代碼代入
+11:26:59 Machine: CHENGCHEN24E7
+11:26:59 ID: 00106
+11:26:59 使用測試用帳號
+11:26:59 tOrgCode: S0000106
+11:27:00 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:27:00 Pinging Machine at 8.8.8.8...
+11:27:01 Server at 8.8.8.8 is reachable. Response time: 17 ms
+11:27:01 okay get Data:Inital Success
+
+11:27:01 App initialization completed.
+11:28:15 App initialization Start
+11:28:15 Loading appsettings.json...
+11:28:15 
+11:28:15 將組織代碼代入
+11:28:15 Machine: CHENGCHEN24E7
+11:28:15 ID: 00106
+11:28:15 使用測試用帳號
+11:28:15 tOrgCode: S0000106
+11:28:16 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:28:16 Pinging Machine at 8.8.8.8...
+11:28:16 Server at 8.8.8.8 is reachable. Response time: 8 ms
+11:28:16 okay get Data:Inital Success
+
+11:28:16 App initialization completed.
+11:29:51 App initialization Start
+11:29:52 
+11:29:52 將組織代碼代入
+11:29:52 Machine: CHENGCHEN24E7
+11:29:52 ID: 00106
+11:29:52 使用測試用帳號
+11:29:52 tOrgCode: S0000106
+11:29:52 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+11:29:52 Pinging Machine at 8.8.8.8...
+11:29:52 Server at 8.8.8.8 is reachable. Response time: 9 ms
+11:29:53 okay get Data:Inital Success
+
+11:29:53 App initialization completed.
+14:15:05 App initialization Start
+14:15:05 
+14:15:05 將組織代碼代入
+14:15:05 Machine: CHENGCHEN24E7
+14:15:05 ID: 00106
+14:15:05 使用測試用帳號
+14:15:05 tOrgCode: S0000106
+14:15:06 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+14:15:06 Pinging Machine at 8.8.8.8...
+14:15:06 Server at 8.8.8.8 is reachable. Response time: 39 ms
+14:15:06 okay get Data:Inital Success
+
+14:15:06 App initialization completed.
+14:15:24 人事同步開始
+14:15:24 Data has been successfully written to FingerIn.json. Time spent: 163.3323 ms
+14:15:24 啟動指紋機程式
+14:15:24 Error during fingerprint process: 'CP950' is not a supported encoding name. For information on defining a custom encoding, see the documentation for the Encoding.RegisterProvider method. (Parameter 'name')
+14:25:00 App initialization Start
+14:25:00 
+14:25:00 將組織代碼代入
+14:25:00 Machine: CHENGCHEN24E7
+14:25:00 ID: 00106
+14:25:00 使用測試用帳號
+14:25:00 tOrgCode: S0000106
+14:25:01 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+14:25:01 Pinging Machine at 8.8.8.8...
+14:25:01 Server at 8.8.8.8 is reachable. Response time: 10 ms
+14:25:01 okay get Data:Inital Success
+
+14:25:01 App initialization completed.
+14:25:03 人事同步開始
+14:25:04 Data has been successfully written to FingerIn.json. Time spent: 229.2084 ms
+14:25:04 啟動指紋機程式
+14:25:05 指紋機執行結束
+14:25:05 準備備份 FingerIn.txt...
+14:25:05 備份卡鐘人事資料
+14:25:05 okay get Data:人事同步完成
+
+14:25:05 Log sent successfully 

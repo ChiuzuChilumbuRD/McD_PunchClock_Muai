@@ -18,6 +18,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = carddatasync3.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
+[C:/Users/reena.tsai/Documents/maui-guru/McD_PunchClock_Muai/carddatasync3/AppSettingPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = carddatasync3.AppSettingPage.xaml
+build_metadata.AdditionalFiles.TargetPath = AppSettingPage.xaml
+build_metadata.AdditionalFiles.RelativePath = AppSettingPage.xaml
+
 [C:/Users/reena.tsai/Documents/maui-guru/McD_PunchClock_Muai/carddatasync3/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = carddatasync3.AppShell.xaml

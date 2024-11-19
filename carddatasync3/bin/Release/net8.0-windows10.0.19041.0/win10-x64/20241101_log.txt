@@ -1,0 +1,197 @@
+00:33:18 App initialization Start
+00:33:18 Loading appsettings.json...
+00:33:18 
+00:33:18 The Folders are all ready.
+00:33:18 Checking Internet connection...
+00:33:18 Machine name: CHENGCHEN24E7
+00:33:18 test_org_code 00106
+00:33:18 使用測試用帳號
+00:33:18 OrgCode: 00106
+00:33:18 組織代碼錯誤
+00:33:20 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:33:20 Pinging server at 8.8.8.8...
+00:33:20 Server at 8.8.8.8 is reachable. Response time: 32 ms
+00:33:20 {}
+00:44:31 App initialization Start
+00:44:31 Loading appsettings.json...
+00:44:31 
+00:44:31 The Folders are all ready.
+00:44:31 Checking Internet connection...
+00:44:31 Machine name: CHENGCHEN24E7
+00:44:31 test_org_code 00106
+00:44:31 使用測試用帳號
+00:44:31 OrgCode: 00106
+00:44:31 組織代碼錯誤
+00:44:35 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:44:35 Pinging server at 8.8.8.8...
+00:44:35 Server at 8.8.8.8 is reachable. Response time: 41 ms
+00:44:36 {
+  "org_No": "00106",
+  "logData": "Your log data here\nYour log data 3r1r\n",
+  "Status": "1",
+  "Level": "2"
+}
+00:44:36 Log sent successfully 
+00:44:36 App initialization completed.
+00:46:09 App initialization Start
+00:46:09 Loading appsettings.json...
+00:46:09 
+00:46:09 The Folders are all ready.
+00:46:09 Checking Internet connection...
+00:46:09 Machine name: CHENGCHEN24E7
+00:46:09 test_org_code 00106
+00:46:09 使用測試用帳號
+00:46:09 OrgCode: 00106
+00:46:09 組織代碼錯誤
+00:46:10 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:46:10 Pinging server at 8.8.8.8...
+00:46:10 Server at 8.8.8.8 is reachable. Response time: 50 ms
+00:46:11 Your log data here
+Your log data 3r1r
+
+00:46:11 Log sent successfully 
+00:46:11 App initialization completed.
+00:47:46 App initialization Start
+00:47:46 Loading appsettings.json...
+00:47:46 
+00:47:46 The Folders are all ready.
+00:47:46 Checking Internet connection...
+00:47:46 Machine name: CHENGCHEN24E7
+00:47:46 test_org_code 00106
+00:47:46 使用測試用帳號
+00:47:46 OrgCode: 00106
+00:47:46 組織代碼錯誤
+00:47:47 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+00:47:47 Pinging server at 8.8.8.8...
+00:47:47 Server at 8.8.8.8 is reachable. Response time: 136 ms
+00:47:49 Your log data here
+Your log data 3r1r
+
+00:47:49 Log sent successfully 
+00:47:49 App initialization completed.
+01:10:12 App initialization Start
+01:10:12 Loading appsettings.json...
+01:10:12 
+01:10:12 The Folders are all ready.
+01:10:12 Checking Internet connection...
+01:10:12 Machine name: CHENGCHEN24E7
+01:10:12 test_org_code 00106
+01:10:12 使用測試用帳號
+01:10:12 OrgCode: S0000106
+01:10:13 {"flag":false,"data":"","message":"Exception occurred: Unexpected character encountered while parsing value: S. Path \u0027org_no\u0027, line 1, position 10."}
+01:12:28 App initialization Start
+01:12:29 Loading appsettings.json...
+01:12:29 
+01:12:29 The Folders are all ready.
+01:12:29 Checking Internet connection...
+01:12:29 Machine name: CHENGCHEN24E7
+01:12:29 test_org_code 00106
+01:12:29 使用測試用帳號
+01:12:29 OrgCode: S000106
+01:12:29 組織代碼錯誤
+01:12:30 {"flag":false,"data":"","message":"Exception occurred: Unexpected character encountered while parsing value: S. Path \u0027org_no\u0027, line 1, position 10."}
+01:13:29 App initialization Start
+01:13:29 Loading appsettings.json...
+01:13:29 
+01:13:29 The Folders are all ready.
+01:13:29 Checking Internet connection...
+01:13:29 Machine name: CHENGCHEN24E7
+01:13:29 test_org_code 00106
+01:13:29 使用測試用帳號
+01:13:29 OrgCode: 00106
+01:13:29 組織代碼錯誤
+01:13:29 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+01:13:29 Pinging server at 8.8.8.8...
+01:13:30 Server at 8.8.8.8 is reachable. Response time: 174 ms
+01:13:30 {"flag":false,"data":"","message":"Exception occurred: 遺漏的參數沒有預設值。\r\n參數名稱: parameters"}
+01:13:30 Log sent successfully 
+01:13:30 App initialization completed.
+01:18:57 App initialization Start
+01:18:57 Loading appsettings.json...
+01:18:57 
+01:18:57 The Folders are all ready.
+01:18:57 Checking Internet connection...
+01:18:57 Machine name: CHENGCHEN24E7
+01:18:57 test_org_code 00106
+01:18:57 使用測試用帳號
+01:18:57 OrgCode: 00106
+01:18:57 組織代碼錯誤
+01:18:58 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+01:18:58 Pinging server at 8.8.8.8...
+01:18:58 Server at 8.8.8.8 is reachable. Response time: 46 ms
+01:18:59 Your log data here
+Your log data 3r1r
+
+01:18:59 Log sent successfully 
+01:18:59 App initialization completed.
+01:30:24 App initialization Start
+01:30:24 Loading appsettings.json...
+01:30:24 
+01:30:24 The Folders are all ready.
+01:30:24 Checking Internet connection...
+01:30:24 Machine name: CHENGCHEN24E7
+01:30:24 test_org_code 00106
+01:30:24 使用測試用帳號
+01:30:24 OrgCode: S0000106
+01:30:25 {"flag":false,"data":"","message":"Exception occurred: Unexpected character encountered while parsing value: S. Path \u0027org_no\u0027, line 1, position 10."}
+01:31:24 App initialization Start
+01:31:24 Loading appsettings.json...
+01:31:24 
+01:31:24 The Folders are all ready.
+01:31:24 Checking Internet connection...
+01:31:24 Machine name: CHENGCHEN24E7
+01:31:24 test_org_code 00106
+01:31:24 使用測試用帳號
+01:31:24 OrgCode: 00106
+01:31:24 組織代碼錯誤
+01:31:25 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+01:31:25 Pinging server at 8.8.8.8...
+01:31:25 Server at 8.8.8.8 is reachable. Response time: 59 ms
+01:31:25 Your log data here
+Your log data 3r1r
+
+01:31:25 Log sent successfully 
+01:31:25 App initialization completed.
+01:31:29 Downloading fingerprint data from HCM...
+01:31:31 Downloading fingerprint data from HCM...
+01:31:31 Data has been successfully written to FingerIn.json
+01:31:44 Downloading fingerprint data from HCM...
+01:31:45 Data has been successfully written to FingerIn.json
+01:33:50 App initialization Start
+01:33:50 Loading appsettings.json...
+01:33:51 
+01:33:51 The Folders are all ready.
+01:33:51 Checking Internet connection...
+01:33:51 Machine name: CHENGCHEN24E7
+01:33:51 test_org_code 00106
+01:33:51 使用測試用帳號
+01:33:51 OrgCode: 00106
+01:33:51 組織代碼錯誤
+01:33:51 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+01:33:51 Pinging server at 8.8.8.8...
+01:33:51 Server at 8.8.8.8 is reachable. Response time: 56 ms
+01:33:52 Your log data here
+Your log data 3r1r
+
+01:33:52 Log sent successfully 
+01:33:52 App initialization completed.
+01:33:54 Downloading fingerprint data from HCM...
+01:35:24 App initialization Start
+01:35:24 Loading appsettings.json...
+01:35:24 
+01:35:24 The Folders are all ready.
+01:35:24 Checking Internet connection...
+01:35:24 Machine name: CHENGCHEN24E7
+01:35:24 test_org_code 00106
+01:35:24 使用測試用帳號
+01:35:24 OrgCode: 00106
+01:35:24 組織代碼錯誤
+01:35:25 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+01:35:25 Pinging server at 8.8.8.8...
+01:35:25 Server at 8.8.8.8 is reachable. Response time: 61 ms
+01:35:25 Your log data here
+Your log data 3r1r
+
+01:35:25 Log sent successfully 
+01:35:25 App initialization completed.
+01:35:29 Downloading fingerprint data from HCM...

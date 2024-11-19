@@ -9,6 +9,9 @@ using System.Text.Json;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using Newtonsoft.Json;
 using System.Reflection;
+using System;
+using System.IO;
+
 
 namespace carddatasync3
 {
@@ -17,26 +20,28 @@ namespace carddatasync3
         private string str_log_level = "debug"; //TODO: Need to change after program release.
         static string _gAPPath = AppContext.BaseDirectory;
         protected static string databaseKey = "GAIA.EHR";
-        protected static string downloaction;
-        protected static string pglocation;
-        protected static string responseData;
+        protected static string downloaction    ="";
+        protected static string pglocation      ="";
+        protected static string responseData    ="";
 
         // ======================================================================================
         //將備份目錄提出來變成Config
-        protected static string _gBackUpPath;
+        protected static string _gBackUpPath    ="";
 
         // ======================================================================================
         //指紋匯出及下載的檔案產生目的地
-        protected static string _gOutFilePath;
+        protected static string _gOutFilePath   ="";
         //For Auto Run Time
-        protected static string autoRunTime;
+        protected static string autoRunTime     ="";
 
-        protected static string test_org_code;
-        protected static string machineIP;
+
+        //
+        protected static string test_org_code   =""; 
+        protected static string machineIP   ="";
 
         protected static DateTime last_check_date = new DateTime();
 
-        public static string eHrToFingerData;
+        public static string eHrToFingerData    ="";
         public static StringBuilder str_accumulated_log = new StringBuilder();
         private static int peopleCount = 0;
 
@@ -47,8 +52,35 @@ namespace carddatasync3
         public static NameValueCollection AppSettings { get; private set; }      
 
         // private static string apiBaseUrl = "https://gurugaia.royal.club.tw/eHR/GuruOutbound/getTmpOrg"; // Base URL for the API
-        private static string apiBaseUrl;
-        private static string hcmEmployeeJsonData;
+        private static string apiBaseUrl    ="";
+
+
+        //測試的模式
+        private static string mode  ="";
+
+        //將測試的模式轉為JSON
+       private static Dictionary<string, object> modeJSON;
+
+
+        //del
+        private static string hcmEmployeeJsonData   ="";
+
+
+
+        // Employee HCM =>
+        private static JObject hcmEmployeeJson   = null;
+
+        // Employee Machine =>
+        private static JObject punchMachineEmployeeJson = new JObject
+                                                            {
+                                                                ["flag"] = true,
+                                                                ["message"] = "",
+                                                                ["data"] = new JArray(),
+                                                                ["modelStatus"] = null
+                                                            };
+        
+        private bool isClockExpanded = true;
+
         private static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
         public MainPage()
@@ -65,24 +97,87 @@ namespace carddatasync3
 
             // Call initialization sequence
             InitializeApp();
+            
+            StartClock();
+        }
+
+
+        // Set hover effect for each button
+        private async void OnToggleLogButtonClicked(object sender, EventArgs e)
+        {
+            if (LogFrame.IsVisible)
+            {
+                await textBox2.FadeTo(0, 500); // Fade-out effect
+                LogFrame.IsVisible = false;
+            }
+            else
+            {
+                LogFrame.IsVisible = true;
+                await textBox2.FadeTo(1, 500); // Fade-in effect
+            }
+        }
+
+         private void StartClock()
+        {
+            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+            {
+                ClockLabel.Text = DateTime.Now.ToString("HH:mm");
+                return true; // Repeat timer
+            });
+        }
+
+        private async void OnClockTapped(object sender, EventArgs e)
+        {
+
+            double startClockWidth = isClockExpanded ? 8 : 0;
+            double endClockWidth = isClockExpanded ? 0 : 8;
+
+            double startLogWidth = isClockExpanded ? 2 : 10;
+            double endLogWidth = isClockExpanded ? 10 : 2;
+
+            // 定義動畫
+            var animation = new Animation();
+
+            // 動畫 ClockColumn 的寬度
+            animation.Add(0, 1, new Animation(v => ClockColumn.Width = new GridLength(v, GridUnitType.Star), startClockWidth, endClockWidth));
+
+            // 動畫 LogColumn 的寬度
+            animation.Add(0, 1, new Animation(v => LogColumn.Width = new GridLength(v, GridUnitType.Star), startLogWidth, endLogWidth));
+
+            // 運行動畫
+            animation.Commit(this, "GridAnimation", 16, 500, Easing.Linear);
+            
+            isClockExpanded = !isClockExpanded;
+
+        }
+
+        private async void OnSettingButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AppSettingPage());
         }
 
         #region Initialisation
-
         private void OnRefreshButtonClicked(object sender, EventArgs e)
         {
             InitializeApp();
         }
 
-        private async void InitializeApp()
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            InitializeApp(); // 每次頁面出現時執行
+        }
+
+         private async Task InitializeApp()
         {
             // ================================ Step.0 Lock Button ===============================================
             set_btns_state(false);
 
             // ======================= Step.1 取得目前 APP 版本號並印出 Get Current APP Version =====================
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
-            AppendTextToEditor(version.ToString());
-            AppendTextToEditor("Form init"); // App initialization started.
+           // var version = Assembly.GetExecutingAssembly().GetName().Version;
+           // AppendTextToEditor(version.ToString());
+             
+            AppendTextToEditor("App initialization Start"); // App initialization started.
 
             // ======================= Step.2 匯入設定檔 Load Config (AppSettings.json) =======================
             // 讀取 appsettings.json 存入 AppSettings 中
@@ -95,99 +190,143 @@ namespace carddatasync3
             
             if (!CheckFilesExist(this))
             {
-                AppendTextToEditor("Required file not found. Closing application.");
+                AppendTextToEditor("Required file not found. ");
                 CheckFilesExistLayout.IsVisible = true;
-                return;
-            }
-            else CheckFilesExistLayout.IsVisible = false;
 
+            }
+           else CheckFilesExistLayout.IsVisible = false;
+
+
+            hcmEmployeeJson = null;
+          
 
             // =============== Step.4 確認網路連線 Check Internet Available ==================================
-            if (!IsInternetAvailable())
-            {
-                AppendTextToEditor("No internet connection. Closing application.");
-                IsInternetAvailableLayout.IsVisible = true;
-                return;
+            
+            if(CheckModeJSON("internetCheck").Length>0){
+                if (!IsInternetAvailable())
+                {
+                    AppendTextToEditor("No internet connection. Closing application.");
+                    IsInternetAvailableLayout.IsVisible = true;
+                    
+                }
+               else IsInternetAvailableLayout.IsVisible = false;
             }
-            else IsInternetAvailableLayout.IsVisible = false;
-
             // ================== Step.5 取得目前電腦名稱 Get Current Computer Name(GetOrgCode) ===============
-            // TODO: 未完成 (getCradORGName)
-            getOrgCode();
 
-            // 確認組織代碼名稱
-            if (string.IsNullOrEmpty(textBox1.Text) || textBox1.Text.Length != 8)
-            {
-                string str_msg = "組織代碼錯誤，將關閉程式";
-                AppendTextToEditor(str_msg);
-                // await show_error(str_msg, "組織代碼錯誤");
-                is_init_completed = false;
-                GetOrgCodeLayout.IsVisible = true;
-                // return;
+            if(CheckModeJSON("orgNameCheck").Length>0){
+                //將組織代碼代入
+                
+             
+                if(string.IsNullOrEmpty(textBox1.Text) ){
+                    AppendTextToEditor("將組織代碼代入");
+                    getOrgCode();
+                }
+            
+
+                // 確認組織代碼名稱
+                if (string.IsNullOrEmpty(textBox1.Text) ) //|| textBox1.Text.Length != 8
+                {
+                    string str_msg = "組織代碼錯誤";
+                    AppendTextToEditor(str_msg);
+                    // await show_error(str_msg, "組織代碼錯誤");
+                   // is_init_completed = false;
+                    GetOrgCodeLayout.IsVisible = true;
+                }
+                else GetOrgCodeLayout.IsVisible = false;
+                // ------------------------ 會卡在這裡 --------------------------------
+
+                    
+                //用POST取得  
+                labStoreName.Text = await getORGName(textBox1.Text);  //old name getCradOrgName
+
+
+                if (labStoreName.Text.Length == 0)
+                {
+                    string str_msg = $"找不到{textBox1.Text}組織名稱，將關閉程式";
+                    // show_error(str_msg, "組織名稱錯誤");
+                    AppendTextToEditor(str_msg);
+                    //is_init_completed = false;
+                    // GetOrgCodeLayout.IsEnabled = true;
+                    GetOrgCodeLayout.IsVisible = true;
+                    // IsHCMReadyLayout.IsEnabled = true;
+                    IsHCMReadyLayout.IsVisible = true;
+                 
+                }
+                else {
+                    GetOrgCodeLayout.IsVisible = false;
+                    IsHCMReadyLayout.IsVisible = false;
+                }
             }
-            else GetOrgCodeLayout.IsVisible = false;
-            // ------------------------ 會卡在這裡 --------------------------------
-
-            labStoreName.Text = getCradORGName();
-            if (labStoreName.Text.Length == 0)
-            {
-                string str_msg = $"找不到{textBox1.Text}組織名稱，將關閉程式";
-                // show_error(str_msg, "組織名稱錯誤");
-                AppendTextToEditor(str_msg);
-                is_init_completed = false;
-                GetOrgCodeLayout.IsVisible = true;
-                // return;
-            }
-            else GetOrgCodeLayout.IsVisible = false;
-
+            
             // ================= Step.6 確認打卡機就緒 Check Punch Machine Available ==================
             // TODO: 無法測試，未完成
-            if (!is_HCM_ready())
+            /* if (!is_HCM_ready())
             {
                 string str_msg = "HCM連接發生問題，將關閉程式";
                 // await show_error(str_msg, "連線問題");
                 AppendTextToEditor(str_msg);
                 is_init_completed = false;
-                IsHCMReadyLayout.IsVisible = true;
+                IsHCMReadyLayout.IsEnabled = true;
+                IsHCMReadyLabel.TextColor = Colors.Blue;
                 // return;
             }
-            else IsHCMReadyLayout.IsVisible = false;
-            // ----------------------------------- 會卡在這裡 ------------------------------------------
-
+            else IsHCMReadyLayout.IsEnabled = false;*/
+        
+              if(CheckModeJSON("machineCheck").Length>0){
+                    // Ping server IP address
+                    if (!PingMachine(machineIP)) // Example IP, replace with the actual one
+                    {
+                     //   AppendTextToEditor("Unable to reach the Machine. "+machineIP);
+                        // PingServerLayout.IsEnabled = true;
+                        PingServerLayout.IsVisible = true;
+                       
+                    }
+                    else PingServerLayout.IsVisible = false;
+              }
             // ====================== Step.7 確認人資系統有沒有上線 (ping IP)​ Check if the HR Server is available ============
-            // Ping server IP address
-            if (!PingServer(machineIP)) // Example IP, replace with the actual one
-            {
-                AppendTextToEditor("Unable to reach the server. Closing application.");
-                PingServerLayout.IsVisible = true;
-                return;
-            }
-            else PingServerLayout.IsVisible = false;
-
+         
             // ====================== Step.8 以組織代碼APP=>回傳版本 Check GuruOutbound service =======================
             // TODO: 未完成 (沒有 code)
 
             // ====================== Step.9 傳送日誌 use POST Send the Log / => 準備就緒 Ready ========================
-            string orgCode = "S000123"; // TODO: textBox1.Text.ToString()
+           /* string orgCode = ;  
             string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
             string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
-            AppendTextToEditor($"url: {fullUrl}");
             bool postSuccess = await send_org_code_hcm(orgCode);
+*/
 
+            SendLogLayout.IsVisible = true;
+              
+            bool logSuccess = await setLog(textBox1.Text,"Inital Success\n");
+
+            if (logSuccess)
+            {
+             //   AppendTextToEditor("Log sent successfully ");
+                SendLogLayout.IsVisible = false;
+            } else{
+                AppendTextToEditor("Failed to send log or save data.");
+               SendLogLayout.IsVisible = true;
+            }
+
+            //AppendTextToEditor($"url: {fullUrl}");
+          
+/*
             if (postSuccess)
             {
                 AppendTextToEditor("Log sent successfully and data saved to FingerIn.json.");
-                SendLogLayout.IsVisible = false;
+                SendLogLayout.IsEnabled = false;
             }
             else
             {
                 AppendTextToEditor("Failed to send log or save data.");
-                SendLogLayout.IsVisible = true;
+                SendLogLayout.IsEnabled = true;
+                SendLogLabel.TextColor = Colors.Blue;
                 return;
             }
-
+*/
             // ====================== Step.10 Unlock Button​ + 初始化成功 App initialization completed =======================
             set_btns_state(true);
+
             AppendTextToEditor("App initialization completed.");
         }
 
@@ -198,23 +337,40 @@ namespace carddatasync3
         private void getOrgCode()
         {
             // TODO: 修改廠商代碼的取得方式
-            string m_name = "S000123"; // TODO: Environment.MachineName
-            AppendTextToEditor("Machine name: " + m_name);
+            string m_name =  Environment.MachineName;//"S000123"; // TODO:
+
+            AppendTextToEditor("Machine: " + m_name);
+            AppendTextToEditor("ID: " + test_org_code);
+
+
             textBox1.Text = string.Empty; // 清空 Entry 控件的文本
 
-            if (m_name.Length < 7)
-            {
-                show_err("抓取組織代碼失敗");
+            if (test_org_code.ToString().Length > 3){
+
+                 AppendTextToEditor("使用測試用帳號");
+                
+                 textBox1.Text = "S00"+test_org_code.ToString();
+
+            }else {
+                
+                if (m_name.Length < 7){
+            
+                AppendTextToEditor("抓取組織代碼失敗");
                 textBox1.Text = string.Empty; // 清空 Entry
-            }
-            else
-            {
-                string l_name = m_name.Substring(2, 5);
-                if (CommonUtility.is_valid_org_code(l_name))
-                {
-                    textBox1.Text = "S00" + l_name; // 設置 Entry 的值
+            
+                }else{
+                
+
+                    string l_name = m_name.Substring(2, 5);
+                    if (CommonUtility.is_valid_org_code(l_name))
+                    {
+                        textBox1.Text = "S00" + l_name; // 設置 Entry 的值
+                    }
+
+                    
                 }
             }
+        
 
             // if (CommonUtility.is_valid_org_code(test_org_code))
             // {
@@ -232,13 +388,13 @@ namespace carddatasync3
             //         textBox1.Text = test_org_code; // 設置 Entry 的值
             //     }
             // }
-            AppendTextToEditor($"OrgCode: {textBox1.Text}"); // 使用 textBox1.Text 來取得值
+            AppendTextToEditor($"tOrgCode: {textBox1.Text}"); // 使用 textBox1.Text 來取得值
         } // END getOrgCode
 
         private bool is_HCM_ready()
         {
             // TODO: 確認 HCM 連線是否成功
-            AppendTextToEditor("HCM連線中,請等待");
+          //  AppendTextToEditor("HCM連線中,請等待");
             // if (ConfigurationManager.ConnectionStrings[databaseKey] != null)
             // {
             //     string conn = ConfigurationManager.ConnectionStrings[databaseKey].ConnectionString;
@@ -264,6 +420,8 @@ namespace carddatasync3
             return false;
         } // END is_HCM_ready
 
+
+        //用組織代碼去要資料
         public static async Task<bool> send_org_code_hcm(string orgCode)
         {
 
@@ -284,13 +442,14 @@ namespace carddatasync3
 
                 // Call the API and get the JSON response
                 string responseData = await GetRequestAsync(orgCode);
+               
                 hcmEmployeeJsonData = responseData;
+
+            
 
                 // Write the response data to a JSON file
                 await File.WriteAllTextAsync(fileHCMPath, responseData);
 
-                // Success message (optional)
-                Console.WriteLine("Data has been successfully written to FingerIn.json");
                 return true;
             }
             catch (Exception ex)
@@ -300,11 +459,12 @@ namespace carddatasync3
             }
         }
         
-        // Function to handle the API POST request
+        //delete
+        // Function to handle the API POST request just for PSNSync
         static async Task<string> GetRequestAsync(string orgCode)
         {
             // Construct the full URL with the org_code
-            string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}";
+            string jsonParam = $"{{\"org_no\":\"{orgCode}\"}}"; //fix param
             string fullUrl = $"{apiBaseUrl}{Uri.EscapeDataString(jsonParam)}";
 
             using (var client = new HttpClient())
@@ -330,8 +490,67 @@ namespace carddatasync3
             }
         }
 
-        private string getCradORGName()
+        private async Task<string> getORGName(string _orgCode)
         {
+
+             try
+        {
+               
+        using (var client = new HttpClient())
+            {
+            // 建立要傳遞的 JSON 資料，使用字串插值來替換 org_No 和 logData 的值
+                        var requestData = new
+                        {
+                            ctrler = "STD1FORME00501",
+                            method = "PSNVersion",
+                            jsonParam = $@"{{
+                                'org_No': '{_orgCode}',
+                            }}",
+                            token = "your-token-here"
+                        };
+
+
+                // 將資料序列化為 JSON 字串
+                string json = JsonConvert.SerializeObject(requestData);
+
+                // 設定請求內容
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+                // 發送 POST 請求
+                var response = await client.PostAsync(AppSettings["serverInfo"] + "/GuruOutbound/Trans", content);
+
+                // 確認回應成功
+                if (response.IsSuccessStatusCode)
+                {
+                    // 讀取並返回回應內容
+                    string _str = await response.Content.ReadAsStringAsync();
+                    AppendTextToEditor(_str);
+
+                    // 反序列化 JSON 並提取 orgName
+                    var jsonDocument = JsonDocument.Parse(_str);
+                    var orgName = jsonDocument.RootElement
+                                        .GetProperty("data")  // 進入 "data" 屬性
+                                        .GetProperty("orgName")  // 進入 "orgName" 屬性
+                                        .GetString();  // 提取 orgName 的值
+
+                    return orgName;
+                }
+                else   
+
+                        {
+                            throw new Exception($"Failed to get data from API: {response.StatusCode}");
+                        }
+            }
+            
+
+        } catch (HttpRequestException ex)
+                {
+                    throw new Exception($"Failed to connect to the API: {ex.Message}");
+                }
+
+           
+
             // TODO: 取得廠商名稱 (不使用 db)
             string name = string.Empty;
             // string sql = string.Format(@"SELECT UNITNAME FROM VW_MDS_ORGSTDSTRUCT WHERE UNITCODE='{0}'", this.textBox1.Text);
@@ -351,11 +570,315 @@ namespace carddatasync3
             return name;
         } // END getCradORGName
 
+
+
+        private async Task<bool> setLog(string _orgCode,string _logData)
+        {
+
+            try
+            {
+                
+                using (var client = new HttpClient())
+                {
+                    // 建立要傳遞的 JSON 資料，使用字串插值來替換 org_No 和 logData 的值
+                    var requestData = new
+                    {
+                        ctrler = "STD1FORME00501",
+                        method = "PSNLog",
+                        jsonParam = "{'logData': '" + _logData + "'}",
+                        token = "your-token-here"
+                    };
+                    AppendTextToEditor($"jsonParam: {_logData}");
+
+                    // 方法2：使用 JsonSerializerSettings
+                    string json = JsonConvert.SerializeObject(requestData, new JsonSerializerSettings 
+                    { 
+                        Formatting = Formatting.None 
+                    });
+
+                    
+                    AppendTextToEditor(json);
+
+                    // 設定請求內容
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+                    // 發送 POST 請求
+                    var response = await client.PostAsync(AppSettings["serverInfo"] + "/GuruOutbound/Trans", content);
+
+                    AppendTextToEditor(AppSettings["serverInfo"] + "/GuruOutbound/Trans");
+/*
+[
+ {
+"flag": true,
+"message": "",
+"data": "Total 1 records",
+"modelStatus": "Success"
+ }
+]
+*/
+
+                    // 確認回應成功
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // 讀取並返回回應內容
+                        string _str = await response.Content.ReadAsStringAsync();
+                        // 反序列化 JSON 陣列
+                        var jsonDocument = JsonDocument.Parse(_str);
+                        var rootElement = jsonDocument.RootElement;
+                        AppendTextToEditor($"rootElement: {rootElement}");
+                        
+                        // 因為是陣列，所以先獲取第一個元素
+                        var firstElement = rootElement[0]; // rootElement[0]
+                        
+                        // 獲取 flag 值
+                        var flag = firstElement.GetProperty("flag").GetBoolean();
+                        
+                        // 記錄返回的訊息
+                        var _resultStr = firstElement.GetProperty("data").GetString();
+                        AppendTextToEditor($"resultStr: {_resultStr}");
+                        
+                        // 根據 flag 值返回結果
+                        return flag;
+                    }
+                    else
+                    {
+                        AppendTextToEditor($"Failed to get data from API: {response.StatusCode}");
+                                
+                        return false;
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                AppendTextToEditor($"Failed to connect to the API: {ex.Message}");
+                return false;
+            }
+        } //setLog END
+
+
+private async Task<bool> setModify(JArray _chgList)
+{
+    const int batchSize = 100; // 每次上傳的批次大小
+    
+    
+    try
+    {
+        using (var client = new HttpClient())
+        {
+            // 將資料分割成每 10 筆為一批
+            for (int i = 0; i < _chgList.Count; i += batchSize)
+            {
+                // 取得當前批次的資料
+                var batch = new JArray(_chgList.Skip(i).Take(batchSize));
+                string batchStr = batch.ToString().Replace("\n", "").Replace("\r", "").Replace("  ", "");
+                batchStr = " {0:"+batchStr+"}";
+                // 準備要傳遞的 JSON 資料
+                var requestData = new
+                {
+                    ctrler = "STD1FORME00501",
+                    method = "PSNModify",
+                    jsonParam = batchStr,
+                    token = "your-token-here"
+                };
+
+                // 將 requestData 轉為 JSON 字串
+                // 將資料序列化為 JSON 字串
+                string json = JsonConvert.SerializeObject(requestData);
+
+                // 設定請求內容
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                
+                // -display 印出即將發送的請求內容
+              
+                    AppendTextToEditor(json);
+
+                    // 發送 POST 請求
+                    var response = await client.PostAsync(AppSettings["serverInfo"] + "/GuruOutbound/Trans", content);
+
+                    // 確認回應成功
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // 讀取並返回回應內容
+                        string _str = await response.Content.ReadAsStringAsync();
+                        // 反序列化 JSON 並提取 orgName
+                        var jsonDocument = JsonDocument.Parse(_str);
+                        var _resultStr = jsonDocument.RootElement
+                                            .GetProperty("data")  // 進入 "data" 屬性
+                                            .GetString();  // 提取 orgName 的值
+
+                        AppendTextToEditor($"resultStr: {_resultStr}");
+
+                        return true;
+                    }
+                    else
+                    {
+                        AppendTextToEditor($"Failed to get data from API: {response.StatusCode}");
+                                
+                        return false;
+                    }
+            }//10 records
+        }
+        
+        return true; // 成功完成所有批次
+    }
+    catch (Exception ex)
+    {
+        AppendTextToEditor($"Exception: {ex.Message}");
+        return false;
+    }
+}//setModify END
+
+       
+        private async Task<bool> getPSNSync(string _orgCode)
+        {
+
+            // 記錄開始時間
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
+
+            AppendTextToEditor("人事同步開始");
+
+            try
+            {
+                
+            
+                using (var client = new HttpClient())
+                {
+                    // 建立要傳遞的 JSON 資料，使用字串插值來替換 org_No 和 logData 的值
+                    var requestData = new
+                    {
+                        ctrler = "STD1FORME00501",
+                        method = "PSNSync",
+                        jsonParam = $@"{{
+                                'org_No': '{_orgCode}',
+                        }}",
+                        token = "your-token-here"
+                    };
+
+
+                    // 將資料序列化為 JSON 字串
+                    string json = JsonConvert.SerializeObject(requestData);
+
+                    // 設定請求內容
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+                    // 發送 POST 請求
+                    var response = await client.PostAsync(AppSettings["serverInfo"] + "/GuruOutbound/Trans", content);
+
+                    // 確認回應成功
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // 讀取並返回回應內容
+                        string _str = await response.Content.ReadAsStringAsync();
+
+                        // 定義當前目錄下的 FingerData 資料夾路徑
+                        string fingerDataPath = Path.Combine(Environment.CurrentDirectory, "");
+
+                        // 確保 FingerData 資料夾存在；如果不存在則建立
+                        if (!Directory.Exists(fingerDataPath))
+                        {
+                            Directory.CreateDirectory(fingerDataPath);
+                        }
+
+                        // 定義 FingerData 資料夾中 FingerIn.json 的路徑
+                        var fileHCMPath = Path.Combine(fingerDataPath, "FingerIn.json");
+
+                        // 呼叫 API 並取得 JSON 回應
+                        string responseData = _str;
+                        //PSNsync
+                        // hcmEmployeeJsonData = responseData;
+
+                        hcmEmployeeJson = JObject.Parse(responseData);
+
+                        // 將回應資料寫入 JSON 檔案 (會覆寫)
+                        await File.WriteAllTextAsync(fileHCMPath, responseData);
+
+                     //   AppendTextToEditor("Data has been successfully written to FingerIn.json");
+                        
+                        stopwatch.Stop();
+                        TimeSpan timeSpent = stopwatch.Elapsed;
+
+                        // 顯示成功訊息及花費的時間
+                        AppendTextToEditor($"Data has been successfully written to FingerIn.json. Time spent: {timeSpent.TotalMilliseconds} ms");
+                        
+                        return true;
+                    }
+                    else
+                    {
+                        AppendTextToEditor($"Failed to get data from API: {response.StatusCode}");
+                                
+                        return false;
+                    }
+                }
+            
+            } catch (HttpRequestException ex)
+            {
+                AppendTextToEditor($"Failed to connect to the API: {ex.Message}");
+                return false;
+                
+            }
+        } //getPSNSync END
+
+        // private async Task<bool> sendPSNModify(string org_no)
+        // {
+        //     // 記錄開始時間
+        //     Stopwatch stopwatch = Stopwatch.StartNew();
+        //     AppendTextToEditor("Uploading fingerprint data to HCM...");
+
+        //     try
+        //     {
+        //         using (var client = new HttpClient())
+        //         {
+        //             // 建立要傳遞的 JSON 資料，包含上傳的 dataToUpload
+        //             var requestData = new
+        //             {
+        //                 ctrler = "STD1FORME00501",
+        //                 method = "PSNModify",
+        //                 jsonParam = $@"{{
+        //                     'org_No': '{_orgCode}',
+        //                     'data': {dataToUpload.ToString()}
+        //                 }}",
+        //                 token = "your-token-here"
+        //             };
+
+        //             // 序列化 JSON 資料
+        //             string json = JsonConvert.SerializeObject(requestData);
+
+        //             // 設定請求內容
+        //             var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        //             // 發送 POST 請求
+        //             var response = await client.PostAsync(AppSettings["serverInfo"] + "/GuruOutbound/Trans", content);
+
+
+        //         }
+
+        //     }
+        //     catch (HttpRequestException ex)
+        //     {
+        //         AppendTextToEditor($"Failed to connect to the API: {ex.Message}");
+        //         return false;
+        //     }
+
+        //     // Prepare the response structure​
+        //     var response = new
+        //     {
+        //         flag = true,               // Set to true or false based on your logic​
+        //         message = "",              // Empty message or adjust as needed​
+        //         data = "共幾筆",            // The data field contains the string "1.2.0"​
+        //         modelStatus = (object)null // Can be set to null or any specific value​
+        //     };
+
+        //     // Return the JSON response​
+        //     return Json(response, JsonRequestBehavior.AllowGet);
+        // }
+
         // 讀取 appsettings.json 並將相關路徑傳入參數中
         private void LoadAppSettings()
         {
             AppSettings = new NameValueCollection();
-            AppendTextToEditor("Loading appsettings.json...");
 
             string appSettingsPath = Path.Combine(_gAPPath, "appsettings.json");
 
@@ -392,28 +915,58 @@ namespace carddatasync3
                 LoadAppSettingsLayout.IsVisible = true;
             }
             
-            downloaction = AppSettings["downloadlocation"];
-            pglocation = AppSettings["pgfingerlocation"];
-            _gBackUpPath = AppSettings["BackUpPath"];
-            _gOutFilePath = AppSettings["fileOutPath"];
-            autoRunTime = AppSettings["AutoRunTime"];
-            test_org_code = AppSettings["test_org_code"];
+
+           
+            downloaction    = AppSettings["downloadlocation"];
+            pglocation      = AppSettings["pgfingerlocation"];
+            _gBackUpPath    = AppSettings["BackUpPath"];
+            _gOutFilePath   = AppSettings["fileOutPath"];
+            autoRunTime     = AppSettings["AutoRunTime"];
+            test_org_code   = AppSettings["test_org_code"];
             last_check_date = DateTime.ParseExact(
                                     AppSettings["LastCheckDate"],
                                     "yyyy-MM-dd",
                                     System.Globalization.CultureInfo.InvariantCulture);
-            machineIP = AppSettings["machineIP"];
-            apiBaseUrl = AppSettings["serverInfo"] + "/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
+
+            machineIP       = AppSettings["machineIP"];
+            apiBaseUrl      = AppSettings["serverInfo"] + "/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=";
+    
+            mode            = AppSettings["mode"];
+            
+
+            // 將 JSON 字串解析為 Dictionary<string, object>
+             modeJSON = JsonConvert.DeserializeObject<Dictionary<string, object>>(mode);
+
+            // 存取 key 的值
+           
+            AppendTextToEditor(CheckModeJSON("debugFileCheck")); // 輸出 "value"
+            
+            
+
+
         } // END LoadAppSettings
+
+
+        //看是否mode有這個key值
+        private string CheckModeJSON(string _key){
+            if (modeJSON != null && modeJSON.ContainsKey(_key))
+            {
+                //AppendTextToEditor(modeJSON[_key].ToString()); // 輸出 "value"
+                return modeJSON[_key].ToString();
+          
+            }
+
+            return "";
+        }
 
         private bool CheckFilesExist(MainPage page)
         {
             // Load settings from appsettings.json
 
-            var downloadLocation = AppSettings["downloadlocation"];
-            var pgFingerLocation = AppSettings["pgfingerlocation"];
-            var fileOutPath = AppSettings["fileOutPath"];
-            var BackUpPath = AppSettings["BackUpPath"];
+            var downloadLocation    = AppSettings["downloadlocation"];
+            var pgFingerLocation    = AppSettings["pgfingerlocation"];
+            var fileOutPath         = AppSettings["fileOutPath"];
+            var BackUpPath          = AppSettings["BackUpPath"];
 
             // Check if the directories exist
             if (!Directory.Exists(downloadLocation))
@@ -430,15 +983,17 @@ namespace carddatasync3
 
             if (!Directory.Exists(fileOutPath))
             {
-                AppendTextToEditor($"The BackUpPath folder does not exist: {fileOutPath}");
+                AppendTextToEditor($"The BackupPath folder does not exist: {fileOutPath}");
                 return false;
             }
 
             if (!Directory.Exists(BackUpPath))
             {
-                AppendTextToEditor($"The BackUp folder does not exist: {BackUpPath}");
+                AppendTextToEditor($"The Backup folder does not exist: {BackUpPath}");
                 return false;
             }
+
+            // AppendTextToEditor("The Folders are all ready.");
 
             // If both directories exist, return true
             return true;
@@ -454,7 +1009,10 @@ namespace carddatasync3
             return true;
         } // END ensureFilePathExists
 
-        // 確認桌面上 PGFinger.exe 是否存在
+
+
+
+        // 確認 PGFinger.exe 是否存在
         public bool validatePGFingerExe()
         {
             // AppendTextToEditor(File.Exists(pglocation + @"\PGFinger.exe").ToString());
@@ -464,7 +1022,7 @@ namespace carddatasync3
         // 確定網路連線
         private bool IsInternetAvailable()
         {
-            AppendTextToEditor("Checking internet connection...");
+            //AppendTextToEditor("Checking Internet connection...");
 
             var current = Connectivity.Current.NetworkAccess;
             var profiles = Connectivity.Current.ConnectionProfiles;
@@ -474,20 +1032,20 @@ namespace carddatasync3
 
             if (isConnected)
             {
-                // AppendTextToEditor("Internet connection is available.");
+                
                 return true;
             }
             else
             {
-                // AppendTextToEditor("No internet connection available.");
+                
                 return false;
             }
         } // END IsInternetAvailable
 
         // 確定是否能夠 ping server
-        private bool PingServer(string ipAddress)
+        private bool PingMachine(string ipAddress)
         {
-            AppendTextToEditor($"Pinging server at {ipAddress}...");
+            AppendTextToEditor($"Pinging Machine at {ipAddress}...");
 
             try
             {
@@ -520,12 +1078,20 @@ namespace carddatasync3
         } // END PingServer
 
 
-        private void DisplayErrorMessage(string message)
+        private async void DisplayErrorMessage(string message)
         {
+            // 使用 MAUI 的 DisplayAlert 顯示錯誤訊息
+            await Application.Current.MainPage.DisplayAlert("錯誤", message, "確定");
+
+            // 如果你需要在控制台輸出錯誤訊息，適用於其他平台的處理方式
+            Console.WriteLine(message);
+
+            // 自定義方法，假設用於編輯器中追加文本
             AppendTextToEditor(message);
+
+            // 日誌記錄錯誤
             Log.Error(message);
-            DisplayAlert("Error", message, "OK");
-        } // END DisplayErrorMessage
+        }// END DisplayErrorMessage
 
         #endregion
 
@@ -534,21 +1100,201 @@ namespace carddatasync3
         // 寫 log 到 TextEditor 中
         private void AppendTextToEditor(string text)
         {
-            if (textBox2 != null)
-            {
-                textBox2.Text += $"{text}\n"; // Append the text line by line
-            }
+                int maxTextLength = 300; // 設定 textBox2.Text 的最大長度
+
+                if (textBox2 != null)
+                {
+                    // 檢查 textBox2 的文本長度是否已達到最大限制
+                   // if (textBox2.Text.Length >= maxTextLength)
+                   // {
+                    //   textBox2.Text=""; // 清除文本框
+                   // }
+
+                    // 添加新文本
+                    textBox2.Text = $"{text}\n" + textBox2.Text;
+                }
+
+
+            //xavier
+            // 如果成功，則在當前目錄寫入或附加到 log 檔案
+            string logFilePath = Path.Combine(Directory.GetCurrentDirectory(), DateTime.Now.ToString("yyyyMMdd") + "_log.txt");
+           
+            File.AppendAllText(logFilePath, DateTime.Now.ToString("HH:mm:ss") + " "+text + Environment.NewLine);
+
+
         } // END AppendTextToEditor
 
          #region download from hcm
 
 
+
+
+        //xavier main button 1
         private async void btn_HCM_to_fingerprint(object sender, EventArgs e)
         {
-            conduct_HCM_to_fingerprint_work_1();
-        }
-    
+            set_btns_state(false);
+
+       
+            // Step 1:
+            bool hcmResult = await getPSNSync(textBox1.Text);
+
+            if (!hcmResult)
+            {
+                await DisplayAlert("Error", "Failed to execute HCM to fingerprint thread.", "OK");
+
+                set_btns_state(true);
+                return;
+            }
+
+                    
+            // Step 2: Load HCM Employee Data
+                
+            if (hcmEmployeeJson == null)
+            {
+                await DisplayAlert("Error", "Failed to load HCM employee JSON data.", "OK");
+                
+                set_btns_state(true);
+                return;
+            }
+            else
+            {
+                
+                JArray dataArray = (JArray)hcmEmployeeJson["data"]; // HCM data
+                /*
+                //example:
+                [{
+                empNo = "工號003",
+                displayName = "員工姓名3",
+                finger1 = "CABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+                finger2 = "XABCDEFGHIJKLMNOPQRSTUVWXYYZABCDEFGHIJKLMNOPQRSTUVWX",
+                cardNo = "C123456789",
+                addFlag = "A"
+                },.....]
+                */
+                if (dataArray == null){
+                
+                    await DisplayAlert("Error", "Failed to load HCM employee JSON data.", "OK");
+                    
+                    set_btns_state(true);
+                    return;
+
+                }
+
+
+            }
+             
+            /*  
+            foreach (JObject item in (JArray)hcmEmployeeJson["data"])
+            {
+                string displayName = (string)item["finger2"];
+                
+                AppendTextToEditor(displayName);
+            }
+            */
+            // AppendTextToEditor(hcmEmployeeJson.ToString()); 
+            
+
+            // Step 3: Read Punch Card Data => punchMachineEmployeeJson
+            bool getPunchMachineEmployeeJson = await upload_fingerprint_to_HCM(this); // FingerOut.txt
+
+            if(!getPunchMachineEmployeeJson){
+
+                await DisplayAlert("Error", "Failed to load Punch Machine employee JSON data.", "OK");
+                    
+                set_btns_state(true);
+                return;
+            }
         
+
+            // 驗證並訪問 "data" 屬性中的每個項目
+            // foreach (JObject item in (JArray)punchMachineEmployeeJson["data"])
+            // {
+            //     string empNo = (string)item["EmpNo"];
+            //     string displayName = (string)item["DisplayName"];
+            //     // 這裡可以進行需要的操作，例如輸出或儲存
+            //     Console.WriteLine($"EmpNo: {empNo}, DisplayName: {displayName}");
+            // }
+
+
+            // Step 4: Compare Employee Data (Rule 1)
+            //--display
+            AppendTextToEditor($"Original punchMachineEmployeeJson: {punchMachineEmployeeJson.ToString()}");
+            AppendTextToEditor($"Original hcmEmployeeJson: {hcmEmployeeJson.ToString()}");
+            
+            JArray rule1Result = Punch_Data_Changing_rule1(hcmEmployeeJson, punchMachineEmployeeJson);
+            // AppendTextToEditor("----------");
+            AppendTextToEditor($"rule1Result: {rule1Result.ToString()}");
+
+            if (rule1Result.Count == 0)
+            {
+                await DisplayAlert("Error", "Rule 1 No record", "OK");
+                
+                set_btns_state(true);
+                return;
+            }
+
+
+
+             
+            // Step 5: Compare Fingerprint Data (Rule 2)
+            JArray rule2Result = Punch_Data_Changing_rule2(hcmEmployeeJson, punchMachineEmployeeJson);
+            // AppendTextToEditor($"After punchMachineEmployeeJson: {punchMachineEmployeeJson.ToString()}");
+            // AppendTextToEditor($"After hcmEmployeeJson: {hcmEmployeeJson.ToString()}");
+            //AppendTextToEditor("----------");
+            AppendTextToEditor($"rule2Result: {rule2Result.ToString()}");
+            
+            
+            // Step 6: Write Data to PunchMachine
+            bool writeToFingerprinterFlag = await write_to_fingerprinter(this,rule1Result);
+
+            if(!writeToFingerprinterFlag) {
+                await DisplayAlert("Error", "Write Data to PunchMachine Error", "OK");
+                set_btns_state(true);
+                return;
+            }
+
+            // Step 7: Updated Employee be changed Data
+           bool updateSuccess = await setModify(rule2Result);
+
+            if (updateSuccess)
+            {
+                //AppendTextToEditor("Log sent successfully ");
+            } else {
+                
+                AppendTextToEditor("Failed to send log or save data.");
+                
+                set_btns_state(true);
+                return;
+            }
+
+            // Step 8: Log the Sync Process
+            bool logSuccess = await setLog(textBox1.Text,"人事同步完成\n");
+
+            if (logSuccess)
+            {
+                //人事同步完成
+               AppendTextToEditor("Log sent successfully ");
+
+                set_btns_state(true);
+                return;
+
+            } else {
+                AppendTextToEditor("Failed to send log or save data.");
+                
+                set_btns_state(true);
+                return;
+
+            }
+
+            // AppendTextToEditor($"result: {result1.Item1.ToString()}");
+            // AppendTextToEditor($"result HCM: {result1.Item2.ToString()}");
+            // AppendTextToEditor($"result punchClock: {result1.Item3.ToString()}");
+
+          
+
+        }//btn_HCM_to
+    
+        //del
         private async Task conduct_HCM_to_fingerprint_work_1()
         {
             set_btns_state(false);
@@ -563,7 +1309,10 @@ namespace carddatasync3
                     return;
                 }
 
-                // Step 2: Load HCM Employee Data
+                  set_btns_state(true);
+                return;
+
+                // Step 2: Load HCM Employee DataD
                 dynamic hcmEmployeeData = await LoadHCMEmployeeDataAsync();
                 if (hcmEmployeeData == null)
                 {
@@ -615,8 +1364,8 @@ namespace carddatasync3
 
         private async Task<bool> HCM_to_fingerprint_thread(MainPage page)
         {
-            await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Downloading fingerprint data from HCM..."));
-            bool result = await send_org_code_hcm("S000123"); // Assuming `send_org_code_hcm` returns bool
+           
+            bool result = await getPSNSync(textBox1.Text); // Assuming `send_org_code_hcm` returns bool
             return result;
         }
 
@@ -664,6 +1413,9 @@ namespace carddatasync3
         private async void HCM_to_fingerprint_thread(object obj)
         {
             bool is_lock_taken = false;
+
+
+
             ui_sp.TryEnter(ref is_lock_taken);
             if (!is_lock_taken)
                 return;
@@ -747,7 +1499,10 @@ namespace carddatasync3
             if (blResult)
             {
                 MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("檢查相關資料夾..")); // Checking relevant folders...
+              
+              
                 blResult = page.ensureFilePathExists();
+
                 if (!blResult)
                 {
                     blResult = page.create_out_folder();
@@ -756,7 +1511,7 @@ namespace carddatasync3
                         MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("指紋機程序「PGFinger」儲存資料夾不存在，請洽系統管理員")); // PGFinger storage folder not found, please contact system administrator.
                         return false;
                     }
-                    MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("指紋機程序「PGFinger」儲存資料夾已創建。")); // PGFinger storage folder created successfully.
+                  //  MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("指紋機程序「PGFinger」儲存資料夾已創建。")); // PGFinger storage folder created successfully.
                 }
                 else
                 {
@@ -827,44 +1582,123 @@ namespace carddatasync3
 
 
 
-
-        private async Task<bool> write_to_fingerprinter(MainPage page)
+        //xavier okay  back to machine
+        private async Task<bool> write_to_fingerprinter(MainPage page,JArray _JSONArray)
         {
             bool ret_val = false;
 
             try
             {
-                // Log the start of the process
-                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Write to fingerprinter initiated."));
-
-                // Step 1: Show information about starting the fingerprint device program
-                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("啟動指紋機程式"));
+                 AppendTextToEditor("啟動指紋機程式");
 
                 // Step 2: Prepare the execution command and parameters for PGFinger.exe
                 string str_exec_cmd = Path.Combine(pglocation, "PGFinger.exe");
-                string str_exec_parameter = @"2 " + Path.Combine(_gOutFilePath, "FingerIn.txt");
+              
+              
+              //  AppendTextToEditor(str_exec_cmd);
 
+
+                 if (!File.Exists(str_exec_cmd))
+                {
+                    AppendTextToEditor("PGFinger.exe 路徑無效");
+                    return false;
+                }
+
+
+                string str_finger_in = Path.Combine(_gOutFilePath, "FingerIn.txt");
+                string str_exec_parameter = @"2 " + str_finger_in;
+
+                // prepare - _JSONArray: Rule1 result
+                if (_JSONArray is JArray dataArray)
+                {
+                      /*
+                        // 建立 StringBuilder 來儲存格式化的內容
+                        StringBuilder sb = new StringBuilder();
+                       
+                        // 迭代每個員工資料並格式化成每行
+                        foreach (var item in dataArray)
+                        {
+                            string empNo = item["empNo"]?.ToString();
+                            string displayName = item["displayName"]?.ToString();
+                            string cardNo   = item["cardNo"]?.ToString();
+                            string finger1  = item["finger1"]?.ToString();
+                            string finger2  = item["finger2"]?.ToString();
+                            string addFlag  = item["addFlag"]?.ToString();
+
+                            // 將每個屬性值格式化為 CSV 格式
+                            sb.AppendLine($"{empNo},{displayName},{cardNo},{finger1},{finger2},{addFlag}");
+                        }
+
+                        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                        
+                         
+*/
+
+                    // Initialize a list to store each line of CSV data
+                    List<string> lines = new List<string>();
+
+                    // Iterate over each employee data and format it as a line
+                    foreach (var item in dataArray)
+                    {
+                        string empNo = item["empNo"]?.ToString();
+                        string displayName = item["displayName"]?.ToString();
+                        string cardNo   = item["cardNo"]?.ToString();
+                        string finger1  = item["finger1"]?.ToString();
+                        string finger2  = item["finger2"]?.ToString();
+                        string addFlag  = item["addFlag"]?.ToString();
+
+                        // Format each attribute value as CSV and add to list
+                        lines.Add($"{empNo},{displayName},{cardNo},{finger1},{finger2},{addFlag}");
+                    }
+
+                    // Write all lines to file.dat with ASCII encoding
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+                    // Write all lines to file with CP950 encoding (ANSI)
+                    File.WriteAllText(str_finger_in, string.Join(Environment.NewLine, lines), Encoding.GetEncoding(950));
+
+                    
+                }
+                else
+                {
+                    throw new InvalidDataException("無效的資料格式，找不到 'data' 陣列");
+                }
+
+
+
+             
                 // Log the execution command
-                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Executing: {str_exec_cmd} {str_exec_parameter}"));
+             
+               
+                if (!File.Exists(Path.Combine(_gOutFilePath, "FingerIn.txt")))
+                {
+                    AppendTextToEditor("FingerIn.txt 路徑無效");
+                    return false;
+                }
+
 
                 // Step 3: Start the PGFinger.exe process with the necessary parameters
-                var process = new Process
+
+                // process.Start();
+                ret_val = await ExecuteProcessAsync(str_exec_cmd, str_exec_parameter);
+                // await process.WaitForExitAsync();
+                if (!ret_val)
                 {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = str_exec_cmd,
-                        Arguments = str_exec_parameter,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    }
-                };
+                    AppendTextToEditor("Error: FingeIn.txt file was not generated by PGFinger.exe. Please contact the system administrator.");
+                    throw new Exception("FingeIn.exe execution failed.");
+                }
 
-                // Start the process and wait for its completion
-                process.Start();
-                await process.WaitForExitAsync(); // Async wait for the process to finish
+                while (!File.Exists(str_finger_in))
+                {
+                    await Task.Delay(1000); // Wait 10 second
+                }
 
+                // ret_val = process.ExitCode == 0;
+                            
                 // Step 4: Log the completion of the fingerprint device execution
                 await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("指紋機執行結束"));
+
+
 
                 // Step 5: Ensure backup directories exist and back up the FingerIn.txt file
                 await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("準備備份 FingerIn.txt..."));
@@ -882,9 +1716,13 @@ namespace carddatasync3
                 }
 
                 // Backup the FingerIn.txt file
-                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Backing up FingerIn.txt to: {backupFile}"));
+                //  await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Backing up FingerIn.txt to: {backupFile}"));
+                
+                
                 File.Copy(Path.Combine(_gOutFilePath, "FingerIn.txt"), backupFile, true);
-                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Backup of FingerIn.txt created successfully."));
+                
+                
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("備份卡鐘人事資料"));
 
                 ret_val = true;
             }
@@ -896,69 +1734,127 @@ namespace carddatasync3
             return ret_val;
         }
 
+        private async Task<bool> ExecuteProcessAsync(string exePath, string arguments)
+        {
+            if (!File.Exists(exePath))
+            {
+                throw new FileNotFoundException("Executable not found.", exePath);
+            }
 
+            try
+            {
+                var processStartInfo = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    Arguments = arguments,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+
+                using (var process = new Process { StartInfo = processStartInfo })
+                {
+                    process.Start();
+
+                    // Asynchronously read the output and error streams
+                    var output = await process.StandardOutput.ReadToEndAsync();
+                    var error = await process.StandardError.ReadToEndAsync();
+
+                    await process.WaitForExitAsync(); // Wait for the process to exit
+
+                    if (process.ExitCode != 0)
+                    {
+                        throw new Exception($"Process exited with code {process.ExitCode}. Error: {error}");
+                    }
+
+                    // Optionally, log the output for debugging
+                    if (!string.IsNullOrWhiteSpace(output))
+                    {
+                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Process output: {output}"));
+                    }
+                    return process.ExitCode == 0;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to execute {exePath}: {ex.Message}", ex);
+            }
+        }
         
+
+         //xavier okay  machine download
         private async Task<bool> upload_fingerprint_to_HCM(MainPage page)
         {
             string date = "";
             bool blResult = true;
             List<string> content = new List<string>();
 
+            string str_exec_cmd = Path.Combine(pglocation, "PGFinger.exe");
+            string str_finger_out = Path.Combine(_gOutFilePath, "FingerOut.txt");
+
             // Step 1: Check if the required file paths exist
-            if (blResult)
-            {
-                blResult = page.checkFilePath();
-                if (!blResult)
-                {
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Directory {_gOutFilePath} does not exist. Please contact the system administrator."));
-                    return false;
-                }
-            }
+
+
 
             // Step 2: Check if PGFinger.exe exists
             if (blResult)
             {
-                blResult = page.checkIsExisitExe();
-                if (!blResult)
+              
+
+                 if (!File.Exists(str_exec_cmd))
                 {
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("PGFinger.exe does not exist. Please contact the system administrator."));
+                    AppendTextToEditor("PGFinger.exe 路徑無效");
                     return false;
                 }
+
             }
+
+            #region 輸入檔案
+
+ /* 測試時打開 quicktest */
+            //輸入檔案以FingerOut.txt這個檔案為準
+            //如果不要使用卡鐘所產生的檔案的話  測試時，這段要關閉
+            //FingerOut.txt
 
             // Step 3: Delete existing FingeOut.txt if it exists
             if (blResult)
             {
-                if (File.Exists(Path.Combine(_gOutFilePath, "FingeOut.txt")))
+                if (File.Exists(str_finger_out))
                 {
                     try
                     {
-                        File.Delete(Path.Combine(_gOutFilePath, "FingeOut.txt"));
-                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Deleted existing FingeOut.txt file."));
-                    }
+                        File.Delete(str_finger_out);
+                           }
                     catch
                     {
-                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Failed to delete FingeOut.txt file. Please contact the system administrator."));
-                        blResult = false;
+                         blResult = false;
                     }
                 }
             }
+
+
 
             // Step 4: Generate fingerprint file using PGFinger.exe
             #region 使用廠商執行檔生成指紋檔案 (Execute PGFinger.exe to generate fingerprint file)
             if (blResult)
             {
                 date = DateTime.Now.ToString("yyyy-MM-dd");
+                bool result = false;
                 try
                 {
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Starting to read fingerprint from the fingerprint machine..."));
-                    string str_exec_cmd = Path.Combine(pglocation, "PGFinger.exe");
-                    string str_exec_parameter = @"1 " + Path.Combine(_gOutFilePath, "FingeOut.txt");
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Executing: {str_exec_cmd} {str_exec_parameter}"));
-
-                    // Start the process
-                    Process.Start(str_exec_cmd, str_exec_parameter);
+                    string str_exec_parameter = @"1 " + str_finger_out;  //
+                   
+                  
+                    // Process.Start(str_exec_cmd, str_exec_parameter);
+                    result = await ExecuteProcessAsync(str_exec_cmd, str_exec_parameter);
                     //await wait_for_devicecontrol_complete();
+                    if (!result)
+                    {
+                        AppendTextToEditor("Error: FingeOut.txt file was not generated by PGFinger.exe. Please contact the system administrator.");
+                        throw new Exception("PGFinger.exe execution failed.");
+                    }
 
                     await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Completed reading fingerprint from the fingerprint machine."));
                 }
@@ -970,51 +1866,150 @@ namespace carddatasync3
                 }
 
                 // Check if FingeOut.txt was created
-                int counter = 0;
+                // int counter = 0;
                 await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Checking for the FingeOut.txt file..."));
-                while (!File.Exists(Path.Combine(_gOutFilePath, "FingeOut.txt")))
+
+                while (!File.Exists(str_finger_out))
                 {
-                    await Task.Delay(1000); // Wait 1 second
-                    counter++;
-                    if (counter > 20)
-                    {
-                        break;
-                    }
+                    await Task.Delay(1000); // Wait 10 second
+                    // counter++;
+                    // if (counter > 20)
+                    // {
+                    //     break;
+                    // }
                 }
             }
-            #endregion 使用廠商執行檔生成指紋檔案
+            #endregion 
+
 
             // Step 5: Verify that FingeOut.txt exists
-            if (!File.Exists(Path.Combine(_gOutFilePath, "FingeOut.txt")))
+            if (!File.Exists(str_finger_out))
             {
                 await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Error: FingeOut.txt file was not generated by PGFinger.exe. Please contact the system administrator."));
                 return false;
             }
+
+
+/* 測試時打開 quicktest*/
+            
+             #endregion
 
             // Step 6: Read and validate FingeOut.txt content
             if (blResult)
             {
                 try
                 {
-                    using (StreamReader sr = new StreamReader(Path.Combine(_gOutFilePath, "FingeOut.txt"), Encoding.Default))
-                    {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(line))
-                                content.Add(line);
-                        }
-                    }
 
-                    if (content.Count <= 0)
-                    {
-                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("FingeOut.txt is empty. Please contact the system administrator."));
-                        blResult = false;
-                    }
+                   // 清空 punchMachineEmployeeJson 的 data 陣列，避免重複載入
+                    punchMachineEmployeeJson["data"] = new JArray();
+
+                    //--display
+                  //  AppendTextToEditor(str_finger_out);
+
+
+                    // Wait for the asynchronous method to complete, and get the file's content as bytes
+                      /*  byte[] fileBytes = await File.ReadAllBytesAsync(str_finger_out);
+
+                        // Decode using ASCII encoding
+                        Encoding asciiEncoding = Encoding.ASCII;
+                        string contentInAscii = asciiEncoding.GetString(fileBytes);
+
+                        // Convert to UTF-8 encoding
+                        byte[] utf8Bytes = Encoding.UTF8.GetBytes(contentInAscii);
+
+                        // Use MemoryStream and StreamReader to read the UTF-8 content line by line
+                        using (var memoryStream = new MemoryStream(utf8Bytes))
+                        using (var reader = new StreamReader(memoryStream, Encoding.UTF8))
+                        {
+                            string line;
+                            while ((line = await reader.ReadLineAsync()) != null)
+                            {(*/
+
+
+                         // 使用 CP950 讀取檔案的內容
+        // 註冊支援的編碼提供者
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        
+        //dotnet add package System.Text.Encoding.CodePages --version 8.0.0
+
+        // 使用 CP950 讀取檔案的內容
+        Encoding cp950 = Encoding.GetEncoding(950);
+        byte[] fileBytes = File.ReadAllBytes(str_finger_out);
+        
+        // 將檔案內容轉為 CP950 字串
+        string cp950String = cp950.GetString(fileBytes);
+ // 將每一行分割
+        var lines = cp950String.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+      
+        foreach (var line in lines)
+        {
+            // 依據逗號切割每一行
+            var values = line.Split(',');
+
+            if (values.Length >= 6) // 確保行中有足夠的欄位
+            {
+                var employeeData = new JObject
+                {
+                    ["empNo"] = values[0].Trim(),
+                    ["displayName"] = values[1].Trim(),
+                    ["cardNo"] = values[2].Trim(),
+                    ["finger1"] = values[3].Trim(),
+                    ["finger2"] = values[4].Trim(),
+                    ["addFlag"] = values[5].Trim()
+                };
+
+                // 將每個員工資料加入到 data 陣列中
+                ((JArray)punchMachineEmployeeJson["data"]).Add(employeeData);
+            }
+        }
+       
+/*
+       // Wait for the asynchronous method to complete, and get the file's content as bytes
+byte[] fileBytes = await File.ReadAllBytesAsync(str_finger_out);
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+// 使用 CP950 编码解码字节
+Encoding cp950Encoding = Encoding.GetEncoding(950);
+string contentInCp950 = cp950Encoding.GetString(fileBytes);
+
+// 将 CP950 编码内容转换为 UTF-8 编码
+byte[] utf8Bytes = Encoding.UTF8.GetBytes(contentInCp950);
+
+// 使用 MemoryStream 和 StreamReader 逐行读取 UTF-8 内容
+using (var memoryStream = new MemoryStream(utf8Bytes))
+using (var reader = new StreamReader(memoryStream, Encoding.UTF8))
+{
+    string line;
+    while ((line = await reader.ReadLineAsync()) != null)
+    {
+ 
+
+                            
+                            var values = line.Split(',');
+
+                            if (values.Length >= 6) // 確保行中有足夠的欄位
+                            {
+                                var employeeData = new JObject
+                                {
+                                    ["empNo"] = values[0].Trim(),
+                                    ["displayName"] = values[1].Trim(),
+                                    ["cardNo"] = values[2].Trim(),
+                                    ["finger1"] = values[3].Trim(),
+                                    ["finger2"] = values[4].Trim(),
+                                    ["addFlag"] = values[5].Trim()
+                                };
+
+                                // 將每個員工資料加入到 data 陣列中
+                                ((JArray)punchMachineEmployeeJson["data"]).Add(employeeData);
+                            }
+                        }
+}*/
+    return true;
+
+
                 }
                 catch (Exception ex)
                 {
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error reading FingeOut.txt: {ex.Message}"));
+                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Error reading FingerOut.txt: {ex.Message}"));
                     blResult = false;
                 }
             }
@@ -1043,46 +2038,8 @@ namespace carddatasync3
             {
                 page.getFilePath1(date);
                 string backupPath = Path.Combine(_gBackUpPath, @"員工指紋匯出資料", date.Replace("-", ""), $"PGFingeOut{date.Replace("-", "")}_{DateTime.Now:HHmmss}.txt");
-                File.Copy(Path.Combine(_gOutFilePath, "FingeOut.txt"), backupPath, true);
-                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Backup created for FingeOut.txt at: {backupPath}."));
-            }
-
-            // Step 9: Update card numbers and employee data in HCM
-            if (blResult)
-            {
-                int success_card_count = 0;
-                //blResult = page.update_card_number(content, ref success_card_count);
-
-                if (!blResult)
-                {
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Failed to upload employee card numbers to HCM."));
-                }
-                else
-                {
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Successfully uploaded {success_card_count} employee card numbers to HCM."));
-                }
-
-                int success_emp_count = 0;
-                //blResult = page.updateDataByEmployeeId(content, ref success_emp_count);
-
-                if (!blResult)
-                {
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Failed to upload employee fingerprint data to HCM."));
-                }
-                else
-                {
-                    try
-                    {
-                        File.Delete(Path.Combine(_gOutFilePath, "FingeOut.txt"));
-                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor("Successfully deleted FingeOut.txt after upload."));
-                    }
-                    catch (Exception ex)
-                    {
-                        await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Successfully uploaded data to HCM but failed to delete FingeOut.txt: {ex.Message}"));
-                    }
-
-                    await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Successfully uploaded {success_emp_count} employee fingerprint records to HCM."));
-                }
+                File.Copy(Path.Combine(_gOutFilePath, "FingerOut.txt"), backupPath, true);
+                await MainThread.InvokeOnMainThreadAsync(() => AppendTextToEditor($"Backup created for FingerOut.txt at: {backupPath}."));
             }
 
             return blResult;
@@ -1108,7 +2065,7 @@ namespace carddatasync3
             }
         }
 
-
+/*// del
         // Check if the necessary folder exists, create it if not
         private bool checkFilePath()
         {
@@ -1124,7 +2081,7 @@ namespace carddatasync3
                 Log.Error(ex, "Can not create {_gOutFilePath}");
             }
             return b_ret;
-        }
+        }*/
 
         private bool create_out_folder()
         {
@@ -1267,8 +2224,23 @@ namespace carddatasync3
                 // 將結果轉換為 JSON
                 string json = JsonConvert.SerializeObject(result, Formatting.Indented);
 
+
+
+                // 使用 CP950 將字串轉換為位元組陣列
+        Encoding cp950 = Encoding.GetEncoding("CP950");
+        byte[] cp950Bytes = cp950.GetBytes(json);
+
+        // 使用 ANSI 編碼（系統預設）將 CP950 字串轉換為 ANSI 格式
+        Encoding ansi = Encoding.Default;
+        byte[] ansiBytes = Encoding.Convert(cp950, ansi, cp950Bytes);
+
+        // 將結果寫入檔案
+        File.WriteAllBytes(outputFilePath, ansiBytes);
+
                 // 將 JSON 寫入文件
-                File.WriteAllText(outputFilePath, json);
+              //  File.WriteAllText(outputFilePath, json);
+
+
                 AppendTextToEditor("JSON file created successfully at: " + outputFilePath);
             }
             catch (Exception ex)
@@ -1313,212 +2285,165 @@ namespace carddatasync3
 
 
         #region Rules
-
-        // 讀取 test_files/ 中的兩個檔案，套用 rules2 並將結果顯示於 alert 中
-        private (object, object, object) Punch_Data_Changing_rule2(dynamic _hcmEmployeeData, dynamic _punchCardData)
+        private string GetFirst10Chars(string input)
         {
-            // 將 dynamic 資料轉為 IEnumerable<dynamic>
-            IEnumerable<dynamic> punchCardDataList = _punchCardData?.data ?? new List<dynamic>();
-            IEnumerable<dynamic> hcmEmployeeDataList = _hcmEmployeeData?.data ?? new List<dynamic>();
-
-            var results = new List<object>(); // 用來儲存比較結果
-
-            // 開始比較
-            foreach (var hcmEmployee in hcmEmployeeDataList)
+            // 如果是null或"0"或空白,返回空字符串
+            if (string.IsNullOrWhiteSpace(input) || input.Trim() == "0")
             {
-                foreach (var punchCard in punchCardDataList)
-                {
-                    // 比對 EmpNo 是否相同
-                    if (hcmEmployee.EmpNo == punchCard.EmpNo)
-                    {
-                        // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 Finger1
-                        bool areFieldsEqualExceptFinger1 =
-                            hcmEmployee.DisplayName == punchCard.DisplayName &&
-                            hcmEmployee.Finger2.ToString().Substring(0, 10) == punchCard.Finger2.ToString().Substring(0, 10) &&
-                            hcmEmployee.CardNo == punchCard.CardNo;
-
-                        // 如果 Finger1 欄位不同且其他欄位相同，印出 case2
-                        if (areFieldsEqualExceptFinger1 && hcmEmployee.Finger1.ToString().Substring(0, 10) != punchCard.Finger1.ToString().Substring(0, 10))
-                        {
-                            results.Add(new { result = false, Failure = $"100" });
-                        }
-
-                        // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 Finger2
-                        bool areFieldsEqualExceptFinger2 =
-                            hcmEmployee.DisplayName == punchCard.DisplayName &&
-                            hcmEmployee.Finger1.ToString().Substring(0, 10) == punchCard.Finger1.ToString().Substring(0, 10) &&
-                            hcmEmployee.CardNo == punchCard.CardNo;
-
-                        // 如果 Finger2 欄位不同且其他欄位相同，印出 case3
-                        if (areFieldsEqualExceptFinger2 && hcmEmployee.Finger2.ToString().Substring(0, 10) != punchCard.Finger2.ToString().Substring(0, 10))
-                        {
-                            results.Add(new { result = false, Failure = $"010" });
-                        }
-
-                        // 比對除了 addFlag 和 Status 的其他欄位是否相同，忽略 CardNo
-                        bool areFieldsEqualExceptCardNo =
-                            hcmEmployee.DisplayName == punchCard.DisplayName &&
-                            hcmEmployee.Finger1.ToString().Substring(0, 10) == punchCard.Finger1.ToString().Substring(0, 10) &&
-                            hcmEmployee.Finger2.ToString().Substring(0, 10) == punchCard.Finger2.ToString().Substring(0, 10);
-
-                        // 如果 CardNo 欄位不同且其他欄位相同，印出 case4
-                        if (areFieldsEqualExceptCardNo && hcmEmployee.CardNo != punchCard.CardNo)
-                        {
-                            results.Add(new { result = false, Failure = $"001" });
-                        }
-
-                        // 如果所有欄位都相同，印出 case1
-                        bool areFieldsEqual =
-                            hcmEmployee.DisplayName == punchCard.DisplayName &&
-                            hcmEmployee.Finger1.ToString().Substring(0, 10) == punchCard.Finger1.ToString().Substring(0, 10) &&
-                            hcmEmployee.Finger2.ToString().Substring(0, 10) == punchCard.Finger2.ToString().Substring(0, 10) &&
-                            hcmEmployee.CardNo == punchCard.CardNo;
-
-                        if (areFieldsEqual)
-                        {
-                            results.Add(new { result = true, Failure = $"000" });
-                        }
-                    }
-                }
+                return "";
             }
 
+            // 去除首尾空白
+            input = input.Trim();
             
-            return (results, _hcmEmployeeData, _punchCardData);
+            // 如果长度小于等于10,直接返回
+            if (input.Length <= 10)
+            {
+                return input;
+            }
+            
+            // 如果长度大于10,截取前10位
+            return input.Substring(0, 10);
         }
 
-        private (object, object, object) Punch_Data_Changing_rule1(dynamic _hcmEmployeeData, dynamic _punchCardData)
+
+
+        private string CompareCardNo(string card1, string card2)
         {
-            // 將 dynamic 資料轉為 IEnumerable<dynamic>
-            IEnumerable<dynamic> punchCardDataList = _punchCardData?.data ?? new List<dynamic>();
-            IEnumerable<dynamic> hcmEmployeeDataList = _hcmEmployeeData?.data ?? new List<dynamic>();
+                
+            // 比较前N位(N=compareLength)是否相同
+            return GetFirst10Chars(card1) == GetFirst10Chars(card2)  ? "0" : "1";
+        }
 
-            // 初始化 EmpNo 列表
-            HashSet<string> allEmpNos = new HashSet<string>();
-            var results = new List<object>(); // 用來儲存比較結果
 
-            // 檢查並添加 _hcmEmployeeData 中的 EmpNo
-            if (hcmEmployeeDataList != null)
+        // 讀取 test_files/ 中的兩個檔案，套用 rules2 並將結果顯示於 alert 中
+        private JArray Punch_Data_Changing_rule2(JObject _hcmEmployeeData, JObject _punchCardData)
+        {
+            var results = new JArray(); // 用來儲存比較結果
+
+            try
             {
+                // 將 hcmEmployeeData 和 punchCardData 轉為 List<JObject>
+                var hcmEmployeeDataList = _hcmEmployeeData["data"]?.ToObject<List<JObject>>() ?? new List<JObject>();
+                var punchCardDataList = _punchCardData["data"]?.ToObject<List<JObject>>() ?? new List<JObject>();
+
+                // 開始比較
                 foreach (var hcmEmployee in hcmEmployeeDataList)
                 {
-                    if (hcmEmployee?.EmpNo != null) allEmpNos.Add((string)hcmEmployee.EmpNo);
-                }
-            }
-
-            // 檢查並添加 _punchCardData 中的 EmpNo
-            if (punchCardDataList != null)
-            {
-                foreach (var punchEmployee in punchCardDataList)
-                {
-                    if (punchEmployee?.EmpNo != null) allEmpNos.Add((string)punchEmployee.EmpNo);
-                }
-            }
-
-            // 處理情況1 和 情況2
-            foreach (var hcmEmployee in hcmEmployeeDataList)
-            {
-                var punchEmployee = punchCardDataList.FirstOrDefault(p => 
-                    p.EmpNo != null && (string)p.EmpNo == (string)hcmEmployee.EmpNo);
-
-                if (punchEmployee == null && (string) hcmEmployee.addFlag == "D")
-                {
-                    results.Add(new { result = true, Failure = $"case 1: Employee with EmpNo: {(string) hcmEmployee.EmpNo} has flag 'D' but is missing in punchCardData." });
-                }
-                else if (punchEmployee != null && (string) hcmEmployee.addFlag == "D")
-                {
-                    results.Add(new { result = true, Failure = $"case 2: Employee with EmpNo: {(string) hcmEmployee.EmpNo} has flag 'D' and exists in both hcmEmployeeData and punchCardData." });
-                    
-                    // 將 punchCardDataList 轉換為 List 以便刪除該筆資料
-                    var punchCardList = punchCardDataList.ToList();
-                    punchCardList.Remove(punchEmployee);
-                    punchCardDataList = punchCardList; // 更新為修改過的 List
-                }
-            }
-
-            // 處理情況3
-            foreach (var punchEmployee in punchCardDataList)
-            {
-                var hcmEmployee = hcmEmployeeDataList.FirstOrDefault(h => 
-                    h.EmpNo != null && (string)h.EmpNo == (string)punchEmployee.EmpNo);
-
-                if (hcmEmployee == null)
-                {
-                    results.Add(new { result = true, Failure = $"case 3: Employee with EmpNo: {(string) punchEmployee.EmpNo} exists in punchCardData but not in hcmEmployeeData." });
-                    
-                    // 將 punchCardDataList 轉換為 List 以便刪除該筆資料
-                    var punchCardList = punchCardDataList.ToList();
-                    punchCardList.Remove(punchEmployee);
-                    punchCardDataList = punchCardList; // 更新為修改過的 List
-                }
-            }
-
-            // 處理情況5：_hcmEmployeeData有資料且addFlag為'A'，但_punchCardData沒有該筆資料
-            foreach (var hcmEmployee in hcmEmployeeDataList)
-            {
-                // 確保 EmpNo 不為 null
-                if (hcmEmployee.EmpNo != null)
-                {
-                    var punchEmployee = punchCardDataList.FirstOrDefault(p => 
-                        p.EmpNo != null && (string)p.EmpNo == (string)hcmEmployee.EmpNo);
-
-                    // 檢查 addFlag 是否為 null 再進行比較
-                    if (punchEmployee == null && hcmEmployee.addFlag != null && (string)hcmEmployee.addFlag == "A")
+                    foreach (var punchCard in punchCardDataList)
                     {
-                        results.Add(new { result = true, Failure = $"case 5: Employee with EmpNo: {(string)hcmEmployee.EmpNo} has flag 'A' but is missing in punchCardData." });
-                    
-                        // 新增該筆資料到 punchCardDataList
-                        var newPunchEmployee = new
+                        // 比對 EmpNo 是否相同
+                        if (hcmEmployee["empNo"]?.ToString() == punchCard["empNo"]?.ToString())
                         {
-                            EmpNo = (string)hcmEmployee.EmpNo,
-                            DisplayName = (string)hcmEmployee.DisplayName,
-                            Finger1 = (string)hcmEmployee.Finger1,
-                            Finger2 = (string)hcmEmployee.Finger2,
-                            CardNo = (string)hcmEmployee.CardNo,
-                            Status = "A"
-                        };
+                            string hcmEmpID = hcmEmployee["empNo"]?.ToString() ?? "";
 
-                        // 將 punchCardDataList 轉換為 List 以便新增該筆資料
-                        var punchCardList = punchCardDataList.ToList();
-                        punchCardList.Add(newPunchEmployee);
-                        punchCardDataList = punchCardList; // 更新為修改過的 List
+                            string hcmCardNo = Convert.ToString(hcmEmployee["cardNo"]) ?? "";
+                            string punchCardNo  = Convert.ToString(punchCard["cardNo"]) ?? "";
+                        
+                            string _cardNoFlag = "0";
+
+                            if (punchCardNo.Length == 10 && hcmCardNo != punchCardNo)
+                            {
+                                _cardNoFlag = "1";
+                            }
+                             
+                            string hcmFinger2 = (Convert.ToString(hcmEmployee["finger2"]) ?? "").PadRight(10).Substring(0, 10);
+                            string punchFinger2 = (Convert.ToString(punchCard["finger2"]) ?? "").PadRight(10).Substring(0, 10);
+                            string _finger2Flag = "0";
+
+                            if (punchFinger2.Length != 0 && hcmFinger2 != punchFinger2)
+                            {
+                                _finger2Flag = "1";
+                            }
+
+                            // string _finger2Flag  = CompareCardNo(hcmEmployee["finger2"]?.ToString(),punchCard["finger2"]?.ToString()); 
+                            //  string _finger1Flag  = CompareCardNo(hcmEmployee["finger1"]?.ToString(),punchCard["finger1"]?.ToString()); 
+
+
+                               
+                            string hcmFinger1 = (Convert.ToString(hcmEmployee["finger1"]) ?? "").PadRight(10).Substring(0, 10);
+                            string punchFinger1 = (Convert.ToString(punchCard["finger1"]) ?? "").PadRight(10).Substring(0, 10);
+                            string _finger1Flag = "0";
+
+                            if (punchFinger1.Length != 0 && hcmFinger1 != punchFinger1)
+                            {
+                                _finger1Flag = "1";
+                            }
+
+
+                            string _checkStr = _finger1Flag + _finger2Flag + _cardNoFlag;
+                            if(_checkStr !="000") 
+                            {
+                                results.Add(punchCard);
+
+                                AppendTextToEditor(hcmEmpID +":"+ _checkStr);
+
+                            }
+                        }
                     }
                 }
             }
-
-            // 處理情況4：當 _hcmEmployeeData 和 _punchCardData 都沒有該筆資料
-            foreach (var empNo in allEmpNos)
+            catch (Exception ex)
             {
-                var hcmEmployee = hcmEmployeeDataList.FirstOrDefault(h => 
-                    h.EmpNo != null && (string)h.EmpNo == (string)empNo);
+                // 例外處理：可以記錄錯誤訊息或處理其他的例外情況
+                AppendTextToEditor($"Rule2 例外發生:: {ex.Message}");
                 
-                var punchEmployee = punchCardDataList.FirstOrDefault(p => 
-                    p.EmpNo != null && (string)p.EmpNo == (string)empNo);
-
-                if (hcmEmployee == null && punchEmployee == null)
-                {
-                    results.Add(new { result = false, Failure = $"case 4: EmpNo {(string) empNo} is missing in both hcmEmployeeData and punchCardData." });
-                }
             }
 
-            // 將更新後的資料重新分配給 _hcmEmployeeData 和 _punchCardData
-            if (_hcmEmployeeData.data is IList<dynamic> hcmDataList)
+            // 直接回傳 JArray
+            return results;
+        }
+
+
+       private JArray Punch_Data_Changing_rule1(JObject _hcmEmployeeData, JObject _punchCardData)
+        {
+
+            JArray dataArray = new JArray();
+           
+
+            try
             {
-                hcmDataList.Clear();
-                foreach (var employee in hcmEmployeeDataList)
-                {
-                    hcmDataList.Add(employee);
+                // 將 hcmEmployeeData 和 punchCardData 轉為 List<JObject>
+                var hcmEmployeeDataList = _hcmEmployeeData["data"]?.ToObject<List<JObject>>() ?? new List<JObject>();
+                var punchCardDataList = _punchCardData["data"]?.ToObject<List<JObject>>() ?? new List<JObject>();
+
+                // 建立 employeeMap，鍵為 empNo
+                Dictionary<string, JObject> employeeMap = new Dictionary<string, JObject>();
+
+                // 處理 hcmEmployeeData
+                foreach (var hcmEmployee in hcmEmployeeDataList) {
+                    string hcmKey = hcmEmployee["empNo"].ToString();
+                    if(!employeeMap.ContainsKey(hcmKey))
+                    { 
+                        employeeMap[hcmKey] = hcmEmployee;
+                    }
                 }
+
+
+                // 處理 punchCardData
+                foreach (var punchcardEmployee in punchCardDataList) {
+                    string cardKey = punchcardEmployee["empNo"].ToString();
+                    punchcardEmployee["addFlag"] = "D";
+                    punchcardEmployee.Remove("Status");
+                    if(!employeeMap.ContainsKey(cardKey)) employeeMap[cardKey] = punchcardEmployee;
+                } 
+
+
+                // 將結果放入
+                foreach (var entry in employeeMap.Values)
+                {
+                    dataArray.Add(entry);
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                
+                AppendTextToEditor($"Rule1 例外發生: {ex.Message}");
             }
 
-            if (_punchCardData.data is IList<dynamic> punchDataList)
-            {
-                punchDataList.Clear();
-                foreach (var punch in punchCardDataList)
-                {
-                    punchDataList.Add(punch);
-                }
-            }
-            return (results, _hcmEmployeeData, _punchCardData);
+            return dataArray;
         }
 
 
@@ -1556,7 +2481,7 @@ namespace carddatasync3
         
         #region UI Updates and Helper Functions
 
-
+/*
          private void show_info(string message)
         {
             // Display information message (e.g., in UI)
@@ -1578,7 +2503,7 @@ namespace carddatasync3
         {
             textBox2.Text += $"Error: {message}\n";
         }
-
+*/
        private void set_btns_state(bool state)
         {
             // Enable or disable the buttons
@@ -1627,4 +2552,10 @@ namespace carddatasync3
 
 
     }
+
+
+
+
+
+
 }

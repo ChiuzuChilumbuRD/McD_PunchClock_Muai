@@ -1,0 +1,10 @@
+23:57:05 1.0.0.0
+23:57:05 Form init
+23:57:05 Loading appsettings.json...
+23:57:05 The download folder does not exist: C:\test\Timeset
+23:57:05 Required file not found. 
+23:59:55 1.0.0.0
+23:59:55 Form init
+23:59:55 Loading appsettings.json...
+23:59:55 The download folder does not exist: C:\test\Timeset
+23:59:55 Required file not found. 

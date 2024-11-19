@@ -1,0 +1,602 @@
+00:00:00 1.0.0.0
+00:00:00 Form init
+00:00:00 Loading appsettings.json...
+00:00:00 The download folder does not exist: C:\test\Timeset
+00:00:00 Required file not found. 
+00:00:04 1.0.0.0
+00:00:04 Form init
+00:00:04 Loading appsettings.json...
+00:00:04 The download folder does not exist: C:\test\Timeset
+00:00:04 Required file not found. 
+00:00:09 1.0.0.0
+00:00:09 Form init
+00:00:09 Loading appsettings.json...
+00:00:09 The download folder does not exist: C:\test\Timeset
+00:00:09 Required file not found. 
+00:00:12 1.0.0.0
+00:00:12 Form init
+00:00:12 Loading appsettings.json...
+00:00:12 The download folder does not exist: C:\test\Timeset
+00:00:12 Required file not found. 
+00:01:28 1.0.0.0
+00:01:28 Form init
+00:01:28 Loading appsettings.json...
+00:01:28 The download folder does not exist: C:\test\Timeset
+00:01:28 Required file not found. 
+00:01:33 1.0.0.0
+00:01:33 Form init
+00:01:33 Loading appsettings.json...
+00:01:33 The download folder does not exist: C:\test\Timeset
+00:01:33 Required file not found. 
+00:13:49 1.0.0.0
+00:13:49 Form init
+00:13:49 Loading appsettings.json...
+00:13:50 The download folder does not exist: C:\test\Timeset
+00:13:50 Required file not found. 
+00:13:55 1.0.0.0
+00:13:55 Form init
+00:13:55 Loading appsettings.json...
+00:13:55 The download folder does not exist: C:\test\Timeset
+00:13:55 Required file not found. 
+00:14:00 1.0.0.0
+00:14:00 Form init
+00:14:00 Loading appsettings.json...
+00:14:01 The download folder does not exist: C:\test\Timeset
+00:14:01 Required file not found. 
+00:19:22 1.0.0.0
+00:19:22 Form init
+00:19:22 Loading appsettings.json...
+00:19:22 The download folder does not exist: C:\test\Timeset
+00:19:22 Required file not found. 
+00:19:27 1.0.0.0
+00:19:27 Form init
+00:19:27 Loading appsettings.json...
+00:19:27 The download folder does not exist: C:\test\Timeset
+00:19:27 Required file not found. 
+00:19:30 1.0.0.0
+00:19:30 Form init
+00:19:30 Loading appsettings.json...
+00:19:30 The download folder does not exist: C:\test\Timeset
+00:19:30 Required file not found. 
+00:19:37 1.0.0.0
+00:19:37 Form init
+00:19:37 Loading appsettings.json...
+00:19:37 The download folder does not exist: C:\test\Timeset
+00:19:37 Required file not found. 
+00:21:10 1.0.0.0
+00:21:10 Form init
+00:21:10 Loading appsettings.json...
+00:21:10 The download folder does not exist: C:\test\Timeset
+00:21:10 Required file not found. 
+00:21:14 1.0.0.0
+00:21:14 Form init
+00:21:14 Loading appsettings.json...
+00:21:14 The download folder does not exist: C:\test\Timeset
+00:21:14 Required file not found. 
+00:24:50 1.0.0.0
+00:24:50 Form init
+00:24:50 Loading appsettings.json...
+00:24:50 The download folder does not exist: C:\test\Timeset
+00:24:50 Required file not found. 
+00:24:58 1.0.0.0
+00:24:58 Form init
+00:24:58 Loading appsettings.json...
+00:24:58 The download folder does not exist: C:\test\Timeset
+00:24:58 Required file not found. 
+00:25:06 1.0.0.0
+00:25:06 Form init
+00:25:06 Loading appsettings.json...
+00:25:06 The download folder does not exist: C:\test\Timeset
+00:25:06 Required file not found. 
+00:26:47 1.0.0.0
+00:26:47 Form init
+00:26:47 Loading appsettings.json...
+00:26:47 The download folder does not exist: C:\test\Timeset
+00:26:47 Required file not found. 
+00:30:19 1.0.0.0
+00:30:19 Form init
+00:30:19 Loading appsettings.json...
+00:30:20 The download folder does not exist: C:\test\Timeset
+00:30:20 Required file not found. 
+00:31:21 1.0.0.0
+00:31:21 Form init
+00:31:21 Loading appsettings.json...
+00:31:21 The download folder does not exist: C:\test\Timeset
+00:31:21 Required file not found. 
+00:33:03 1.0.0.0
+00:33:03 Form init
+00:33:03 Loading appsettings.json...
+00:33:04 The download folder does not exist: C:\test\Timeset
+00:33:04 Required file not found. 
+00:33:07 1.0.0.0
+00:33:07 Form init
+00:33:07 Loading appsettings.json...
+00:33:07 The download folder does not exist: C:\test\Timeset
+00:33:07 Required file not found. 
+00:33:08 1.0.0.0
+00:33:08 Form init
+00:33:08 Loading appsettings.json...
+00:33:08 The download folder does not exist: C:\test\Timeset
+00:33:08 Required file not found. 
+00:35:33 1.0.0.0
+00:35:33 Form init
+00:35:33 Loading appsettings.json...
+00:35:33 The download folder does not exist: C:\test\Timeset
+00:35:33 Required file not found. 
+00:36:57 1.0.0.0
+00:36:57 Form init
+00:36:57 Loading appsettings.json...
+00:36:57 The download folder does not exist: C:\test\Timeset
+00:36:57 Required file not found. 
+00:38:27 1.0.0.0
+00:38:27 Form init
+00:38:27 Loading appsettings.json...
+00:38:27 The download folder does not exist: C:\test\Timeset
+00:38:27 Required file not found. 
+00:44:29 1.0.0.0
+00:44:29 Form init
+00:44:29 Loading appsettings.json...
+00:44:29 The download folder does not exist: C:\test\Timeset
+00:44:29 Required file not found. 
+00:46:02 1.0.0.0
+00:46:02 Form init
+00:46:02 Loading appsettings.json...
+00:46:02 The download folder does not exist: C:\test\Timeset
+00:46:02 Required file not found. 
+00:46:26 1.0.0.0
+00:46:26 Form init
+00:46:26 Loading appsettings.json...
+00:46:26 The download folder does not exist: C:\test\Timeset
+00:46:26 Required file not found. 
+00:48:22 1.0.0.0
+00:48:22 Form init
+00:48:22 Loading appsettings.json...
+00:48:22 The download folder does not exist: C:\test\Timeset
+00:48:22 Required file not found. 
+00:49:45 1.0.0.0
+00:49:45 Form init
+00:49:45 Loading appsettings.json...
+00:49:45 The download folder does not exist: C:\test\Timeset
+00:49:45 Required file not found. 
+09:35:36 1.0.0.0
+09:35:36 Form init
+09:35:36 Loading appsettings.json...
+09:35:37 The download folder does not exist: C:\test\Timeset
+09:35:37 Required file not found. 
+09:36:40 1.0.0.0
+09:36:40 Form init
+09:36:40 Loading appsettings.json...
+09:36:40 uhuhuhuhuhuh
+09:36:40 The download folder does not exist: C:\test\Timeset
+09:36:40 Required file not found. 
+09:46:53 1.0.0.0
+09:46:53 Form init
+09:46:53 Loading appsettings.json...
+09:47:30 1.0.0.0
+09:47:30 Form init
+09:47:30 Loading appsettings.json...
+09:48:08 1.0.0.0
+09:48:08 Form init
+09:48:08 Loading appsettings.json...
+09:49:03 1.0.0.0
+09:49:03 Form init
+09:49:03 Loading appsettings.json...
+09:49:04 The download folder does not exist: C:\test\Timeset
+09:49:04 Required file not found. 
+09:53:49 1.0.0.0
+09:53:49 Form init
+09:53:49 Loading appsettings.json...
+09:53:49 value
+09:53:49 The download folder does not exist: C:\test\Timeset
+09:53:49 Required file not found. 
+09:54:16 1.0.0.0
+09:54:16 Form init
+09:54:16 Loading appsettings.json...
+09:54:16 value
+09:54:16 The download folder does not exist: C:\test\Timeset
+09:54:16 Required file not found. 
+09:54:30 1.0.0.0
+09:54:30 Form init
+09:54:30 Loading appsettings.json...
+09:54:30 value
+09:54:30 The download folder does not exist: C:\test\Timeset
+09:54:30 Required file not found. 
+09:55:06 1.0.0.0
+09:55:06 Form init
+09:55:06 Loading appsettings.json...
+09:55:07 value
+09:55:07 The download folder does not exist: C:\test\Timeset
+09:55:07 Required file not found. 
+09:56:09 1.0.0.0
+09:56:09 Form init
+09:56:09 Loading appsettings.json...
+09:56:10 的我會的下
+09:56:10 The BackupPath folder does not exist: C:\Finger
+09:56:10 Required file not found. 
+09:56:16 1.0.0.0
+09:56:16 Form init
+09:56:16 Loading appsettings.json...
+09:56:16 的我會的下
+09:56:16 The BackupPath folder does not exist: C:\Finger
+09:56:16 Required file not found. 
+09:56:23 1.0.0.0
+09:56:23 Form init
+09:56:23 Loading appsettings.json...
+09:56:23 的我會的下
+09:56:23 The BackupPath folder does not exist: C:\Finger
+09:56:23 Required file not found. 
+09:58:55 1.0.0.0
+09:58:55 Form init
+09:58:55 Loading appsettings.json...
+09:58:55 The BackupPath folder does not exist: C:\Finger
+09:58:55 Required file not found. 
+10:02:24 1.0.0.0
+10:02:24 Form init
+10:02:24 Loading appsettings.json...
+10:02:24 The BackupPath folder does not exist: C:\Finger
+10:02:24 Required file not found. 
+10:04:44 1.0.0.0
+10:04:44 Form init
+10:04:44 Loading appsettings.json...
+10:04:44 的我會的下
+10:04:44 The BackupPath folder does not exist: C:\Finger
+10:04:44 Required file not found. 
+10:04:57 1.0.0.0
+10:04:57 Form init
+10:04:57 Loading appsettings.json...
+10:04:57 ok
+10:04:57 The BackupPath folder does not exist: C:\Finger
+10:04:57 Required file not found. 
+10:06:09 1.0.0.0
+10:06:09 Form init
+10:06:09 Loading appsettings.json...
+10:06:09 ok
+10:06:09 The BackupPath folder does not exist: C:\Finger
+10:06:09 Required file not found. 
+10:06:41 1.0.0.0
+10:06:41 Form init
+10:06:41 Loading appsettings.json...
+10:06:41 ok
+10:06:41 The Backup folder does not exist: C:\HCMBackUp
+10:06:41 Required file not found. 
+10:13:35 1.0.0.0
+10:13:35 Form init
+10:13:35 Loading appsettings.json...
+10:13:35 
+10:13:35 Checking Internet connection...
+10:13:35 Machine name: S000123
+10:13:35 OrgCode: S0000123
+10:13:35 找不到S0000123組織名稱，將關閉程式
+10:13:35 HCM連線中,請等待
+10:13:35 HCM連接發生問題，將關閉程式
+10:13:35 Pinging server at 8.8.8.8...
+10:13:35 Server at 8.8.8.8 is reachable. Response time: 6 ms
+10:13:35 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+10:13:36 Log sent successfully and data saved to FingerIn.json.
+10:13:36 App initialization completed.
+13:33:06 1.0.0.0
+13:33:06 Form init
+13:33:06 Loading appsettings.json...
+13:33:06 
+13:33:06 Checking Internet connection...
+13:33:06 Machine name: CHENGCHEN24E7
+13:33:06 OrgCode: 
+13:33:06 組織代碼錯誤，將關閉程式
+13:33:06 找不到組織名稱，將關閉程式
+13:33:06 HCM連線中,請等待
+13:33:06 HCM連接發生問題，將關閉程式
+13:33:06 Pinging server at 8.8.8.8...
+13:33:06 Server at 8.8.8.8 is reachable. Response time: 66 ms
+13:33:06 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+13:33:07 Log sent successfully and data saved to FingerIn.json.
+13:33:07 App initialization completed.
+13:37:04 1.0.0.0
+13:37:04 Form init
+13:37:04 Loading appsettings.json...
+13:37:04 
+13:37:04 Checking Internet connection...
+13:37:04 Machine name: CHENGCHEN24E7
+13:37:04 OrgCode: 
+13:37:04 組織代碼錯誤，將關閉程式
+13:37:04 找不到組織名稱，將關閉程式
+13:37:04 HCM連線中,請等待
+13:37:04 HCM連接發生問題，將關閉程式
+13:37:04 Pinging server at 8.8.8.8...
+13:37:04 Server at 8.8.8.8 is reachable. Response time: 7 ms
+13:37:04 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+13:37:04 Log sent successfully and data saved to FingerIn.json.
+13:37:04 App initialization completed.
+14:00:54 1.0.0.0
+14:00:54 Form init
+14:00:54 Loading appsettings.json...
+14:00:54 
+14:00:54 Checking Internet connection...
+14:00:54 Machine name: CHENGCHEN24E7
+14:00:54 OrgCode: 
+14:00:54 組織代碼錯誤，將關閉程式
+14:00:54 找不到組織名稱，將關閉程式
+14:00:54 HCM連線中,請等待
+14:00:54 HCM連接發生問題，將關閉程式
+14:00:54 Pinging server at 8.8.8.8...
+14:00:54 Server at 8.8.8.8 is reachable. Response time: 7 ms
+14:00:54 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+14:00:55 Log sent successfully and data saved to FingerIn.json.
+14:00:55 App initialization completed.
+14:04:29 1.0.0.0
+14:04:29 Form init
+14:04:29 Loading appsettings.json...
+14:04:29 
+14:04:29 Checking Internet connection...
+14:04:29 Machine name: CHENGCHEN24E7
+14:04:29 test_org_code 00106
+14:04:29 OrgCode: 
+14:04:29 組織代碼錯誤，將關閉程式
+14:04:29 找不到組織名稱，將關閉程式
+14:04:29 HCM連線中,請等待
+14:04:29 HCM連接發生問題，將關閉程式
+14:04:29 Pinging server at 8.8.8.8...
+14:04:29 Server at 8.8.8.8 is reachable. Response time: 6 ms
+14:04:29 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+14:04:30 Log sent successfully and data saved to FingerIn.json.
+14:04:30 App initialization completed.
+14:05:56 1.0.0.0
+14:05:56 Form init
+14:05:56 Loading appsettings.json...
+14:05:56 
+14:05:56 Checking Internet connection...
+14:05:56 Machine name: CHENGCHEN24E7
+14:05:56 test_org_code 00106
+14:05:56 OrgCode: 
+14:05:56 組織代碼錯誤，將關閉程式
+14:05:56 找不到組織名稱，將關閉程式
+14:05:56 HCM連線中,請等待
+14:05:56 HCM連接發生問題，將關閉程式
+14:05:56 Pinging server at 8.8.8.8...
+14:05:57 Server at 8.8.8.8 is reachable. Response time: 9 ms
+14:05:57 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+14:05:57 Log sent successfully and data saved to FingerIn.json.
+14:05:57 App initialization completed.
+14:11:05 1.0.0.0
+14:11:05 Form init
+14:11:05 Loading appsettings.json...
+14:11:05 
+14:11:05 Checking Internet connection...
+14:11:05 Machine name: CHENGCHEN24E7
+14:11:05 test_org_code 00106
+14:11:05 使用測試用帳號
+14:11:05 OrgCode: 00106
+14:11:05 組織代碼錯誤，將關閉程式
+14:11:05 找不到00106組織名稱，將關閉程式
+14:11:05 HCM連線中,請等待
+14:11:05 HCM連接發生問題，將關閉程式
+14:11:05 Pinging server at 8.8.8.8...
+14:11:05 Server at 8.8.8.8 is reachable. Response time: 8 ms
+14:11:05 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+14:11:06 Log sent successfully and data saved to FingerIn.json.
+14:11:06 App initialization completed.
+15:50:52 1.0.0.0
+15:50:52 Form init
+15:50:52 Loading appsettings.json...
+15:50:52 
+15:50:52 Checking Internet connection...
+15:50:52 Machine name: CHENGCHEN24E7
+15:50:52 test_org_code 00106
+15:50:52 使用測試用帳號
+15:50:52 OrgCode: 00106
+15:50:52 組織代碼錯誤，將關閉程式
+15:50:52 找不到00106組織名稱，將關閉程式
+15:50:52 HCM連線中,請等待
+15:50:52 HCM連接發生問題，將關閉程式
+15:50:52 Pinging server at 8.8.8.8...
+15:50:52 Server at 8.8.8.8 is reachable. Response time: 6 ms
+15:50:52 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+15:50:53 Log sent successfully and data saved to FingerIn.json.
+15:50:53 App initialization completed.
+15:51:40 1.0.0.0
+15:51:40 Form init
+15:51:40 Loading appsettings.json...
+15:51:40 
+15:51:40 Checking Internet connection...
+15:51:40 Machine name: CHENGCHEN24E7
+15:51:40 test_org_code 00106
+15:51:40 使用測試用帳號
+15:51:40 OrgCode: 00106
+15:51:40 組織代碼錯誤，將關閉程式
+15:51:40 找不到00106組織名稱，將關閉程式
+15:51:40 HCM連線中,請等待
+15:51:40 HCM連接發生問題，將關閉程式
+15:51:40 Pinging server at 8.8.8.8...
+15:51:40 Server at 8.8.8.8 is reachable. Response time: 6 ms
+15:51:40 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+15:51:41 Log sent successfully and data saved to FingerIn.json.
+15:51:41 App initialization completed.
+16:39:43 1.0.0.0
+16:39:43 Form init
+16:39:43 Loading appsettings.json...
+16:39:43 
+16:39:43 Checking Internet connection...
+16:39:43 Machine name: CHENGCHEN24E7
+16:39:43 test_org_code 00106
+16:39:43 使用測試用帳號
+16:39:43 OrgCode: 00106
+16:39:43 組織代碼錯誤，將關閉程式
+16:39:43 找不到00106組織名稱，將關閉程式
+16:39:43 HCM連線中,請等待
+16:39:43 HCM連接發生問題，將關閉程式
+16:39:43 Pinging server at 8.8.8.8...
+16:39:43 Server at 8.8.8.8 is reachable. Response time: 11 ms
+16:39:43 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+16:39:44 Log sent successfully and data saved to FingerIn.json.
+16:39:44 App initialization completed.
+17:05:30 1.0.0.0
+17:05:30 Form init
+17:05:30 Loading appsettings.json...
+17:05:30 
+17:05:30 Checking Internet connection...
+17:05:30 Machine name: CHENGCHEN24E7
+17:05:30 test_org_code 00106
+17:05:30 使用測試用帳號
+17:05:30 OrgCode: 00106
+17:05:30 組織代碼錯誤，將關閉程式
+17:05:30 這裡這裡
+17:05:30 {"flag":false,"data":"","message":"Exception occurred: 並未將物件參考設定為物件的執行個體。"}
+17:05:30 HCM連線中,請等待
+17:05:30 HCM連接發生問題，將關閉程式
+17:05:30 Pinging server at 8.8.8.8...
+17:05:30 Server at 8.8.8.8 is reachable. Response time: 29 ms
+17:05:30 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+17:05:31 Log sent successfully and data saved to FingerIn.json.
+17:05:31 App initialization completed.
+17:13:03 1.0.0.0
+17:13:03 Form init
+17:13:03 Loading appsettings.json...
+17:13:03 
+17:13:03 Checking Internet connection...
+17:13:03 Machine name: CHENGCHEN24E7
+17:13:03 test_org_code 00106
+17:13:03 使用測試用帳號
+17:13:03 OrgCode: 00106
+17:13:03 組織代碼錯誤，將關閉程式
+17:13:03 這裡這裡
+17:13:04 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:13:04 HCM連線中,請等待
+17:13:04 HCM連接發生問題，將關閉程式
+17:13:04 Pinging server at 8.8.8.8...
+17:13:04 Server at 8.8.8.8 is reachable. Response time: 25 ms
+17:13:04 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+17:13:04 Log sent successfully and data saved to FingerIn.json.
+17:13:04 App initialization completed.
+17:16:46 1.0.0.0
+17:16:46 Form init
+17:16:46 Loading appsettings.json...
+17:16:46 
+17:16:46 Checking Internet connection...
+17:16:46 Machine name: CHENGCHEN24E7
+17:16:46 test_org_code 00106
+17:16:46 使用測試用帳號
+17:16:46 OrgCode: 00106
+17:16:46 組織代碼錯誤，將關閉程式
+17:16:46 這裡這裡
+17:16:47 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:16:47 HCM連線中,請等待
+17:16:47 HCM連接發生問題，將關閉程式
+17:16:47 Pinging server at 8.8.8.8...
+17:16:47 Server at 8.8.8.8 is reachable. Response time: 82 ms
+17:16:47 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%22S000123%22%7D
+17:16:48 Log sent successfully and data saved to FingerIn.json.
+17:16:48 App initialization completed.
+17:25:20 Downloading fingerprint data from HCM...
+17:25:20 Parsing HCM employee data...
+17:25:20 An error occurred: Could not find file 'C:\Users\chengchen\Desktop\fingerprint.dat'.
+17:25:20 Applying Rule 1...
+17:25:20 Applying Rule 2...
+17:25:20 Data successfully written to fingerprint_update.json
+17:31:03 1.0.0.0
+17:31:03 Form init
+17:31:03 Loading appsettings.json...
+17:31:03 
+17:31:03 Checking Internet connection...
+17:31:03 Machine name: CHENGCHEN24E7
+17:31:03 test_org_code 00106
+17:31:03 使用測試用帳號
+17:31:03 OrgCode: 00106
+17:31:03 組織代碼錯誤，將關閉程式
+17:31:03 這裡這裡
+17:31:03 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:31:04 Pinging server at 192.168.29.105...
+17:31:09 Failed to reach server at 192.168.29.105. Status: TimedOut
+17:31:09 Unable to reach the server. Closing application.
+17:57:08 1.0.0.0
+17:57:08 Form init
+17:57:08 Loading appsettings.json...
+17:57:08 
+17:57:08 Checking Internet connection...
+17:57:08 Machine name: CHENGCHEN24E7
+17:57:08 test_org_code 00106
+17:57:08 使用測試用帳號
+17:57:08 OrgCode: 00106
+17:57:08 組織代碼錯誤，將關閉程式
+17:57:09 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+17:57:09 Pinging server at 8.8.8.8...
+17:57:09 Server at 8.8.8.8 is reachable. Response time: 6 ms
+17:57:09 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%2200106%22%7D
+17:57:10 Log sent successfully and data saved to FingerIn.json.
+17:57:10 App initialization completed.
+18:08:29 1.0.0.0
+18:08:29 Form init
+18:08:29 Loading appsettings.json...
+18:08:29 
+18:08:29 Checking Internet connection...
+18:08:29 Machine name: CHENGCHEN24E7
+18:08:29 test_org_code 00106
+18:08:29 使用測試用帳號
+18:08:29 OrgCode: 00106
+18:08:29 組織代碼錯誤，將關閉程式
+18:08:30 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+18:08:30 Pinging server at 8.8.8.8...
+18:08:30 Server at 8.8.8.8 is reachable. Response time: 11 ms
+18:08:30 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%2200106%22%7D
+18:08:30 Log sent successfully and data saved to FingerIn.json.
+18:08:30 App initialization completed.
+18:08:52 1.0.0.0
+18:08:52 Form init
+18:08:52 Loading appsettings.json...
+18:08:52 
+18:08:52 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%2200106%22%7D
+18:08:53 Log sent successfully and data saved to FingerIn.json.
+18:08:53 App initialization completed.
+18:08:57 1.0.0.0
+18:08:57 Form init
+18:08:57 Loading appsettings.json...
+18:08:57 
+18:10:30 1.0.0.0
+18:10:30 Form init
+18:10:30 Loading appsettings.json...
+18:10:30 
+18:10:30 Checking Internet connection...
+18:13:39 1.0.0.0
+18:13:39 Form init
+18:13:39 Loading appsettings.json...
+18:13:39 
+18:13:39 Checking Internet connection...
+18:13:39 Machine name: CHENGCHEN24E7
+18:13:39 test_org_code 00106
+18:13:39 使用測試用帳號
+18:13:39 OrgCode: 00106
+18:13:39 組織代碼錯誤，將關閉程式
+18:13:40 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+18:13:40 Pinging server at 8.8.8.8...
+18:13:40 Server at 8.8.8.8 is reachable. Response time: 8 ms
+18:13:40 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%2200106%22%7D
+18:13:40 Log sent successfully and data saved to FingerIn.json.
+18:13:40 App initialization completed.
+18:14:01 1.0.0.0
+18:14:01 Form init
+18:14:01 Loading appsettings.json...
+18:14:01 
+18:14:01 Checking Internet connection...
+18:14:01 Machine name: CHENGCHEN24E7
+18:14:01 test_org_code 00106
+18:14:01 使用測試用帳號
+18:14:01 OrgCode: 00106
+18:14:01 組織代碼錯誤，將關閉程式
+18:14:01 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+18:14:01 Pinging server at 192.168.29.105...
+18:14:06 Failed to reach server at 192.168.29.105. Status: TimedOut
+18:14:06 Unable to reach the Machine. 192.168.29.105
+18:53:07 1.0.0.0
+18:53:07 Form init
+18:53:07 Loading appsettings.json...
+18:53:07 
+18:53:07 Checking Internet connection...
+18:53:07 Machine name: CHENGCHEN24E7
+18:53:07 test_org_code 00106
+18:53:07 使用測試用帳號
+18:53:07 OrgCode: 00106
+18:53:07 組織代碼錯誤，將關閉程式
+18:53:08 {"flag":true,"message":"","data":{"version":"1.2.0","orgName":"忠孝一店"},"modelStatus":null}
+18:53:08 Pinging server at 8.8.8.8...
+18:53:08 Server at 8.8.8.8 is reachable. Response time: 8 ms
+18:53:08 url: https://gurugaia.royal.club.tw/eHR/GuruOutbound/Trans?ctrler=Std1forme00501&method=PSNSync&jsonParam=%7B%22org_no%22%3A%2200106%22%7D
+18:53:08 Log sent successfully and data saved to FingerIn.json.
+18:53:08 App initialization completed.
