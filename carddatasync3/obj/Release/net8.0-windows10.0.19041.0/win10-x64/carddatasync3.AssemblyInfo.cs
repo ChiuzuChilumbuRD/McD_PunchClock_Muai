@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("carddatasync3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+50befa9adbb00d686472cc736f60c82aa6de63e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+26478246c550bb696370d19d9670ebe074a0297b")]
 [assembly: System.Reflection.AssemblyProductAttribute("carddatasync3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("carddatasync3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

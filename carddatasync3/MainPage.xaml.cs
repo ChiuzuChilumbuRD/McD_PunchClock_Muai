@@ -12,7 +12,6 @@ using System.Reflection;
 using System;
 using System.IO;
 
-
 namespace carddatasync3
 {
     public partial class MainPage : ContentPage
@@ -194,7 +193,7 @@ namespace carddatasync3
                 CheckFilesExistLayout.IsVisible = true;
 
             }
-           else CheckFilesExistLayout.IsVisible = false;
+            else CheckFilesExistLayout.IsVisible = false;
 
 
             hcmEmployeeJson = null;
@@ -233,7 +232,6 @@ namespace carddatasync3
                     GetOrgCodeLayout.IsVisible = true;
                 }
                 else GetOrgCodeLayout.IsVisible = false;
-                // ------------------------ 會卡在這裡 --------------------------------
 
                     
                 //用POST取得  
@@ -272,7 +270,7 @@ namespace carddatasync3
             }
             else IsHCMReadyLayout.IsEnabled = false;*/
         
-              if(CheckModeJSON("machineCheck").Length>0){
+                if(CheckModeJSON("machineCheck").Length>0){
                     // Ping server IP address
                     if (!PingMachine(machineIP)) // Example IP, replace with the actual one
                     {
@@ -282,7 +280,7 @@ namespace carddatasync3
                        
                     }
                     else PingServerLayout.IsVisible = false;
-              }
+                }
             // ====================== Step.7 確認人資系統有沒有上線 (ping IP)​ Check if the HR Server is available ============
          
             // ====================== Step.8 以組織代碼APP=>回傳版本 Check GuruOutbound service =======================
@@ -492,82 +490,59 @@ namespace carddatasync3
 
         private async Task<string> getORGName(string _orgCode)
         {
-
-             try
-        {
-               
-        using (var client = new HttpClient())
+            try
             {
-            // 建立要傳遞的 JSON 資料，使用字串插值來替換 org_No 和 logData 的值
-                        var requestData = new
-                        {
-                            ctrler = "STD1FORME00501",
-                            method = "PSNVersion",
-                            jsonParam = $@"{{
-                                'org_No': '{_orgCode}',
-                            }}",
-                            token = "your-token-here"
-                        };
-
-
-                // 將資料序列化為 JSON 字串
-                string json = JsonConvert.SerializeObject(requestData);
-
-                // 設定請求內容
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-
-                // 發送 POST 請求
-                var response = await client.PostAsync(AppSettings["serverInfo"] + "/GuruOutbound/Trans", content);
-
-                // 確認回應成功
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    // 讀取並返回回應內容
-                    string _str = await response.Content.ReadAsStringAsync();
-                    AppendTextToEditor(_str);
+                    // 建立要傳遞的 JSON 資料，使用字串插值來替換 org_No 和 logData 的值
+                    var requestData = new
+                    {
+                        ctrler = "STD1FORME00501",
+                        method = "PSNVersion",
+                        jsonParam = $@"{{
+                            'org_No': '{_orgCode}',
+                        }}",
+                        token = "your-token-here"
+                    };
 
-                    // 反序列化 JSON 並提取 orgName
-                    var jsonDocument = JsonDocument.Parse(_str);
-                    var orgName = jsonDocument.RootElement
-                                        .GetProperty("data")  // 進入 "data" 屬性
-                                        .GetProperty("orgName")  // 進入 "orgName" 屬性
-                                        .GetString();  // 提取 orgName 的值
 
-                    return orgName;
+                    // 將資料序列化為 JSON 字串
+                    string json = JsonConvert.SerializeObject(requestData);
+
+                    // 設定請求內容
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+                    // 發送 POST 請求
+                    var response = await client.PostAsync(AppSettings["serverInfo"] + "/GuruOutbound/Trans", content);
+
+                    // 確認回應成功
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // 讀取並返回回應內容
+                        string _str = await response.Content.ReadAsStringAsync();
+                        AppendTextToEditor(_str);
+
+                        // 反序列化 JSON 並提取 orgName
+                        var jsonDocument = JsonDocument.Parse(_str);
+                        var orgName = jsonDocument.RootElement
+                                            .GetProperty("data")  // 進入 "data" 屬性
+                                            .GetProperty("orgName")  // 進入 "orgName" 屬性
+                                            .GetString();  // 提取 orgName 的值
+
+                        return orgName;
+                    }
+                    else
+                    {
+                        return "";
+                        // throw new Exception($"Failed to get data from API: {response.StatusCode}");
+                    }
                 }
-                else   
-
-                        {
-                            throw new Exception($"Failed to get data from API: {response.StatusCode}");
-                        }
+            } 
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Failed to connect to the API: {ex.Message}");
             }
-            
-
-        } catch (HttpRequestException ex)
-                {
-                    throw new Exception($"Failed to connect to the API: {ex.Message}");
-                }
-
-           
-
-            // TODO: 取得廠商名稱 (不使用 db)
-            string name = string.Empty;
-            // string sql = string.Format(@"SELECT UNITNAME FROM VW_MDS_ORGSTDSTRUCT WHERE UNITCODE='{0}'", this.textBox1.Text);
-            // Database db = DatabaseFactory.CreateDatabase(databaseKey);
-            // DbCommand dc = db.GetSqlStringCommand(sql);
-
-            // DataSet ds = db.ExecuteDataSet(dc);
-
-            // if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            // {
-            //     name = ds.Tables[0].Rows[0][0].ToString();
-            // }
-            // else
-            // {
-            //     name = "";
-            // }
-            return name;
         } // END getCradORGName
 
 
@@ -671,14 +646,14 @@ private async Task<bool> setModify(JArray _chgList)
             {
                 // 取得當前批次的資料
                 var batch = new JArray(_chgList.Skip(i).Take(batchSize));
-                string batchStr = batch.ToString().Replace("\n", "").Replace("\r", "").Replace("  ", "");
-                batchStr = " {0:"+batchStr+"}";
+                // string batchStr = batch.ToString().Replace("\n", "").Replace("\r", "").Replace("  ", "");
+                // batchStr = " {0:"+batchStr+"}";
                 // 準備要傳遞的 JSON 資料
                 var requestData = new
                 {
                     ctrler = "STD1FORME00501",
                     method = "PSNModify",
-                    jsonParam = batchStr,
+                    jsonParam = batch,
                     token = "your-token-here"
                 };
 
@@ -691,7 +666,7 @@ private async Task<bool> setModify(JArray _chgList)
                 
                 // -display 印出即將發送的請求內容
               
-                    AppendTextToEditor(json);
+                    AppendTextToEditor($"PSNModify json: {json}");
 
                     // 發送 POST 請求
                     var response = await client.PostAsync(AppSettings["serverInfo"] + "/GuruOutbound/Trans", content);
@@ -1218,8 +1193,8 @@ private async Task<bool> setModify(JArray _chgList)
 
             // Step 4: Compare Employee Data (Rule 1)
             //--display
-            AppendTextToEditor($"Original punchMachineEmployeeJson: {punchMachineEmployeeJson.ToString()}");
-            AppendTextToEditor($"Original hcmEmployeeJson: {hcmEmployeeJson.ToString()}");
+            // AppendTextToEditor($"Original punchMachineEmployeeJson: {punchMachineEmployeeJson.ToString()}");
+            // AppendTextToEditor($"Original hcmEmployeeJson: {hcmEmployeeJson.ToString()}");
             
             JArray rule1Result = Punch_Data_Changing_rule1(hcmEmployeeJson, punchMachineEmployeeJson);
             // AppendTextToEditor("----------");
@@ -1233,7 +1208,8 @@ private async Task<bool> setModify(JArray _chgList)
                 return;
             }
 
-
+            AppendTextToEditor($"Rule1 punchMachineEmployeeJson: {punchMachineEmployeeJson.ToString()}");
+            AppendTextToEditor($"Rule1 hcmEmployeeJson: {hcmEmployeeJson.ToString()}");
 
              
             // Step 5: Compare Fingerprint Data (Rule 2)
@@ -2342,7 +2318,7 @@ using (var reader = new StreamReader(memoryStream, Encoding.UTF8))
                         
                             string _cardNoFlag = "0";
 
-                            if (punchCardNo.Length == 10 && hcmCardNo != punchCardNo)
+                            if (punchCardNo.Length == 10 && !string.Equals(hcmCardNo, punchCardNo))
                             {
                                 _cardNoFlag = "1";
                             }
@@ -2351,7 +2327,7 @@ using (var reader = new StreamReader(memoryStream, Encoding.UTF8))
                             string punchFinger2 = (Convert.ToString(punchCard["finger2"]) ?? "").PadRight(10).Substring(0, 10);
                             string _finger2Flag = "0";
 
-                            if (punchFinger2.Length != 0 && hcmFinger2 != punchFinger2)
+                            if (punchFinger2.Length != 0 || !string.Equals(hcmFinger2, punchFinger2))
                             {
                                 _finger2Flag = "1";
                             }
@@ -2365,14 +2341,14 @@ using (var reader = new StreamReader(memoryStream, Encoding.UTF8))
                             string punchFinger1 = (Convert.ToString(punchCard["finger1"]) ?? "").PadRight(10).Substring(0, 10);
                             string _finger1Flag = "0";
 
-                            if (punchFinger1.Length != 0 && hcmFinger1 != punchFinger1)
+                            if (punchFinger1.Length != 0 || !string.Equals(hcmFinger1, punchFinger1))
                             {
                                 _finger1Flag = "1";
                             }
 
 
                             string _checkStr = _finger1Flag + _finger2Flag + _cardNoFlag;
-                            if(_checkStr !="000") 
+                            if(!string.Equals(_checkStr, "000")) 
                             {
                                 results.Add(punchCard);
 
