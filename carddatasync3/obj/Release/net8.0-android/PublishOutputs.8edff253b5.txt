@@ -1,4 +1,0 @@
-C:\Users\reena.tsai\OneDrive - MTG\Reena\maui_demo\McD_project\carddatasync3\bin\Release\net8.0-android\publish\com.companyname.carddatasync3-Signed.aab
-C:\Users\reena.tsai\OneDrive - MTG\Reena\maui_demo\McD_project\carddatasync3\bin\Release\net8.0-android\publish\com.companyname.carddatasync3.aab
-C:\Users\reena.tsai\OneDrive - MTG\Reena\maui_demo\McD_project\carddatasync3\bin\Release\net8.0-android\publish\com.companyname.carddatasync3-Signed.apk
-C:\Users\reena.tsai\OneDrive - MTG\Reena\maui_demo\McD_project\carddatasync3\bin\Release\net8.0-android\publish\_Microsoft.Android.Resource.Designer.dll

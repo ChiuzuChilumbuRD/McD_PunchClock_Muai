@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="carddatasync3.AppSettingPage"
              BackgroundColor="#F5F5F5">
-
-    <ScrollView Padding="20">
-        <VerticalStackLayout
-            Padding="20,20"
-            Spacing="5">
-
-            <!-- Settings -->
-            <StackLayout x:Name="DynamicFieldsLayout" Spacing="2" HorizontalOptions="Fill" >
-                <!-- New fields will be added here dynamically -->
-            </StackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+    <Grid Padding="10" RowDefinitions="Auto, *">
+        <!-- 設定的內容 -->
+        <VerticalStackLayout x:Name="FlexLayout" Spacing="1" />
+    </Grid>
 </ContentPage>

@@ -15,6 +15,7 @@ namespace carddatasync3
         public AppSettingPage()
         {
             InitializeComponent();
+            
             LoadSettings();
             
             // Save Button (Navigation bar)
@@ -36,74 +37,77 @@ namespace carddatasync3
                 var json = File.ReadAllText(appSettingsFilePath);
                 var settings = JsonConvert.DeserializeObject<dynamic>(json);
 
-                // 假設settings.Settings是一個字典，包含所有的設定欄位
                 var settingsValues = JsonConvert.DeserializeObject<Dictionary<string, string>>(settings.Settings.ToString());
                 var parameterDescript = JsonConvert.DeserializeObject<Dictionary<string, string>>(settings.Parameter_Descript.ToString());
 
-                // 清空字典，確保每次加載新的設定時字典是空的
                 dynamicEntries.Clear();
                 try
                 {
-                    var commonKeys = new HashSet<string>(settingsValues.Keys);
-                    foreach (var key in commonKeys)
+                    foreach (var key in settingsValues.Keys)
                     {
                         string description = parameterDescript[key];
                         string fieldValue = settingsValues[key];
 
-                        // 使用Frame包裝Label和Entry
+                        // 設計欄位的 Grid
                         var grid = new Grid
                         {
                             ColumnDefinitions =
                             {
                                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }, // Label 比例
-                                new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) } // Entry 比例
+                                new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) }  // Entry 比例
                             },
-                            Margin = new Thickness(0, 2, 0, 2)
+                            Margin = new Thickness(0, 2),
+                            ColumnSpacing = 10
                         };
 
-                        // 欄位名稱
+                        // Label
                         var label = new Label
                         {
                             Text = description,
-                            FontSize = 16,
+                            FontSize = 15,
                             VerticalTextAlignment = TextAlignment.Center
                         };
 
-                        // 欄位值
+                        // Entry
                         var entry = new Entry
                         {
                             Text = fieldValue,
                             Placeholder = "請輸入" + description,
+                            FontSize = 15,
+                            VerticalOptions = LayoutOptions.FillAndExpand
                         };
 
-                        // 將Label和Entry包裝在Frame中
+                        // Label 的 Frame
                         var labelFrame = new Frame
                         {
                             BackgroundColor = Colors.White,
-                            Padding = 10,
-                            Margin = new Thickness(5),
-                            CornerRadius = 8,
-                            Content = label
+                            Padding = 2, // 縮小內間距
+                            Margin = 3,
+                            CornerRadius = 5,
+                            Content = label,
+                            HeightRequest = 45 // 控制 Frame 的高度
                         };
 
+                        // Entry 的 Frame
                         var entryFrame = new Frame
                         {
                             BackgroundColor = Colors.White,
-                            Padding = 10,
-                            Margin = new Thickness(5),
-                            CornerRadius = 8,
-                            Content = entry
+                            Padding = 2, // 縮小內間距
+                            Margin = 3,
+                            CornerRadius = 5,
+                            Content = entry,
+                            HeightRequest = 45 // 控制 Frame 的高度
                         };
 
                         Grid.SetColumn(labelFrame, 0);
                         grid.Children.Add(labelFrame);
+
                         Grid.SetColumn(entryFrame, 1);
                         grid.Children.Add(entryFrame);
 
-                        dynamicEntries[key] = entry; // 儲存到 dynamicEntries 或其他處理邏輯
-
-                        // 將Grid添加到DynamicFieldsLayout中
-                        DynamicFieldsLayout.Children.Add(grid);
+                        // 加入 DynamicFieldsLayout
+                        dynamicEntries[key] = entry;
+                        FlexLayout.Children.Add(grid);
                     }
                 }
                 catch (Exception ex)
@@ -112,6 +116,7 @@ namespace carddatasync3
                 }
             }
         }
+
         private async void OnSaveSettingsClicked(object sender, EventArgs e)
         {
             var updatedSettings = new Dictionary<string, string>();

@@ -10,14 +10,11 @@
             Padding="30,20"
             Spacing="15">
 
-
-
             <!-- Grid for Labels and Entry Fields -->
-            <Grid Padding="10" BackgroundColor="White"  > <!-- Soft shadow and rounded corners for modern look -->
+            <Grid Padding="10" BackgroundColor="White" RowSpacing="5" ColumnSpacing="5" > <!-- Soft shadow and rounded corners for modern look -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -34,26 +31,30 @@
 
                 <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" x:Name="labStoreName" Text="範例餐廳" FontSize="18" TextColor="#0D47A1" FontAttributes="Bold" />
 
-                <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" VerticalOptions="Center" Text="" FontAttributes="Bold" FontSize="16" TextColor="#0D47A1"/>
-
-                <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Center" x:Name="textBox1" FontSize="14" Placeholder="輸入代碼" TextColor="#FF3C4B52" PlaceholderColor="#90A4AE"  />
+                <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Center" x:Name="textBox1" FontSize="14" Placeholder="輸入代碼" TextColor="#FF3C4B52" PlaceholderColor="#90A4AE" />
 
                 <!-- Configuration Status Indicators -->
-                <VerticalStackLayout Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" x:Name="LoadAppSettingsLayout">
+                <VerticalStackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" x:Name="LoadAppSettingsLayout">
                     <Image Source="load_settings.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
                     <Label x:Name="LoadAppSettingsLabel" Text="設定檔不存在" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
                 </VerticalStackLayout>
 
                 <!-- CheckFilesExist -->
-                <VerticalStackLayout Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" x:Name="CheckFilesExistLayout">
-                    <Image Source="folder_not_exist.png" WidthRequest="20" HeightRequest="20" Margin="5,0"/>
+                <VerticalStackLayout Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" x:Name="CheckFilesExistLayout">
+                    <Image Source="folder_not_exist.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
                     <Label x:Name="CheckFilesExistLabel" Text="資料夾不存在" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
                 </VerticalStackLayout>
 
                 <!-- IsInternetAvailable -->
-                <VerticalStackLayout Grid.Row="0" Grid.Column="5" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsInternetAvailableLayout">
-                    <Image Source="wifi_disconnected.png" WidthRequest="20" HeightRequest="20" Margin="5,0"/>
+                <VerticalStackLayout Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsInternetAvailableLayout">
+                    <Image Source="wifi_disconnected.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
                     <Label x:Name="IsInternetAvailableLabel" Text="無網路" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                </VerticalStackLayout>
+
+                <!-- IsHCMReady (GetOrgCode) -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="5" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsHCMReadyLayout">
+                    <Image Source="servers.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
+                    <Label x:Name="IsHCMReadyLabel" Text="HCM 未就緒" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
                 </VerticalStackLayout>
 
                 <!-- GetOrgCode -->
@@ -62,27 +63,23 @@
                     <Label x:Name="GetOrgCodeLabel" Text="組織代碼錯誤" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
                 </VerticalStackLayout>
 
-                <!-- IsHCMReady -->
-                <VerticalStackLayout Grid.Row="0" Grid.Column="7" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsHCMReadyLayout">
+                <!-- PingMachine -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="7" HorizontalOptions="Center" VerticalOptions="Center" x:Name="PingMachineLayout">
                     <Image Source="punch_clock.png" WidthRequest="30" HeightRequest="20" Margin="5,0"  Opacity="0.5"/>
-                    <Label x:Name="IsHCMReadyLabel" Text="打卡機未就緒" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
-                </VerticalStackLayout>
-                
-                <!-- PingServer -->
-                <VerticalStackLayout Grid.Row="0" Grid.Column="8" HorizontalOptions="Center" VerticalOptions="Center" x:Name="PingServerLayout">
-                    <Image Source="ip.png" WidthRequest="30" HeightRequest="20" Margin="5,0"  Opacity="0.5"/>
-                    <Label x:Name="PingServerLabel" Text="HCM未上線" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                    <Label x:Name="PingMachineLabel" Text="打卡機未就緒" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
                 </VerticalStackLayout>
 
                 <!-- SendLog -->
-                <VerticalStackLayout Grid.Row="0" Grid.Column="9" HorizontalOptions="Center" VerticalOptions="Center" x:Name="SendLogLayout">
+                <VerticalStackLayout Grid.Row="0" Grid.Column="8" HorizontalOptions="Center" VerticalOptions="Center" x:Name="SendLogLayout">
                     <Image Source="log.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
                     <Label x:Name="SendLogLabel" Text="傳送日誌失敗" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
                 </VerticalStackLayout>
 
                 <!-- Refresh & Configuration Button -->
-                <ImageButton Source="refresh.png" Grid.Row="0" Grid.Column="10" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnRefreshButtonClicked" />
-                <ImageButton Source="configuration.png" Grid.Row="0" Grid.Column="11" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnSettingButtonClicked" />
+                <ImageButton x:Name="refreshButton" Source="refresh.png" Grid.Row="0" Grid.Column="9" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnRefreshButtonClicked" />
+                <ImageButton x:Name="settingButton" Source="configuration.png" Grid.Row="0" Grid.Column="10" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnSettingButtonClicked" />
+                <!-- <ImageButton Source="test.png" Grid.Row="0" Grid.Column="11" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnActionButtonClicked" />
+                <ImageButton Source="downloads.png" Grid.Row="0" Grid.Column="12" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnDownloadButtonClicked" /> -->
             </Grid>
 
 
@@ -100,45 +97,19 @@
             </Grid-->
 
         <Grid  x:Name="MainGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="7*" x:Name="ClockColumn"/>
-                <ColumnDefinition Width="2*" x:Name="LogColumn"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- Clock Display occupying 2/3 of the screen on the left -->
-            <ContentView x:Name="ClockView"
-                        Grid.Column="0"
-                        BackgroundColor="Transparent"
-                        VerticalOptions="FillAndExpand"
-                        HorizontalOptions="FillAndExpand"
-                        Padding="10">
-                <!-- Use AbsoluteLayout to anchor the Label to the bottom-left corner -->
-                <AbsoluteLayout>
-                    <Label x:Name="ClockLabel"
-                        Text="00:00"
-                        FontSize="36"
-                        TextColor="#FF748196"
-                        AbsoluteLayout.LayoutBounds="0,1,AutoSize,AutoSize"
-                        AbsoluteLayout.LayoutFlags="PositionProportional"/>
-                </AbsoluteLayout>
-
-                <ContentView.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnClockTapped"/>
-                </ContentView.GestureRecognizers>
-            </ContentView>
 
             <!-- Log Display Frame occupying 1/3 of the screen on the right -->
             <Frame x:Name="LogFrame"
-                Grid.Column="1"
+                Grid.Column="0"
                 BackgroundColor="White"
                 Padding="10"
                 Margin="5"
                 CornerRadius="8"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand">
-                <Frame.GestureRecognizers>
+                <!-- <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnClockTapped" />
-                </Frame.GestureRecognizers>
+                </Frame.GestureRecognizers> -->
                 <Editor x:Name="textBox2"
                         AutoSize="TextChanges"
                         IsReadOnly="True"
@@ -149,12 +120,34 @@
                         />
             </Frame>
 
+            <!-- Clock Display occupying 2/3 of the screen on the left -->
+            <ContentView x:Name="ClockView"
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        VerticalOptions="Start"
+                        HorizontalOptions="End"
+                        Padding="20">
+                <!-- Use AbsoluteLayout to anchor the Label to the bottom-left corner -->
+                <AbsoluteLayout>
+                    <Label x:Name="ClockLabel"
+                        Text="00:00"
+                        FontSize="36"
+                        TextColor="#FF748196"
+                        AbsoluteLayout.LayoutBounds="1,0,AutoSize,AutoSize"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                </AbsoluteLayout>
+
+                <!-- <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClockTapped"/>
+                </ContentView.GestureRecognizers> -->
+            </ContentView>
+
             <!-- Toggle Button -->
-            <!--Button Text="切換模式"
+            <!-- Button Text="切換模式"
                     Grid.Row="1"
                     HorizontalOptions="Center"
                     VerticalOptions="End"
-                    Clicked="OnClockTapped"/-->
+                    Clicked="OnClockTapped"/ -->
         </Grid>
 
             <!-- Log Output Area -->
@@ -218,9 +211,6 @@
             </Grid>
 
     </VerticalStackLayout>
-
-
-
 
 
 
