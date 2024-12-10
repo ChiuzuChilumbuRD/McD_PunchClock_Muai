@@ -4365,11 +4365,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\reena.tsai\\Documents\\maui-guru\\McD_PunchClock_Muai_bk\\carddatasync3\\carddatasync3.csproj",
+      "projectUniqueName": "C:\\Users\\reena.tsai\\Documents\\maui-guru\\McD_PunchClock_Muai\\carddatasync3\\carddatasync3.csproj",
       "projectName": "carddatasync3",
-      "projectPath": "C:\\Users\\reena.tsai\\Documents\\maui-guru\\McD_PunchClock_Muai_bk\\carddatasync3\\carddatasync3.csproj",
+      "projectPath": "C:\\Users\\reena.tsai\\Documents\\maui-guru\\McD_PunchClock_Muai\\carddatasync3\\carddatasync3.csproj",
       "packagesPath": "C:\\Users\\reena.tsai\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\reena.tsai\\Documents\\maui-guru\\McD_PunchClock_Muai_bk\\carddatasync3\\obj\\",
+      "outputPath": "C:\\Users\\reena.tsai\\Documents\\maui-guru\\McD_PunchClock_Muai\\carddatasync3\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
