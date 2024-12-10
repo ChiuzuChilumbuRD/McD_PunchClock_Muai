@@ -1,0 +1,9 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="carddatasync3.AppSettingPage"
+             BackgroundColor="#F5F5F5">
+    <Grid Padding="10" RowDefinitions="Auto, *">
+        <!-- 設定的內容 -->
+        <VerticalStackLayout x:Name="FlexLayout" Spacing="1" />
+    </Grid>
+</ContentPage>

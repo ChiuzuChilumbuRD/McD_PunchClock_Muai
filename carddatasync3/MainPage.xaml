@@ -1,95 +1,222 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="carddatasync3.MainPage">
+             x:Class="carddatasync3.MainPage"
+             BackgroundColor="#F5F5F5"> <!-- Light background -->
 
     <ScrollView>
+        
         <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <!-- HorizontalStackLayout to hold three Entry controls -->
-            <FlexLayout 
-                Direction="Row"
-                Wrap="Wrap"
-                AlignItems="Center"
-                JustifyContent="Center"
-                HorizontalOptions="Start">
-            </FlexLayout>
+            Padding="30,20"
+            Spacing="15">
 
-            <ScrollView>
-                <Editor x:Name="XmlEditor"
+            <!-- Grid for Labels and Entry Fields -->
+            <Grid Padding="10" BackgroundColor="White" RowSpacing="5" ColumnSpacing="5" > <!-- Soft shadow and rounded corners for modern look -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" x:Name="labStoreName" Text="範例餐廳" FontSize="18" TextColor="#0D47A1" FontAttributes="Bold" />
+
+                <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Center" x:Name="textBox1" FontSize="14" Placeholder="輸入代碼" TextColor="#FF3C4B52" PlaceholderColor="#90A4AE" />
+
+                <!-- Configuration Status Indicators -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" x:Name="LoadAppSettingsLayout">
+                    <Image Source="load_settings.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
+                    <Label x:Name="LoadAppSettingsLabel" Text="設定檔不存在" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                </VerticalStackLayout>
+
+                <!-- CheckFilesExist -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" x:Name="CheckFilesExistLayout">
+                    <Image Source="folder_not_exist.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
+                    <Label x:Name="CheckFilesExistLabel" Text="資料夾不存在" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                </VerticalStackLayout>
+
+                <!-- IsInternetAvailable -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsInternetAvailableLayout">
+                    <Image Source="wifi_disconnected.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
+                    <Label x:Name="IsInternetAvailableLabel" Text="無網路" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                </VerticalStackLayout>
+
+                <!-- IsHCMReady (GetOrgCode) -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="5" HorizontalOptions="Center" VerticalOptions="Center" x:Name="IsHCMReadyLayout">
+                    <Image Source="servers.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
+                    <Label x:Name="IsHCMReadyLabel" Text="HCM 未就緒" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                </VerticalStackLayout>
+
+                <!-- GetOrgCode -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="6" HorizontalOptions="Center" VerticalOptions="Center" x:Name="GetOrgCodeLayout">
+                    <Image Source="org_code.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
+                    <Label x:Name="GetOrgCodeLabel" Text="組織代碼錯誤" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                </VerticalStackLayout>
+
+                <!-- PingMachine -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="7" HorizontalOptions="Center" VerticalOptions="Center" x:Name="PingMachineLayout">
+                    <Image Source="punch_clock.png" WidthRequest="30" HeightRequest="20" Margin="5,0"  Opacity="0.5"/>
+                    <Label x:Name="PingMachineLabel" Text="打卡機未就緒" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                </VerticalStackLayout>
+
+                <!-- SendLog -->
+                <VerticalStackLayout Grid.Row="0" Grid.Column="8" HorizontalOptions="Center" VerticalOptions="Center" x:Name="SendLogLayout">
+                    <Image Source="log.png" WidthRequest="30" HeightRequest="20" Margin="5,0"/>
+                    <Label x:Name="SendLogLabel" Text="傳送日誌失敗" TextColor="#1976D2" HorizontalOptions="Center" FontSize="10"/>
+                </VerticalStackLayout>
+
+                <!-- Refresh & Configuration Button -->
+                <ImageButton x:Name="refreshButton" Source="refresh.png" Grid.Row="0" Grid.Column="9" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnRefreshButtonClicked" />
+                <ImageButton x:Name="settingButton" Source="configuration.png" Grid.Row="0" Grid.Column="10" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnSettingButtonClicked" />
+                <!-- <ImageButton Source="test.png" Grid.Row="0" Grid.Column="11" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnActionButtonClicked" />
+                <ImageButton Source="downloads.png" Grid.Row="0" Grid.Column="12" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnDownloadButtonClicked" /> -->
+            </Grid>
+
+
+
+  <!-- Icon Button in the Top-Left Corner -->
+            <!--Grid>
+                <ImageButton Source="log_icon.png"  
+                             x:Name="ToggleLogButton"
+                             Clicked="OnToggleLogButtonClicked"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Start"
+                             WidthRequest="30"
+                             HeightRequest="30"
+                             Margin="10"/>
+            </Grid-->
+
+        <Grid  x:Name="MainGrid">
+
+            <!-- Log Display Frame occupying 1/3 of the screen on the right -->
+            <Frame x:Name="LogFrame"
+                Grid.Column="0"
+                BackgroundColor="White"
+                Padding="10"
+                Margin="5"
+                CornerRadius="8"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+                <!-- <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClockTapped" />
+                </Frame.GestureRecognizers> -->
+                <Editor x:Name="textBox2"
                         AutoSize="TextChanges"
                         IsReadOnly="True"
-                        HeightRequest="250"
-                        WidthRequest="900"/>
-            </ScrollView>
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        TextColor="#616161"
+                        HeightRequest="230"
+                        />
+            </Frame>
 
-            <FlexLayout 
-                Direction="Row"
-                Wrap="Wrap"
-                AlignItems="Center"
-                JustifyContent="Center">
+            <!-- Clock Display occupying 2/3 of the screen on the left -->
+            <ContentView x:Name="ClockView"
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        VerticalOptions="Start"
+                        HorizontalOptions="End"
+                        Padding="20">
+                <!-- Use AbsoluteLayout to anchor the Label to the bottom-left corner -->
+                <AbsoluteLayout>
+                    <Label x:Name="ClockLabel"
+                        Text="00:00"
+                        FontSize="36"
+                        TextColor="#FF748196"
+                        AbsoluteLayout.LayoutBounds="1,0,AutoSize,AutoSize"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                </AbsoluteLayout>
 
-                <!-- First Button (HCM to Fingerprint) -->
-                <VerticalStackLayout>
-                    <Button x:Name="btnHCMToFingerprint"
-                            Text="員工資料匯入指紋機"
-                            FontSize="20"
-                            HorizontalOptions="Center"
-                            Clicked="btn_HCM_to_fingerprint"/>  <!-- Event handler for clicks -->
-                    <Image Source="fingerprint_d.png"
-                           WidthRequest="300"
-                           HeightRequest="100"
-                           Aspect="Center"/>
-                    <Label Text="新進、離職、資源維護(調撥)"
-                           WidthRequest="300"
-                           HeightRequest="50"
-                           FontSize="15"
-                           Margin="0,10,0,0"
-                           VerticalOptions="FillAndExpand"/>
-                </VerticalStackLayout>
+                <!-- <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClockTapped"/>
+                </ContentView.GestureRecognizers> -->
+            </ContentView>
 
-                <!-- Second Button (Upload to HCM) -->
-                <VerticalStackLayout>
-                    <Button x:Name="btnUploadToHCM"
-                            Text="卡鐘與指紋資料上傳"
-                            FontSize="20"
-                            HorizontalOptions="Center"
-                            Clicked="btn_upload_to_HCM"/>  <!-- Event handler for clicks -->
-                    <Image Source="fingerprint_u.png"
-                           WidthRequest="300"
-                           HeightRequest="100"
-                           Aspect="Center"/>
-                    <Label Text="卡鐘內刷卡與指紋資料上傳至HCM"
-                           WidthRequest="300"
-                           HeightRequest="50"
-                           FontSize="15"
-                           Margin="0,10,0,0"
-                           VerticalOptions="FillAndExpand"/>
-                </VerticalStackLayout>
+            <!-- Toggle Button -->
+            <!-- Button Text="切換模式"
+                    Grid.Row="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"
+                    Clicked="OnClockTapped"/ -->
+        </Grid>
 
-                <!-- Third Button (Delivery Upload) -->
-                <VerticalStackLayout>
-                    <Button x:Name="btnDeliveryUpload"
-                            Text="趟次資料上傳"
-                            FontSize="20"
-                            HorizontalOptions="Center"
-                            Clicked="btn_delivery_upload"/>  <!-- Event handler for clicks -->
-                    <Image Source="btn_delivery_upload.png"
-                           WidthRequest="300"
-                           HeightRequest="100"
-                           Aspect="Center"/>
-                    <Label Text="趟次資料傳回後端系統，匯入資料庫"
-                           WidthRequest="300"
-                           HeightRequest="50"
-                           FontSize="15"
-                           Margin="0,10,0,0"
-                           VerticalOptions="FillAndExpand"/>
-                </VerticalStackLayout>
+            <!-- Log Output Area -->
+ <!-- Toggle Log Button -->
+          
+            <!-- Action Buttons Grid -->
+            <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            </FlexLayout>
-            
+
+<!-- Button 1: HCM to Fingerprint -->
+<VerticalStackLayout Grid.Column="0" Margin="0,0,10,10">
+    <ContentView x:Name="btnHCMToFingerprint" WidthRequest="300" HeightRequest="180" BackgroundColor="White">
+        <ContentView.GestureRecognizers>
+            <TapGestureRecognizer Tapped="btn_HCM_to_fingerprint"/>
+        </ContentView.GestureRecognizers>
+        
+        <VerticalStackLayout Padding="15" HorizontalOptions="Center">
+            <Image Source="fingerprint_d.png" WidthRequest="280" HeightRequest="80" Aspect="Center" Margin="0,-20,0,0"/>
+            <Label Text="員工資料匯入指紋機" HorizontalOptions="Center" FontSize="18" TextColor="#005582" Margin="0,20,0,0"/>
+            <Label Text="新進、離職、資源維護(調撥)" HorizontalOptions="Center" FontSize="14" TextColor="#6C849F" Margin="0,10,0,0"/>
         </VerticalStackLayout>
+    </ContentView>
+</VerticalStackLayout>
+
+<!-- Button 2: Upload to HCM -->
+<VerticalStackLayout Grid.Column="1" Margin="0,0,10,10">
+    <ContentView x:Name="btnUploadToHCM" WidthRequest="300" HeightRequest="180" BackgroundColor="White">
+        <ContentView.GestureRecognizers>
+            <TapGestureRecognizer Tapped="btn_upload_to_HCM"/>
+        </ContentView.GestureRecognizers>
+
+        <VerticalStackLayout Padding="15" HorizontalOptions="Center">
+            <Image Source="fingerprint_u.png" WidthRequest="280" HeightRequest="80" Aspect="Center" Margin="0,-20,0,0"/>
+            <Label Text="卡鐘與指紋資料上傳" HorizontalOptions="Center" FontSize="18" TextColor="#005582" Margin="0,20,0,0"/>
+            <Label Text="卡鐘內刷卡與指紋資料上傳至HCM" HorizontalOptions="Center" FontSize="14" TextColor="#6C849F" Margin="0,10,0,0"/>
+        </VerticalStackLayout>
+    </ContentView>
+</VerticalStackLayout>
+
+<!-- Button 3: Delivery Upload -->
+<VerticalStackLayout Grid.Column="2" Margin="0,0,10,10">
+    <ContentView x:Name="btnDeliveryUpload" WidthRequest="300" HeightRequest="180" BackgroundColor="White">
+        <ContentView.GestureRecognizers>
+            <TapGestureRecognizer Tapped="btn_delivery_upload"/>
+        </ContentView.GestureRecognizers>
+
+        <VerticalStackLayout Padding="15" HorizontalOptions="Center">
+            <Image Source="btn_delivery_upload.png" WidthRequest="280" HeightRequest="80" Aspect="Center" Margin="0,-20,0,0"/>
+            <Label Text="趟次資料上傳" HorizontalOptions="Center" FontSize="18" TextColor="#005582" Margin="0,20,0,0"/>
+            <Label Text="趟次資料傳回後端系統，匯入資料庫" HorizontalOptions="Center" FontSize="14" TextColor="#6C849F" Margin="0,10,0,0"/>
+        </VerticalStackLayout>
+    </ContentView>
+</VerticalStackLayout>
+
+
+            </Grid>
+
+    </VerticalStackLayout>
+
+
+
+
+
+        
     </ScrollView>
 
 </ContentPage>
