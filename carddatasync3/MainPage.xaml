@@ -24,6 +24,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -78,6 +79,8 @@
                 <!-- Refresh & Configuration Button -->
                 <ImageButton x:Name="refreshButton" Source="refresh.png" Grid.Row="0" Grid.Column="9" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnRefreshButtonClicked" />
                 <ImageButton x:Name="settingButton" Source="configuration.png" Grid.Row="0" Grid.Column="10" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnSettingButtonClicked" />
+                <ImageButton x:Name="startButton" Source="start.png" Grid.Row="0" Grid.Column="11" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnStartButtonClicked" />
+
                 <!-- <ImageButton Source="test.png" Grid.Row="0" Grid.Column="11" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnActionButtonClicked" />
                 <ImageButton Source="downloads.png" Grid.Row="0" Grid.Column="12" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="25" HeightRequest="25" Clicked="OnDownloadButtonClicked" /> -->
             </Grid>

@@ -1,1 +1,1 @@
-{"ctrler":"STD1FORME00501","method":"PSNSync","jsonParam":"{\n                                'org_No': 'S000015',\n                        }","token":"your-token-here"}
+{"ctrler":"STD1FORME00501","method":"PSNSync","jsonParam":"{\n                                'org_No': 'S0000150',\n                        }","token":"your-token-here"}

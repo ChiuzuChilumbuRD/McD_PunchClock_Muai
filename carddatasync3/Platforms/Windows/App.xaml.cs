@@ -15,6 +15,7 @@ namespace carddatasync3.WinUI
         {
             this.InitializeComponent();
 
+/*
             bool createdNew;
             string appName = "YourUniqueAppName"; // 唯一的應用名稱，用來識別這個應用
 
@@ -25,6 +26,7 @@ namespace carddatasync3.WinUI
                 // 如果應用已經在運行，顯示警告並退出
                 ShowAlertAndExit();
             }
+            */
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();

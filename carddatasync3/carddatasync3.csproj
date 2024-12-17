@@ -41,7 +41,7 @@
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)' == 'Release'">
 		<GenerateMsix>true</GenerateMsix>
 		<AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
-		<PackageCertificateThumbprint>23DC4947DF3DED32594C88B3503B90FE358A7A6D</PackageCertificateThumbprint>
+		<PackageCertificateThumbprint>AFE2BD9FD41F5F74D3B46EF2FE8D2A712B750D5D</PackageCertificateThumbprint>
 	</PropertyGroup>
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(RuntimeIdentifierOverride)' != ''">
 		<RuntimeIdentifier>$(RuntimeIdentifierOverride)</RuntimeIdentifier>
@@ -49,7 +49,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\calendar_multiweek.ico" />
+		<MauiIcon Include="Resources\AppIcon\calendar_multiweek.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />

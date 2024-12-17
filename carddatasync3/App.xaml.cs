@@ -19,7 +19,7 @@ public partial class App : Application
 		var mainWindow = Application.Current.Windows.FirstOrDefault();
 		if (mainWindow != null)
 		{
-			Application.Current.Windows.First().Title = "HCM出勤資料同步工具 1.2";
+			Application.Current.Windows.First().Title = "HCM出勤資料同步工具 1.28";
 		}
 	}
 

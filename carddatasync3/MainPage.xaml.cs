@@ -94,6 +94,7 @@ namespace carddatasync3
 
         public MainPage()
         {
+            
             // Initialize Serilog (this can also be done in the program's entry point)
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -199,6 +200,26 @@ namespace carddatasync3
         {
             await Navigation.PushAsync(new AppSettingPage());
         }
+        private async void OnStartButtonClicked(object sender, EventArgs e)
+        {
+            for (int remainingTime = second_punchMachine; remainingTime > 0; remainingTime--)
+            {
+                // 每10秒記錄Log
+                if (remainingTime % 10 == 0)
+                {
+                    AppendTextToEditor($"在 {remainingTime} 秒後自動執行");
+                }
+
+                await Task.Delay(1000); // 延遲1秒
+            }
+
+            InitializeApp();
+            btn_HCM_to_fingerprint(this, EventArgs.Empty);
+            // if(is_init_completed){
+            // btn_HCM_to_fingerprint(this, EventArgs.Empty);
+            // }
+        }
+
 
         private async void OnDownloadButtonClicked(object sender, EventArgs e)
         {
@@ -439,7 +460,12 @@ namespace carddatasync3
                 SendLogLayout.IsVisible = true;
             }
 
-            if(is_init_completed) AppendTextToEditor("\n【初始化設定結束】"); // App initialization completed.
+            if(is_init_completed) {
+                AppendTextToEditor("\n【初始化設定結束】");
+                refreshButton.IsVisible = false;
+                settingButton.IsVisible = false;
+             // App initialization completed.
+            }
             else {
                 AppendTextToEditor("\n【初始化設定有誤，請重新修改設定項目】");
                 set_btns_state(false);
@@ -1144,6 +1170,8 @@ namespace carddatasync3
         // 寫 log 到 TextEditor 中
         private void AppendTextToEditor(string text)
         {
+                
+
                 int maxTextLength = 300; // 設定 textBox2.Text 的最大長度
 
                 if (textBox2 != null)
